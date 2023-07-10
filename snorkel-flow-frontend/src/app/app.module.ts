@@ -7,16 +7,25 @@ import { HomepageComponent } from './components/public/homepage/homepage.compone
 import { NavbarComponent } from './components/public/navbar/navbar.component';
 import { LoginComponent } from './components/public/auth/login/login.component';
 
+import { MenuModule } from 'primeng/menu';
+import { MenubarModule } from 'primeng/menubar';
+import { CardModule } from 'primeng/card';
+import { SignUpComponent } from './components/public/auth/sign-up/sign-up.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MenuModule,
+    MenubarModule,
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
