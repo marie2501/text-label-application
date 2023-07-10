@@ -6,11 +6,15 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './components/public/homepage/homepage.component';
 import { NavbarComponent } from './components/public/navbar/navbar.component';
 import { LoginComponent } from './components/public/auth/login/login.component';
+import { SignUpComponent } from './components/public/auth/sign-up/sign-up.component';
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
-import { SignUpComponent } from './components/public/auth/sign-up/sign-up.component';
+import { PasswordModule } from 'primeng/password';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +29,10 @@ import { SignUpComponent } from './components/public/auth/sign-up/sign-up.compon
     AppRoutingModule,
     MenuModule,
     MenubarModule,
-    CardModule
+    CardModule,
+    PasswordModule,
+    ButtonModule,
+    InputTextModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,15 @@
+.component_position {
+  width: 50rem;
+  position: relative;
+  top: 6rem;
+  left: 30rem;
+}
+
+.card_width {
+  width: 30rem;
+}
+
+.button_position {
+  position: relative;
+  top: 1rem;
+}
