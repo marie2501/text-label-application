@@ -15,3 +15,13 @@ export const loginChildGuard: CanActivateChildFn = (
   state: RouterStateSnapshot) => {
   return loginGuard(next, state);
 }
+
+//todo return URLTree um auf /dashboard zu bleiben
+export const loginGuardHomepage: CanActivateFn = (
+  next: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot) => {
+  if (localStorage.getItem('userData')) {
+    return false;
+  }
+  return true;
+}

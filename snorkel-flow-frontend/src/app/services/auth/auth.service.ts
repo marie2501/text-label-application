@@ -26,6 +26,16 @@ export class AuthService {
     }));
   }
 
+  signup(username: string, password: string, email: string) {
+    return this.http.post<AuthRespData>(`${auhtURL}/register/`, {
+      "username": username,
+      "password": password,
+      "email": email
+    }).pipe(catchError(this.handleError), tap(respData => {
+      this.loginAuth(username, respData.token);
+    }));
+  }
+
   validateToken(){
     return this.http.get(`${auhtURL}/validate/`).pipe(tap(respData => {
       this.isAuthenticated.next(true)
