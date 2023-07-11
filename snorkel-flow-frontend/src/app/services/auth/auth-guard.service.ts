@@ -1,8 +1,17 @@
-import {ActivatedRouteSnapshot, CanActivateFn, RouterStateSnapshot} from "@angular/router";
+import {ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, RouterStateSnapshot} from "@angular/router";
 
 export const loginGuard: CanActivateFn = (
   next: ActivatedRouteSnapshot,
   state: RouterStateSnapshot) => {
-    //todo Logik einbauen sobald Login funktioniert
-    return true;
+    if (localStorage.getItem('userData')) {
+      return true;
+    }
+    return false;
+}
+
+
+export const loginChildGuard: CanActivateChildFn = (
+  next: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot) => {
+  return loginGuard(next, state);
 }
