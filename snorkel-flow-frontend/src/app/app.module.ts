@@ -19,6 +19,9 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
+import { WorkflowDashboardComponent } from './components/workflow/workflow-dashboard/workflow-dashboard.component';
+import { WorkflowCreateComponent } from './components/workflow/workflow-create/workflow-create.component';
+import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
 
 
 
@@ -29,7 +32,10 @@ import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
     NavbarComponent,
     LoginComponent,
     SignUpComponent,
-    UserDashboardComponent
+    UserDashboardComponent,
+    WorkflowDashboardComponent,
+    WorkflowCreateComponent,
+    WorkflowHomeComponent
   ],
   imports: [
     BrowserModule,
