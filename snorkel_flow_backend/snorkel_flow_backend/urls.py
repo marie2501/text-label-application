@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^accounts/', include('the_social_network.urls.accountUrls')),
     url(r'^search/', include('the_social_network.urls.searchUrls')),
     url(r'^contents/', include('the_social_network.urls.contentUrls')),
+    url(r'^settings/', include('workflow_settings.urls')),
+
 ]
