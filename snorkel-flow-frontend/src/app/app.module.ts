@@ -11,6 +11,10 @@ import { NavbarComponent } from './components/public/navbar/navbar.component';
 import { LoginComponent } from './components/public/auth/login/login.component';
 import { SignUpComponent } from './components/public/auth/sign-up/sign-up.component';
 import { UserDashboardComponent } from './components/dashboard/user-dashboard/user-dashboard.component';
+import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
+import { WorkflowDashboardComponent } from './components/workflow/workflow-dashboard/workflow-dashboard.component';
+import { WorkflowCreateComponent } from './components/workflow/workflow-create/workflow-create.component';
+import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -18,10 +22,8 @@ import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
-import { WorkflowDashboardComponent } from './components/workflow/workflow-dashboard/workflow-dashboard.component';
-import { WorkflowCreateComponent } from './components/workflow/workflow-create/workflow-create.component';
-import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 
 
@@ -48,7 +50,8 @@ import { WorkflowHomeComponent } from './components/workflow/workflow-home/workf
     CardModule,
     PasswordModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    CheckboxModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

@@ -1,1 +1,23 @@
-<p>workflow-create works!</p>
+<div class="container card_width">
+  <p-card header="Workflow">
+    <form #workflowForm="ngForm" (ngSubmit)="onCreate(workflowForm)">
+      <div class="p-fluid">
+        <div>
+              <span class="p-float-label">
+                <input type="text" id="title" [disabled]="workflow_created" pInputText name="title" ngModel required>
+                <label for="title">Title</label>
+              </span>
+        </div>
+        <br>
+        <div>
+              <span class="flex align-items-center gap-1">
+                <p-checkbox id="isPublic" [binary]="true" ngModel [disabled]="workflow_created" inputId="binary" name="isPublic" ></p-checkbox>
+                <label style="padding-left: 0.5rem" for="isPublic">public</label>
+              </span>
+        </div>
+      </div>
+      <br>
+      <button pButton class="button_position p-button-sm"  [disabled]="workflow_created" type="submit">Submit</button>
+    </form>
+  </p-card>
+</div>
