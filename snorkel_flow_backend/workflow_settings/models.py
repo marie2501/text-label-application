@@ -1,7 +1,9 @@
+from django.core.exceptions import NON_FIELD_ERRORS
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
 class Workflow(models.Model):
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='workflow_creator')
     title = models.CharField(max_length=200)
@@ -10,7 +12,11 @@ class Workflow(models.Model):
     # is_public : False -> nur Creator und Contibutors können Workflow einsehen
     is_public = models.BooleanField()
     # contributer : dürfen alles außer Workflow löschen
-    contributors = models.ManyToManyField(User, related_name='workflow_contributors')
+    contributors = models.ManyToManyField(User, related_name='workflow_contributors', default=creator)
+
+    class Meta:
+        unique_together = [["title", "creator"]]
+        ordering = ["-creation_date"]
 
 
 
