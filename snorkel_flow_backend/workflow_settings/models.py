@@ -55,5 +55,11 @@ class Datapoint(models.Model):
     )
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
 
-
+def get_default_user():
+    return User.objects.get_or_create(username="default")[0]
+class Labelfunction(models.Model):
+    name = models.CharField(max_length=150)
+    labelfunction = models.TextField()
+    creator = models.ForeignKey(User, on_delete=models.SET(get_default_user), default=get_default_user)
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
 
