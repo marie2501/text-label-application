@@ -34,5 +34,26 @@ class File(models.Model):
     def __str__(self):
         return "{creator} : {name}".format(creator=self.creator.username, name=self.file.name)
 
+class Datapoint(models.Model):
+    Development = "D"
+    Test = "T"
+    Unlabeled = "U"
+
+    Stages = [
+        (Development, "Development"),
+        (Test, "Test"),
+        (Unlabeled, "Unlabeled"),
+    ]
+
+    corpus_id = models.IntegerField()
+    tweet_id = models.CharField(max_length=30)
+    text = models.CharField(max_length=400)
+    splitting = models.CharField(
+        max_length=1,
+        choices=Stages,
+        default=Unlabeled,
+    )
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+
 
 
