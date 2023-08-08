@@ -1,5 +1,6 @@
-<div class="container card_width">
-  <p-card header="Workflow">
+<input type="file" accept="text/csv" hidden (change)="onLabeledFileUpload(fileUpload)" #fileUpload>
+<div class="container mt-4 mb-6">
+  <h1 class="mb-6"> Create a workflow</h1>
     <form #workflowForm="ngForm" (ngSubmit)="onCreate(workflowForm)">
       <div class="p-fluid">
         <div>
@@ -17,7 +18,39 @@
         </div>
       </div>
       <br>
-      <button pButton class="button_position p-button-sm"  [disabled]="workflow_created" type="submit">Submit</button>
+      <button pButton class="p-button-secondary"  [disabled]="workflow_created" type="submit">Submit</button>
     </form>
-  </p-card>
 </div>
+<div *ngIf="workflow_created">
+  <p-divider></p-divider>
+  <div class="container mt-4">
+    <h2 class="mb-4">Upload the datasets</h2>
+    <div class="grid">
+        <div class="col-4 flex align-items-center justify-content-center">
+          <div class="p-fluid">
+            <p>Upload two dataset (a dataset which was already labeled by hand and an dataset with unlabeled data)
+              in csv format. Make sure that a col named tweet_id in both datasets exists.</p>
+          </div>
+        </div>
+        <div class="col-2">
+          <p-divider layout="vertical">
+          </p-divider>
+        </div>
+        <div class="col-3 flex align-items-center justify-content-center">
+          <button pButton (click)="fileUpload.click()" type="submit"
+                  class="p-button-help"  label="Labeled" icon="pi pi-arrow-circle-up"></button>
+        </div>
+        <div class="col-3 flex align-items-center justify-content-center">
+        <button pButton (click)="fileUpload.click()" type="submit"
+                class="p-button-help"  label="Unlabeld" icon="pi pi-arrow-circle-up"></button>
+      </div>
+    </div>
+    <div class="grid mt-5">
+      <div class="col-2 col-offset-10">
+        <button pButton type="submit"
+                class="p-button-secondary ml-5" (click)="navigateWorkflowDashboard()" label="Finish"></button>
+      </div>
+    </div>
+  </div>
+</div>
+

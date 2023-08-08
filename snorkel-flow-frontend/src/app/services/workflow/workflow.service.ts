@@ -5,6 +5,7 @@ import { catchError, retry } from 'rxjs/operators';
 import {WorkflowModel} from "../../models/workflow.model";
 
 const workflowURL = 'http://localhost:8080/settings/workflow';
+const fileURL = 'http://localhost:8080/settings/file_upload';
 
 
 
@@ -16,7 +17,15 @@ export class WorkflowService {
   }
 
   createWorkflow(workflow: WorkflowModel) {
-    return this.http.post<{id: number}>(`${workflowURL}/create/`, workflow);
+    return this.http.post<{workflow_id: number}>(`${workflowURL}/`, workflow);
+  }
+
+  labeledfileUpload(formData: FormData) {
+    return this.http.post(`${fileURL}/`, formData);
+  }
+
+  unlabeledfileUpload(formData: FormData) {
+    return this.http.post(`${fileURL}/`, formData);
   }
 
 

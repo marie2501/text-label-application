@@ -5,10 +5,15 @@ from rest_framework.validators import UniqueTogetherValidator
 
 from workflow_settings.models import Workflow
 
-class UserSerializers(serializers.ModelSerializer):
+class UserAddRelSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id']
+
+class UserSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username']
 
 
 class WorkflowCreateSerializer(serializers.ModelSerializer):
@@ -21,18 +26,14 @@ class WorkflowCreateSerializer(serializers.ModelSerializer):
         validators = [
             UniqueTogetherValidator(
                 queryset=Workflow.objects.all(),
-                fields=['creator', 'title']
+                fields=['creator', 'title'],
+                message="A workflow with this title already exists."
             )
         ]
 
-        error_messages = {
-            NON_FIELD_ERRORS: {
-                'unique_together': "A workflow with this title already exists.",
-            }
-        }
-
 
 class WorkflowSerializer(serializers.ModelSerializer):
+    creator = UserSerializers(read_only=True)
     class Meta:
         model = Workflow
         fields = '__all__'

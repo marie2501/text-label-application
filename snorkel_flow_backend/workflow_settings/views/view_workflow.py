@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from workflow_settings.models import Workflow
-from workflow_settings.serializers.serializers_workflow import WorkflowSerializer, WorkflowCreateSerializer, UserSerializers
+from workflow_settings.serializers.serializers_workflow import WorkflowSerializer, WorkflowCreateSerializer, UserAddRelSerializers
 
 
 
@@ -23,7 +23,7 @@ class WorkflowView(APIView):
     def post(self, request, *args, **kwargs):
         if isinstance(request.data, QueryDict):
             request.data._mutable = True
-        request.data['creator'] = UserSerializers(request.user).data['id']
+        request.data['creator'] = UserAddRelSerializers(request.user).data['id']
         workflow_serializer = WorkflowCreateSerializer(data=request.data)
         if workflow_serializer.is_valid():
             workflow = workflow_serializer.save()
