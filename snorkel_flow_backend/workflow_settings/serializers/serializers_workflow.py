@@ -33,7 +33,11 @@ class WorkflowCreateSerializer(serializers.ModelSerializer):
 
 
 class WorkflowSerializer(serializers.ModelSerializer):
-    creator = UserSerializers(read_only=True)
+    creator = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+     )
+    
     class Meta:
         model = Workflow
         fields = '__all__'
