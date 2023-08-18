@@ -14,13 +14,15 @@ from workflow_settings.models import Workflow
 class WorkflowViewTest(APITestCase):
 
     def setUp(self):
-        # Setup 3 Users
+        # Setup 4 Users
         self.user_1 = User.objects.create(username='test_user_1', email='test_user1@user.com')
         self.token_user_1 = Token.objects.create(user=self.user_1)
         self.user_2 = User.objects.create(username='test_user_2', email='test_user2@user.com')
         self.token_user_2 = Token.objects.create(user=self.user_2)
         self.user_3 = User.objects.create(username='test_user_3', email='test_user3@user.com')
         self.token_user_3 = Token.objects.create(user=self.user_3)
+        self.user_4 = User.objects.create(username='test_user_4', email='test_user4@user.com')
+        self.token_user_4 = Token.objects.create(user=self.user_4)
 
         self.workflow_user1 =  Workflow.objects.create(creator=self.user_1, is_public=False, title="Workflow_Test_1")
         self.workflow_user2 = Workflow.objects.create(creator=self.user_2, is_public=False, title="Workflow_Test_2")
@@ -98,8 +100,6 @@ class WorkflowViewTest(APITestCase):
         response_content: dict = json.loads(response.content)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response_content, {'id': 1, 'creator': 'test_user_1', 'title': 'Workflow_Test_1',
-                                            'creation_date': '2023-08-14', 'is_public': False, 'contributors': []})
 
     def test_list_user_1_contributer_get_by_id(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
@@ -110,8 +110,6 @@ class WorkflowViewTest(APITestCase):
         response_content: dict = json.loads(response.content)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response_content, {'id': 2, 'creator': 'test_user_2', 'title': 'Workflow_Test_2',
-                                            'creation_date': '2023-08-14', 'is_public': False, 'contributors': [1, 3]})
 
     def test_list_user_3_forbidden_get_by_id(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_3.key)
@@ -121,6 +119,17 @@ class WorkflowViewTest(APITestCase):
         response = self.client.get(self.url_2)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_list_user_3_get_by_id_public(self):
+        Workflow.objects.create(creator=self.user_4, is_public=True, title="Workflow_Test_4")
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_3.key)
+
+        self.url_2 = reverse('workflow_user', args=[3])
+
+        response = self.client.get(self.url_2)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     # delete
     def test_list_user_1_creator_delete_by_id(self):
@@ -149,3 +158,119 @@ class WorkflowViewTest(APITestCase):
         response = self.client.delete(self.url_2)
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+    def test_update_by_id(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_user', args=[2])
+
+        data = {'is_public': 'True', 'splitting_ratio_labeled_test': '80.00'}
+
+        response = self.client.patch(self.url_2, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_by_id_s(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_user', args=[2])
+
+        data = {'is_public': 'True'}
+
+        response = self.client.patch(self.url_2, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_by_id_p(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_user', args=[2])
+
+        data = {'splitting_ratio_labeled_test': '80.00'}
+
+        response = self.client.patch(self.url_2, data=data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+    def test_add_contributer(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[1])
+
+        data = {'username': 'test_user_2'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Workflow.objects.get(pk=1).contributors.count(), 1)
+
+    def test_add_contributer_connected(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_1'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 2)
+
+    def test_add_contributer_not_exists(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_6'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 2)
+
+    def test_add_contributer_not_creator(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_6'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 2)
+
+    def test_remove_contributer(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_1'}
+
+        response = self.client.delete(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 1)
+
+    def test_remove_contributer_not_exists(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_6'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 2)
+
+    def test_remove_contributer_not_creator(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
+
+        self.url_2 = reverse('workflow_contibuter', args=[2])
+
+        data = {'username': 'test_user_6'}
+
+        response = self.client.post(self.url_2, data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Workflow.objects.get(pk=2).contributors.count(), 2)

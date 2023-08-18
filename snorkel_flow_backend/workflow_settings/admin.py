@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from workflow_settings.models import Workflow, File, Datapoint, Labelfunction
+from workflow_settings.models import Workflow, File, Labelfunctions
 
 
 # Register your models here.
@@ -12,10 +12,10 @@ class WorkflowAdmin(admin.ModelAdmin):
 class FileAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(Datapoint)
-class DatapointAdmin(admin.ModelAdmin):
-    pass
+# @admin.register(Datapoint)
+# class DatapointAdmin(admin.ModelAdmin):
+#     pass
 
-@admin.register(Labelfunction)
+@admin.register(Labelfunctions)
 class LabelfunctionAdmin(admin.ModelAdmin):
     pass
