@@ -12,7 +12,7 @@ class Workflow(models.Model):
     # is_public : False -> nur Creator und Contibutors können Workflow einsehen
     is_public = models.BooleanField()
     # contributer : dürfen alles außer Workflow löschen
-    contributors = models.ManyToManyField(User, related_name='workflow_contributors', default=creator)
+    contributors = models.ManyToManyField(User, related_name='workflow_contributors')
     # Prozentzahl - Anteil der Datenpunkte für das Testdatenset
     splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
@@ -57,8 +57,8 @@ class File(models.Model):
 #     )
 #     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
 
-def get_default_user():
-    return User.objects.get_or_create(username="default")[0]
+# def get_default_user():
+#     return User.objects.get_or_create(username="default")[0]
 
 
 # def count_function_by_workflow(workflow_id):
@@ -68,7 +68,21 @@ def upload_to_labelfunction(instance, filename):
     return "{workflow_id}/labelfunction/{filename}".format(workflow_id=instance.workflow.id,
                                                                    filename=filename)
 
-class Labelfunctions(models.Model):
+# Speichert die Labelfunktionen der verschiedenen Runs
+class Labelfunction_Run(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator_run')
     file = models.FileField(upload_to=upload_to_labelfunction)
+    creation_date = models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-creation_date"]
+
+# Speichert die Labelfunktionen in der Datenbank
+class Labelfunction(models.Model):
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator')
+    type = models.CharField(max_length=50)
+    code = models.TextField()
+    title = models.CharField(max_length=100)
 

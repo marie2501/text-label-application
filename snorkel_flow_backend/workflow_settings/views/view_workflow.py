@@ -28,8 +28,7 @@ class WorkflowView(viewsets.ViewSet):
         if workflow_serializer.is_valid():
             workflow = workflow_serializer.save()
             return Response({'workflow_id': workflow.id}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(workflow_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(workflow_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list_all_by_user(self, request, *args, **kwargs):
         workflows = Workflow.objects.filter(Q(creator=request.user) | Q(contributors=request.user)).distinct()
@@ -62,7 +61,7 @@ class WorkflowView(viewsets.ViewSet):
         else:
             return HttpResponseNotFound()
 
-    #todo update, todo list all public
+
     def update_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
         workflow = Workflow.objects.filter(pk=workflow_id)

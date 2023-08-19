@@ -170,7 +170,7 @@ class WorkflowViewTest(APITestCase):
         response = self.client.patch(self.url_2, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_by_id_s(self):
+    def test_update_by_id_split(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
 
         self.url_2 = reverse('workflow_user', args=[2])
@@ -180,7 +180,7 @@ class WorkflowViewTest(APITestCase):
         response = self.client.patch(self.url_2, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_update_by_id_p(self):
+    def test_update_by_id_public(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
 
         self.url_2 = reverse('workflow_user', args=[2])
