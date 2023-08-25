@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from workflow_settings.models import Workflow, File, Labelfunction
+from workflow_settings.models import Workflow, File, Labelfunction, Labelfunction_Run
 
 
 # Register your models here.
@@ -18,4 +18,8 @@ class FileAdmin(admin.ModelAdmin):
 
 @admin.register(Labelfunction)
 class LabelfunctionAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Labelfunction_Run)
+class Labelfunction_Run_Admin(admin.ModelAdmin):
     pass

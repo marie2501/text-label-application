@@ -36,7 +36,7 @@ class LabelfunctionViewTest(APITestCase):
     def test_add_labelfunction(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
 
-        data = {'title': 'Test_Python_Code', 'type': 'python_code', 'code': 'def add():\n   x = 16\n   y = 13\n   print(x+y)'}
+        data = {'name': 'Test_Python_Code', 'type': 'python_code', 'code': 'def add():\n   x = 16\n   y = 13\n   print(x+y)'}
 
         self.url_1 = reverse('labelfunction', args=[1])
 
@@ -53,7 +53,7 @@ class LabelfunctionViewTest(APITestCase):
     def test_add_labelfunction_missing_data(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_1.key)
 
-        data = {'title': 'Test_Python_Code', 'code': 'def add():\n   x = 16\n   y = 13\n   print(x+y)'}
+        data = {'name': 'Test_Python_Code', 'code': 'def add():\n   x = 16\n   y = 13\n   print(x+y)'}
 
         self.url_1 = reverse('labelfunction', args=[1])
 
@@ -65,11 +65,11 @@ class LabelfunctionViewTest(APITestCase):
 
     def test_get_all_by_workflow_id(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-        Labelfunction.objects.create(title='Test_Python_Code', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_1', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_1', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_2', creator=self.user_1, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_2', creator=self.user_1, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
 
         self.url_1 = reverse('labelfunction', args=[2])
@@ -80,11 +80,11 @@ class LabelfunctionViewTest(APITestCase):
 
     def test_delete_by_id(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-        Labelfunction.objects.create(title='Test_Python_Code', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_1', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_1', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_2', creator=self.user_1, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_2', creator=self.user_1, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
 
         self.url_1 = reverse('labelfunction', args=[1])
@@ -96,11 +96,11 @@ class LabelfunctionViewTest(APITestCase):
 
     def test_delete_by_id_wrong_creator(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-        Labelfunction.objects.create(title='Test_Python_Code', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_1', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_1', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_2', creator=self.user_1, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_2', creator=self.user_1, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
 
         self.url_1 = reverse('labelfunction', args=[3])
@@ -112,40 +112,40 @@ class LabelfunctionViewTest(APITestCase):
 
     def test_update_by_id(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-        Labelfunction.objects.create(title='Test_Python_Code', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_1', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_1', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_2', creator=self.user_1, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_2', creator=self.user_1, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
 
         self.url_1 = reverse('labelfunction', args=[1])
 
-        data = {'title': 'Update_Test'}
+        data = {'name': 'Update_Test'}
 
         response = self.client.patch(self.url_1, data=data, format='json')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(Labelfunction.objects.get(pk=1).title, 'Update_Test')
+        self.assertEqual(Labelfunction.objects.get(pk=1).name, 'Update_Test')
 
     def test_update_by_id_wrong_creator(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-        Labelfunction.objects.create(title='Test_Python_Code', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_1', creator=self.user_2, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_1', creator=self.user_2, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
-        Labelfunction.objects.create(title='Test_Python_Code_2', creator=self.user_1, type='python_code',
+        Labelfunction.objects.create(name='Test_Python_Code_2', creator=self.user_1, type='python_code',
                                      code='def add():\n   x = 16\n   y = 13\n   print(x+y)', workflow_id=2)
 
         self.url_1 = reverse('labelfunction', args=[3])
 
-        data = {'title': 'Update_Test'}
+        data = {'name': 'Update_Test'}
 
         response = self.client.patch(self.url_1, data=data, format='json')
 
 
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-        self.assertEqual(Labelfunction.objects.get(pk=3).title, 'Test_Python_Code_2')
+        self.assertEqual(Labelfunction.objects.get(pk=3).name, 'Test_Python_Code_2')
 
     # FileTest
     # def test_get_run_by_id(self):

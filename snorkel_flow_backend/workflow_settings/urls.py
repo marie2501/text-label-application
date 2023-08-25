@@ -9,8 +9,12 @@ urlpatterns = [
     path('workflow/', WorkflowView.as_view({'get': 'list_all_by_user', 'post': 'create'}), name='workflow'),
     path('workflow/<int:pk>/', WorkflowView.as_view({'get': 'get_by_id', 'delete': 'delete_by_id', 'patch': 'update_by_id'}), name='workflow_user'),
     path('workflow/<int:pk>/contributer/', WorkflowView.as_view({'post': 'add_contributer_by_id', 'delete': 'remove_contributer_by_id'}), name='workflow_contibuter'),
-    path('workflow/<int:pk>/labelfunction', LabelfunctionView.as_view({'post': 'add_labelfunction',
+    path('workflow/<int:pk>/labelfunction/', LabelfunctionView.as_view({'post': 'add_labelfunction',
                                                                        'get': 'get_all_labelfunction_by_workflow_id',
                                                                        'delete': 'delete_labelfunction',
                                                                        'patch': 'update_labelfunction'}), name='labelfunction'),
+    path('workflow/<int:pk>/labelfunctionrun/', LabelfunctionView.as_view({'post': 'create_labelfunction_run',
+                                                                       'get': 'get_labelfunction_run'}), name='labelfunction_run'),
+    path('workflow/<int:pk>/labelfunctionrun/exec/', LabelfunctionView.as_view({'get': 'exec_labelfunction_run'}), name='labelfunction_run_exec'),
+
 ]

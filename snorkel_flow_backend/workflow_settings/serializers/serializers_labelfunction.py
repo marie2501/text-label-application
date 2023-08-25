@@ -14,13 +14,13 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Labelfunction
-        fields = ['creator','title', 'type', 'code']
+        fields = ['creator','name', 'type', 'code']
 
 class LabelfunctionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Labelfunction
-        fields = ['title', 'type', 'code']
+        fields = ['name', 'type', 'code']
 
 class LabelfunctionRunSerializer(serializers.ModelSerializer):
     creator = serializers.SlugRelatedField(

@@ -80,9 +80,10 @@ class Labelfunction_Run(models.Model):
 
 # Speichert die Labelfunktionen in der Datenbank
 class Labelfunction(models.Model):
+    # todo name von der labelfuntion als string mit speichern
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator')
     type = models.CharField(max_length=50)
     code = models.TextField()
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=150)
 
