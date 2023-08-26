@@ -26,6 +26,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -57,7 +58,8 @@ import { PanelModule } from 'primeng/panel';
     InputTextModule,
     CheckboxModule,
     DividerModule,
-    PanelModule
+    PanelModule,
+    InputNumberModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

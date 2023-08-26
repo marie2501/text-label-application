@@ -11,14 +11,21 @@
         </div>
         <br>
         <div>
-              <span class="flex align-items-center gap-1">
-                <p-checkbox id="isPublic" [binary]="true" ngModel [disabled]="workflow_created" inputId="binary" name="isPublic" ></p-checkbox>
-                <label style="padding-left: 0.5rem" for="isPublic">public</label>
-              </span>
+          <span class="flex align-items-center gap-1 mt-2">
+            <p-checkbox id="isPublic" [binary]="true" ngModel [disabled]="workflow_created" inputId="binary" name="isPublic" ></p-checkbox>
+            <label style="padding-left: 0.5rem" for="isPublic">public</label>
+          </span>
+        </div>
+        <br>
+        <div class="ration-form-with">
+          <span class="p-float-label mt-2">
+            <p-inputNumber inputId="minmaxfraction" ngModel id="splittingRatio" mode="decimal" name="splittingRatio" [maxFractionDigits]="2"></p-inputNumber>
+            <label>Splitting-Ratio in %</label>
+          </span>
         </div>
       </div>
       <br>
-      <button pButton class="p-button-secondary"  [disabled]="workflow_created" type="submit">Submit</button>
+      <button pButton class="p-button-secondary mt-2"  [disabled]="workflow_created" type="submit">Submit</button>
     </form>
 </div>
 <div *ngIf="workflow_created">
@@ -28,8 +35,7 @@
     <div class="grid">
         <div class="col-4 flex align-items-center justify-content-center">
           <div class="p-fluid">
-            <p>Upload two dataset (a dataset which was already labeled by hand and an dataset with unlabeled data)
-              in csv format. Make sure that a col named tweet_id in both datasets exists.</p>
+            <p>Upload a dataset in csv format. Make sure that the dataset has the cols </p> <p class="font-italic">corpus_id, entity_id, text, splitting_id.</p>
           </div>
         </div>
         <div class="col-2">
@@ -38,12 +44,9 @@
         </div>
         <div class="col-3 flex align-items-center justify-content-center">
           <button pButton (click)="fileUpload.click()" type="submit"
-                  class="p-button-help"  label="Labeled" icon="pi pi-arrow-circle-up"></button>
+                  class="p-button-help"  label="Upload" [loading]="isLoading" icon="pi pi-arrow-circle-up"></button>
         </div>
-        <div class="col-3 flex align-items-center justify-content-center">
-        <button pButton (click)="fileUpload.click()" type="submit"
-                class="p-button-help"  label="Unlabeld" icon="pi pi-arrow-circle-up"></button>
-      </div>
+      <div>
     </div>
     <div class="grid mt-5">
       <div class="col-2 col-offset-10">
