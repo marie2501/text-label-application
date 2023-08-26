@@ -1,1 +1,21 @@
+<div *ngIf="workflowLoaded|async">
+  <div class="grid">
+    <div class="col-3 mt-4 ml-2 mr-2">
+      <p-panel header="Recent workflows">
+        <div>
+          <ul>
+            <li *ngFor="let workflow of workflows | slice:0:7">
+              <a [routerLink]="['/workflow', workflow.id, 'dashboard']">{{workflow.title}}</a>
+            </li>
+          </ul>
+        </div>
+      </p-panel>
+    </div>
+    <div class="col-offset-7 mt-4 align-content-center">
+      <p-button [routerLink]="['/workflow', 'create']" label="New Workflow" icon="pi pi-plus" styleClass="p-button-raised p-button-success"></p-button>
+    </div>
+  </div>
+</div>
+
+
 
