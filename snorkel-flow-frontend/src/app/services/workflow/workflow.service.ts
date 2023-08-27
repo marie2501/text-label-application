@@ -28,9 +28,4 @@ export class WorkflowService {
     return this.http.post(`${fileURL}/${workflow_id}/`, formData);
   }
 
-  unlabeledfileUpload(formData: FormData) {
-    return this.http.post(`${fileURL}/`, formData);
-  }
-
-
 }
