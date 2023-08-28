@@ -17,6 +17,7 @@ import { WorkflowDashboardComponent } from './components/workflow/workflow-dashb
 import { WorkflowCreateComponent } from './components/workflow/workflow-create/workflow-create.component';
 import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
 import { LabelfunctionCreateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-create.component';
+import { LabelfunctionRunComponent } from './components/workflow/labelfunction/labelfunction-run/labelfunction-run.component';
 
 
 import { MenuModule } from 'primeng/menu';
@@ -31,6 +32,11 @@ import { PanelModule } from 'primeng/panel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TableModule } from 'primeng/table';
 import { ScrollerModule } from 'primeng/scroller';
+import { DropdownModule } from 'primeng/dropdown';
+import { StepsModule } from 'primeng/steps';
+import { LabelfunctionTypeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-type/labelfunction-type.component';
+import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component';
+import { LabelfunctionTemplateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-template.component';
 
 
 
@@ -46,7 +52,11 @@ import { ScrollerModule } from 'primeng/scroller';
     WorkflowDashboardComponent,
     WorkflowCreateComponent,
     WorkflowHomeComponent,
-    LabelfunctionCreateComponent
+    LabelfunctionCreateComponent,
+    LabelfunctionRunComponent,
+    LabelfunctionTypeComponent,
+    LabelfunctionCodeComponent,
+    LabelfunctionTemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +76,9 @@ import { ScrollerModule } from 'primeng/scroller';
     PanelModule,
     InputNumberModule,
     TableModule,
-    ScrollerModule
+    ScrollerModule,
+    DropdownModule,
+    StepsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
