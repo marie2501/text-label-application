@@ -8,6 +8,9 @@ import {loginGuard, loginGuardHomepage} from "./services/auth/auth-guard.service
 import {WorkflowCreateComponent} from "./components/workflow/workflow-create/workflow-create.component";
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
+import {
+  LabelfunctionCreateComponent
+} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -19,6 +22,9 @@ const routes: Routes = [
     children: [
       {path: 'create', component: WorkflowCreateComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
+      {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent},
+      //todo generate component
+      {path: ':id/update-labelfunction', component: LabelfunctionCreateComponent},
     ]},
 ];
 

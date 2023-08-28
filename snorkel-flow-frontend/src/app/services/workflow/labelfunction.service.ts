@@ -1,8 +1,5 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subject, tap, throwError} from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
-import {WorkflowModel} from "../../models/workflow.model";
 import {LabelfunctionModel} from "../../models/labelfunction.model";
 
 const labelfuntionURL = 'http://localhost:8080/settings/workflow';
@@ -25,23 +22,23 @@ export class LabelfunctionService {
   }
 
   deleteLabelfunctions(labelfunction_id: number){
-    return this.http.get<LabelfunctionModel[]>(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`);
+    return this.http.delete(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`);
   }
 
   updateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel){
-    return this.http.patch<LabelfunctionModel[]>(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction);
+    return this.http.patch(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction);
   }
 
   createlabelfunctionRun(formData: FormData, workflow_id: number) {
     return this.http.post(`${labelfuntionURL}/${workflow_id}/labelfunctionrun/`, formData);
   }
 
-  getlabelfunctionRun(workflow_id: number) {
-    return this.http.get(`${labelfuntionURL}/${workflow_id}/labelfunctionrun/`);
+  getlabelfunctionRun(labelfunctionrun_id: number) {
+    return this.http.get<LabelfunctionModel[]>(`${labelfuntionURL}/${labelfunctionrun_id}/labelfunctionrun/`);
   }
 
-  executelabelfunctionRun(workflow_id: number) {
-    return this.http.get(`${labelfuntionURL}/${workflow_id}/labelfunctionrun/exec/`);
+  executelabelfunctionRun(labelfunctionrun_id: number) {
+    return this.http.get(`${labelfuntionURL}/${labelfunctionrun_id}/labelfunctionrun/exec/`);
   }
 
 

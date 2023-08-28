@@ -16,6 +16,8 @@ import {AuthInterceptorService} from "./services/auth/auth-interceptor.service";
 import { WorkflowDashboardComponent } from './components/workflow/workflow-dashboard/workflow-dashboard.component';
 import { WorkflowCreateComponent } from './components/workflow/workflow-create/workflow-create.component';
 import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
+import { LabelfunctionCreateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-create.component';
+
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -27,6 +29,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TableModule } from 'primeng/table';
+import { ScrollerModule } from 'primeng/scroller';
 
 
 
@@ -41,7 +45,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     UserDashboardComponent,
     WorkflowDashboardComponent,
     WorkflowCreateComponent,
-    WorkflowHomeComponent
+    WorkflowHomeComponent,
+    LabelfunctionCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +64,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CheckboxModule,
     DividerModule,
     PanelModule,
-    InputNumberModule
+    InputNumberModule,
+    TableModule,
+    ScrollerModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

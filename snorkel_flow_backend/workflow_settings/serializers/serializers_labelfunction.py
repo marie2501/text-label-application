@@ -14,7 +14,7 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Labelfunction
-        fields = ['creator','name', 'type', 'code']
+        fields = ['id','creator','name', 'type', 'code']
 
 class LabelfunctionCreateSerializer(serializers.ModelSerializer):
 
