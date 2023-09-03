@@ -17,6 +17,9 @@ import {
 import {
   LabelfunctionTemplateComponent
 } from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-template.component";
+import {
+  LabelfunctionCodeComponent
+} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -30,7 +33,9 @@ const routes: Routes = [
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
       {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent, children:[
           {path: 'type', component: LabelfunctionTypeComponent},
-          {path: 'template', component: LabelfunctionTemplateComponent}
+          {path: 'template', component: LabelfunctionTemplateComponent, children: [
+              {path: 'code', component: LabelfunctionCodeComponent}
+            ]}
         ]},
       //todo generate component
       {path: ':id/update-labelfunction', component: LabelfunctionCreateComponent},
