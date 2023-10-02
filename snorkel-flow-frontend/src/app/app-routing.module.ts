@@ -8,34 +8,29 @@ import {loginGuard, loginGuardHomepage} from "./services/auth/auth-guard.service
 import {WorkflowCreateComponent} from "./components/workflow/workflow-create/workflow-create.component";
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
-import {
-  LabelfunctionCreateComponent
-} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
-import {
-  LabelfunctionTypeComponent
-} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-type/labelfunction-type.component";
-import {
-  LabelfunctionTemplateComponent
-} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-template.component";
-import {
-  LabelfunctionCodeComponent
-} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component";
+import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
+import {LabelfunctionCodeComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component";
+import {FileUploadComponent} from "./components/workflow/workflow-create/file/file-upload/file-upload.component";
+import {FileComponent} from "./components/workflow/workflow-create/file/file.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
   {path: 'login', component: LoginComponent, canActivate: [loginGuardHomepage]},
   {path: 'sign-up', component: SignUpComponent, canActivate: [loginGuardHomepage]},
   {path: 'dashboard', component: UserDashboardComponent, canActivate: [loginGuard]},
+  {path: 'file', component: FileUploadComponent, canActivate: [loginGuard]},
   {path: 'workflow', component: WorkflowHomeComponent,
     canActivate: [loginGuard], canActivateChild: [loginGuard],
     children: [
       {path: 'create', component: WorkflowCreateComponent},
+      {path: ':id/file', component: FileComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
       {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent, children:[
-          {path: 'type', component: LabelfunctionTypeComponent},
-          {path: 'template', component: LabelfunctionTemplateComponent, children: [
-              {path: 'code', component: LabelfunctionCodeComponent}
-            ]}
+          // {path: 'type', component: LabelfunctionTypeComponent},
+          // {path: 'template', component: LabelfunctionTemplateComponent, children: [
+          //     {path: 'code', component: LabelfunctionCodeComponent}
+          //   ]}
+          {path: 'code', component: LabelfunctionCodeComponent},
         ]},
       //todo generate component
       {path: ':id/update-labelfunction', component: LabelfunctionCreateComponent},

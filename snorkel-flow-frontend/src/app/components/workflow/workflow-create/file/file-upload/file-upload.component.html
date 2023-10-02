@@ -1,0 +1,20 @@
+<input type="file" accept="text/csv" hidden (change)="onFileUpload(fileUpload)" #fileUpload>
+
+
+<h2 class="mb-4">Upload a datasets</h2>
+<div class="grid">
+  <div class="col-5 flex align-items-center justify-content-center">
+    <div class="p-fluid">
+      <p>Upload a dataset in csv format. Make sure that the dataset has cols named </p> <p class="font-italic">corpus_id, entity_id, text, splitting_id.</p>
+    </div>
+  </div>
+  <div class="col-2">
+    <p-divider layout="vertical">
+    </p-divider>
+  </div>
+  <div class="col-3 flex align-items-center justify-content-center">
+    <button pButton (click)="fileUpload.click()" type="submit"
+            class="p-button-help"  label="Upload" [loading]="isLoading" icon="pi pi-arrow-circle-up"></button>
+  </div>
+</div>
+

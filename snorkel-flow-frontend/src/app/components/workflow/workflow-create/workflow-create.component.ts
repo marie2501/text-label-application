@@ -41,9 +41,6 @@ export class WorkflowCreateComponent {
       () => {
         console.log('success');
       })
-
-
-
   }
 
   onLabeledFileUpload(fileUpload: HTMLInputElement) {
@@ -54,7 +51,7 @@ export class WorkflowCreateComponent {
       formData.append('file', file);
       formData.append('workflow_id', '' + this.workflow_id);
       this.isLoading = true;
-      this.workflowService.labeledfileUpload(formData, this.workflow_id).subscribe(respData => {
+      this.workflowService.fileUpload(formData, this.workflow_id).subscribe(respData => {
         this.success = true;
       }, error => {
         this.isLoading = false;
@@ -65,8 +62,4 @@ export class WorkflowCreateComponent {
     }
   }
 
-
-  navigateWorkflowDashboard() {
-    this.router.navigate(['/workflow', this.workflow_id, 'dashboard'])
-  }
 }

@@ -37,6 +37,8 @@ import { StepsModule } from 'primeng/steps';
 import { LabelfunctionTypeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-type/labelfunction-type.component';
 import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component';
 import { LabelfunctionTemplateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-template.component';
+import { FileUploadComponent } from './components/workflow/workflow-create/file/file-upload/file-upload.component';
+import { FileComponent } from './components/workflow/workflow-create/file/file.component';
 
 
 
@@ -56,7 +58,9 @@ import { LabelfunctionTemplateComponent } from './components/workflow/labelfunct
     LabelfunctionRunComponent,
     LabelfunctionTypeComponent,
     LabelfunctionCodeComponent,
-    LabelfunctionTemplateComponent
+    LabelfunctionTemplateComponent,
+    FileUploadComponent,
+    FileComponent
   ],
   imports: [
     BrowserModule,
