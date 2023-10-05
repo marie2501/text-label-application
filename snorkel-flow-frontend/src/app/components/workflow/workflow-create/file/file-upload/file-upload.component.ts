@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {WorkflowService} from "../../../../../services/workflow/workflow.service";
-import {Router} from "@angular/router";
+import {FileService} from "../../../../../services/workflow/file.service";
 
 @Component({
   selector: 'app-file-upload',
@@ -14,7 +13,7 @@ export class FileUploadComponent implements OnInit{
   success: boolean = false;
   isLoading: boolean = false;
 
-  constructor(private workflowService: WorkflowService) {
+  constructor(private fileService: FileService) {
   }
 
   onFileUpload(fileUpload: HTMLInputElement) {
@@ -25,7 +24,7 @@ export class FileUploadComponent implements OnInit{
       formData.append('file', file);
       formData.append('workflow_id', '' + this.workflow_id);
       this.isLoading = true;
-      this.workflowService.fileUpload(formData, this.workflow_id).subscribe(respData => {
+      this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
         this.success = true;
       }, error => {
         this.isLoading = false;

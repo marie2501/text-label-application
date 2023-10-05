@@ -24,8 +24,4 @@ export class WorkflowService {
     return this.http.get<WorkflowModel[]>(`${workflowURL}/`);
   }
 
-  labeledfileUpload(formData: FormData, workflow_id: number) {
-    return this.http.post(`${fileURL}/${workflow_id}/`, formData);
-  }
-
 }

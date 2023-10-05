@@ -3,6 +3,7 @@ import {NgForm} from "@angular/forms";
 import {WorkflowModel} from "../../../models/workflow.model";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {Router} from "@angular/router";
+import {FileService} from "../../../services/workflow/file.service";
 
 @Component({
   selector: 'app-workflow-create',
@@ -17,7 +18,7 @@ export class WorkflowCreateComponent {
   isLoading: boolean = false;
 
 
-  constructor(private workflowService: WorkflowService, private router: Router) {
+  constructor(private workflowService: WorkflowService, private router: Router, private fileService: FileService) {
   }
 
   onCreate(workflowForm: NgForm) {
@@ -51,7 +52,7 @@ export class WorkflowCreateComponent {
       formData.append('file', file);
       formData.append('workflow_id', '' + this.workflow_id);
       this.isLoading = true;
-      this.workflowService.fileUpload(formData, this.workflow_id).subscribe(respData => {
+      this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
         this.success = true;
       }, error => {
         this.isLoading = false;
