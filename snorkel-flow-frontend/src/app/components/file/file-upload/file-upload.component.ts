@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FileService} from "../../../../../services/workflow/file.service";
+import {FileService} from "../../../services/workflow/file.service";
 
 @Component({
   selector: 'app-file-upload',

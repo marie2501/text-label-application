@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {FileService} from "../../services/workflow/file.service";
 
 @Component({
   selector: 'app-file',
@@ -9,11 +10,17 @@ import {ActivatedRoute} from "@angular/router";
 export class FileComponent implements OnInit{
 
   workflow_id: number = 0;
+  file_names: string[] = [];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute, private fileService: FileService) {
   }
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
+    this.fileService.getFileNamesByWorkflowId(this.workflow_id).subscribe(respData =>{
+      this.file_names = respData;
+    }, error => {
+      console.log(error);
+    });
   }
 }
