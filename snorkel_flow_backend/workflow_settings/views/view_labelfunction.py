@@ -71,16 +71,21 @@ class LabelfunctionView(viewsets.ViewSet):
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 
+    # Später aufpassen, ob noch functioniert, import statement müssen bei local in die funtion geschrieben werden
+    # bei globals ist das nicht der fall, hier aber bei funktionnamen aufpassen -> unsicher ob 2 funktionen den gleichen namen haben dürfen
+    # wahrscheinlich nicht
     def test_labelfunction(self, request, *args, **kwargs):
         print(request.data)
         code = request.data['pythoncode']
         name = request.data['name']
         try:
-            exec(code)
+            exec(code, globals())
             file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/Youtube05-Shakira.csv')
             dataframe = pd.read_csv(file_path)
-            myVars = locals()
-            x = [myVars[name]]
+            local_var = locals()
+            global_var = globals()
+
+            x = [global_var[name]]
             applier = PandasLFApplier(lfs=x)
             L_train = applier.apply(df=dataframe)
             print(L_train)

@@ -13,6 +13,8 @@ urlpatterns = [
                                                                        'get': 'get_all_labelfunction_by_workflow_id',
                                                                        'delete': 'delete_labelfunction',
                                                                        'patch': 'update_labelfunction'}), name='labelfunction'),
+    path('workflow/labelfunction/compile/', LabelfunctionView.as_view({'post': 'compile_labelfunction'}), name='labelfunction_compile'),
+    path('workflow/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
     path('workflow/<int:pk>/labelfunctionrun/', LabelfunctionView.as_view({'post': 'create_labelfunction_run',
                                                                        'get': 'get_labelfunction_run'}), name='labelfunction_run'),
     path('workflow/<int:pk>/labelfunctionrun/exec/', LabelfunctionView.as_view({'get': 'exec_labelfunction_run'}), name='labelfunction_run_exec'),

@@ -32,9 +32,11 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
+    console.log('dsdad', this.workflow_id)
   }
 
   ngAfterViewInit(): void {
+    this.workflow_id = this.route.snapshot.params['id'];
     const element = this.codeEditorRef.nativeElement;
     const editorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
@@ -57,6 +59,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     const code = this.codeEditor.getValue();
     console.log(code);
     const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
+    console.log(this.workflow_id)
     this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
       console.log(respData);
     }, error => {

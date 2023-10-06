@@ -23,9 +23,7 @@ const routes: Routes = [
       {path: 'create', component: WorkflowCreateComponent},
       {path: ':id/file', component: FileComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
-      {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent, children:[
-          {path: 'code', component: LabelfunctionCodeComponent},
-        ]},
+      {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent},
     ]},
 ];
 
