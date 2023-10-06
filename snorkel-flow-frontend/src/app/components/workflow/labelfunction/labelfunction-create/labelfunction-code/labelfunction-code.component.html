@@ -1,0 +1,18 @@
+
+
+<div class="container">
+
+  <div class="flex flex-column gap-2">
+    <label for="name">Name of the function</label>
+    <input pInputText id="name" aria-describedby="username-help" [(ngModel)]="functionName" />
+    <small id="name-help">Make sure that the name of the function equals the name in the code</small>
+  </div>
+
+  <h2 class="mt-4 mb-4">Python-Editor</h2>
+  <div #editor></div>
+
+  <button pButton label="Compile" class="p-button-success mt-4 mr-4" (click)="compilePythonCode()"></button>
+  <button pButton label="Test" class="p-button-success mt-4 mr-4" [disabled]="!isCompiled"  (click)="testPythonCode()"></button>
+  <button pButton label="Save" class="p-button-success mt-4" [disabled]="!isTested" (click)="savePythonCode()"></button>
+</div>
+

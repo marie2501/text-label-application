@@ -18,7 +18,9 @@ import { WorkflowCreateComponent } from './components/workflow/workflow-create/w
 import { WorkflowHomeComponent } from './components/workflow/workflow-home/workflow-home.component';
 import { LabelfunctionCreateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-create.component';
 import { LabelfunctionRunComponent } from './components/workflow/labelfunction/labelfunction-run/labelfunction-run.component';
-
+import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-code/labelfunction-code.component';
+import { FileUploadComponent } from './components/file/file-upload/file-upload.component';
+import { FileComponent } from './components/file/file.component';
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -34,11 +36,6 @@ import { TableModule } from 'primeng/table';
 import { ScrollerModule } from 'primeng/scroller';
 import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
-import { LabelfunctionTypeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-type/labelfunction-type.component';
-import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component';
-import { LabelfunctionTemplateComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-template.component';
-import { FileUploadComponent } from './components/file/file-upload/file-upload.component';
-import { FileComponent } from './components/file/file.component';
 
 
 
@@ -56,9 +53,7 @@ import { FileComponent } from './components/file/file.component';
     WorkflowHomeComponent,
     LabelfunctionCreateComponent,
     LabelfunctionRunComponent,
-    LabelfunctionTypeComponent,
     LabelfunctionCodeComponent,
-    LabelfunctionTemplateComponent,
     FileUploadComponent,
     FileComponent
   ],

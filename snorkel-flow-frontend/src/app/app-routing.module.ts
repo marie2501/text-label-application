@@ -9,8 +9,7 @@ import {WorkflowCreateComponent} from "./components/workflow/workflow-create/wor
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
 import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
-import {LabelfunctionCodeComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component";
-import {FileUploadComponent} from "./components/file/file-upload/file-upload.component";
+import {LabelfunctionCodeComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-code/labelfunction-code.component";
 import {FileComponent} from "./components/file/file.component";
 
 const routes: Routes = [
@@ -25,14 +24,8 @@ const routes: Routes = [
       {path: ':id/file', component: FileComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
       {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent, children:[
-          // {path: 'type', component: LabelfunctionTypeComponent},
-          // {path: 'template', component: LabelfunctionTemplateComponent, children: [
-          //     {path: 'code', component: LabelfunctionCodeComponent}
-          //   ]}
           {path: 'code', component: LabelfunctionCodeComponent},
         ]},
-      //todo generate component
-      {path: ':id/update-labelfunction', component: LabelfunctionCreateComponent},
     ]},
 ];
 
