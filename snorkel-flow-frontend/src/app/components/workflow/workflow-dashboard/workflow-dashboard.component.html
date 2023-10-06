@@ -1,5 +1,5 @@
 <div class="mt-4 ml-4 mb-4 align-content-center">
-  <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction', 'code']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-success"></p-button>
+  <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-success"></p-button>
   <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-success"></p-button>
 </div>
 <div *ngIf="labelfunctions.length > 0">
