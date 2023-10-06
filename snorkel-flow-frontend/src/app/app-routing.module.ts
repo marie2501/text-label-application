@@ -10,15 +10,14 @@ import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflo
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
 import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
 import {LabelfunctionCodeComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-template/labelfunction-code/labelfunction-code.component";
-import {FileUploadComponent} from "./components/workflow/workflow-create/file/file-upload/file-upload.component";
-import {FileComponent} from "./components/workflow/workflow-create/file/file.component";
+import {FileUploadComponent} from "./components/file/file-upload/file-upload.component";
+import {FileComponent} from "./components/file/file.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
   {path: 'login', component: LoginComponent, canActivate: [loginGuardHomepage]},
   {path: 'sign-up', component: SignUpComponent, canActivate: [loginGuardHomepage]},
   {path: 'dashboard', component: UserDashboardComponent, canActivate: [loginGuard]},
-  {path: 'file', component: FileUploadComponent, canActivate: [loginGuard]},
   {path: 'workflow', component: WorkflowHomeComponent,
     canActivate: [loginGuard], canActivateChild: [loginGuard],
     children: [

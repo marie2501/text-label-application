@@ -18,4 +18,8 @@ export class FileService {
     return this.http.post(`${fileURL}/${workflow_id}/`, formData);
   }
 
+  getFileNamesByWorkflowId(workflow_id: number){
+    return this.http.get<string[]>(`${fileURL}/${workflow_id}/`);
+  }
+
 }

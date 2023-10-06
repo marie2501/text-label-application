@@ -1,3 +1,4 @@
+from django.http import HttpResponseNotFound
 from rest_framework import status, authentication
 from rest_framework.parsers import FileUploadParser, JSONParser
 from rest_framework.permissions import IsAuthenticated
@@ -7,7 +8,7 @@ import pandas as pd
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.serializers.serializers_file import FileUploadSerializer
-from workflow_settings.models import Workflow, File
+from workflow_settings.models import File
 
 # Dataset: corpus_id, entity_id, text, splitting_id
 
@@ -28,4 +29,14 @@ class FileView(APIView):
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        files = File.objects.filter(workflow_id=9)
+        print(files)
+        if files.exists():
+            names = []
+            for f in files:
+                names.append(f.__str__())
+            return Response(names, status=status.HTTP_200_OK)
+        return HttpResponseNotFound()
 
