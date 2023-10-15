@@ -36,6 +36,7 @@ import { TableModule } from 'primeng/table';
 import { ScrollerModule } from 'primeng/scroller';
 import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
+import { MessagesModule } from 'primeng/messages';
 
 
 
@@ -77,7 +78,8 @@ import { StepsModule } from 'primeng/steps';
     TableModule,
     ScrollerModule,
     DropdownModule,
-    StepsModule
+    StepsModule,
+    MessagesModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

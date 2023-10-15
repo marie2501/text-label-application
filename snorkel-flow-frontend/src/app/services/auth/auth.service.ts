@@ -55,10 +55,11 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify({username: username, token: token}));
   }
 
-  //todo später noch anpassen
+  //todo passe error code später an
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
+      // Error orrcured - currently general error message
+      //                - later give specific error message back
       console.error('Error:', error.error);
     } else {
       console.error(

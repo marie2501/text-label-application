@@ -1,22 +1,24 @@
 <div class="background">
   <div class="container component_position">
-<!--    <div>-->
-<!--      <p-messages [value]="errorMessage"></p-messages>-->
-<!--    </div>-->
+    <div>
+      <p-messages [value]="errorMessage"></p-messages>
+    </div>
     <div class="container card_width">
       <p-card header="Login">
         <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
           <div class="p-fluid">
             <div>
               <span class="p-float-label">
-                <input type="text" id="username" pInputText name="username" ngModel required>
+                <input type="text" id="username" pInputText name="username" ngModel
+                       required [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                 <label for="username">Username</label>
               </span>
             </div>
             <br>
             <div>
               <span class="p-float-label">
-                <p-password id="password" [feedback]="false" ngModel name="password" required [toggleMask]="true">
+                <p-password id="password" [feedback]="false" ngModel name="password" required [toggleMask]="true"
+                            [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                 </p-password>
                 <label for="password">Password</label>
               </span>
@@ -26,7 +28,7 @@
             <a routerLink="/sign-up" class="button_position">Not yet signed up? </a>
           </div>
           <br>
-          <button pButton class="button_position p-button-sm" type="submit">Submit</button>
+          <button pButton class="button_position p-button-sm" icon="pi pi-user" label="Login" type="submit"></button>
         </form>
       </p-card>
     </div>

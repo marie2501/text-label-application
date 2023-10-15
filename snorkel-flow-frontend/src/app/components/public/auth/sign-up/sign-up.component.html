@@ -1,29 +1,32 @@
 <div class="background">
   <div class="container component_position">
-<!--    <div>-->
-<!--      <p-messages [value]="errorMessage"></p-messages>-->
-<!--    </div>-->
+    <div>
+      <p-messages [value]="errorMessage"></p-messages>
+    </div>
     <div class="container card_width">
       <p-card header="Sign up">
           <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)">
             <div class="p-fluid">
               <div>
                 <span class="p-float-label">
-                  <input type="text" id="username" pInputText name="username" ngModel required>
+                  <input type="text" id="username" pInputText name="username" ngModel required
+                         [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   <label for="username">Username</label>
                 </span>
               </div>
               <br>
               <div>
                 <span class="p-float-label">
-                  <input type="email" id="email" pInputText name="email" ngModel email required>
+                  <input type="email" id="email" pInputText name="email" ngModel email required
+                         [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   <label for="email">Email</label>
                 </span>
               </div>
               <br>
               <div>
                 <span class="p-float-label">
-                  <p-password id="password" ngModel name="password" [toggleMask]="true" required >
+                  <p-password id="password" ngModel name="password" [toggleMask]="true" required
+                              [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   </p-password>
                   <label for="password">Password</label>
                 </span>
@@ -33,7 +36,7 @@
               <a routerLink="/login" class="button_position">Already signed up? Go to Login</a>
             </div>
             <br>
-            <button pButton class="button_position p-button-sm" type="submit">Submit</button>
+            <button pButton class="button_position p-button-sm" icon="pi pi-user" label="Sign-in" type="submit"></button>
         </form>
       </p-card>
     </div>
