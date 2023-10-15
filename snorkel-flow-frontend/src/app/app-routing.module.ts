@@ -9,8 +9,8 @@ import {WorkflowCreateComponent} from "./components/workflow/workflow-create/wor
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
 import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
-import {LabelfunctionCodeComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-code/labelfunction-code.component";
 import {FileComponent} from "./components/file/file.component";
+import {LabelfunctionRunComponent} from "./components/workflow/labelfunction/labelfunction-run/labelfunction-run.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -24,6 +24,7 @@ const routes: Routes = [
       {path: ':id/file', component: FileComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
       {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent},
+      {path: ':id/labelfunction-run', component: LabelfunctionRunComponent},
     ]},
 ];
 
