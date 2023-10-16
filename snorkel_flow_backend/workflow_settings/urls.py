@@ -2,6 +2,7 @@ from django.urls import path
 
 from workflow_settings.views.view_file import FileView
 from workflow_settings.views.view_labelfunction import LabelfunctionView
+from workflow_settings.views.view_run import RunView
 from workflow_settings.views.view_workflow import WorkflowView
 
 urlpatterns = [
@@ -22,8 +23,7 @@ urlpatterns = [
     path('workflow/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
 
     # run related urls
-    path('workflow/<int:pk>/labelfunctionrun/', LabelfunctionView.as_view({'post': 'create_labelfunction_run',
-                                                                       'get': 'get_labelfunction_run'}), name='labelfunction_run'),
-    path('workflow/<int:pk>/labelfunctionrun/exec/', LabelfunctionView.as_view({'get': 'exec_labelfunction_run'}), name='labelfunction_run_exec'),
+    path('workflow/<int:pk>/run/', RunView.as_view({'post': 'create_run', 'get': 'get_run'}), name='run'),
+    path('workflow/<int:pk>/run/exec/', RunView.as_view({'get': 'exec_run'}), name='run_exec'),
 
 ]

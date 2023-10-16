@@ -21,13 +21,3 @@ class LabelfunctionCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Labelfunction
         fields = ['name', 'type', 'code']
-
-class LabelfunctionRunSerializer(serializers.ModelSerializer):
-    creator = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='username'
-    )
-
-    class Meta:
-        model = Run
-        fields = ['creator', 'creation_date']
