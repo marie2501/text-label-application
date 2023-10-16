@@ -3,7 +3,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from workflow_settings.models import Workflow, Labelfunction, Labelfunction_Run
+from workflow_settings.models import Workflow, Labelfunction, Run
 
 
 class LabelfunctionSerializer(serializers.ModelSerializer):
@@ -29,5 +29,5 @@ class LabelfunctionRunSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Labelfunction_Run
-        fields = ['creator', 'file', 'creation_date']
+        model = Run
+        fields = ['creator', 'creation_date']

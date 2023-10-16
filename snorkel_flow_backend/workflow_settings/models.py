@@ -13,6 +13,7 @@ class Workflow(models.Model):
     is_public = models.BooleanField()
     # contributer : dürfen alles außer Workflow löschen
     contributors = models.ManyToManyField(User, related_name='workflow_contributors')
+    # todo diesen Punkt beim run mitspeichern alles im frontend etc hirzu entfernen
     # Prozentzahl - Anteil der Datenpunkte für das Testdatenset
     splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
@@ -35,28 +36,6 @@ class File(models.Model):
     def __str__(self):
         return "{name}".format(name=self.file.name)
 
-# todo löschen, als file richtig speichern und mit pandas file immer einlesen
-# class Datapoint(models.Model):
-#     Development = "D"
-#     Test = "T"
-#     Unlabeled = "U"
-#
-#     Stages = [
-#         (Development, "Development"),
-#         (Test, "Test"),
-#         (Unlabeled, "Unlabeled"),
-#     ]
-#
-#     corpus_id = models.IntegerField()
-#     tweet_id = models.CharField(max_length=30)
-#     text = models.CharField(max_length=400)
-#     splitting = models.CharField(
-#         max_length=1,
-#         choices=Stages,
-#         default=Unlabeled,
-#     )
-#     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
-
 # def get_default_user():
 #     return User.objects.get_or_create(username="default")[0]
 
@@ -65,25 +44,30 @@ class File(models.Model):
 #     return Workflow.objects.filter(pk=workflow_id).count()
 
 def upload_to_labelfunction(instance, filename):
-    return "{workflow_id}/labelfunction/{filename}".format(workflow_id=instance.workflow.id,
-                                                                   filename=filename)
-
-# Speichert die Labelfunktionen der verschiedenen Runs
-class Labelfunction_Run(models.Model):
-    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator_run')
-    file = models.FileField(upload_to=upload_to_labelfunction)
-    creation_date = models.DateField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-creation_date"]
+    return "{workflow_id}/labelfunction/{filename}".format(workflow_id=instance.workflow.id, filename=filename)
 
 # Speichert die Labelfunktionen in der Datenbank
 class Labelfunction(models.Model):
-    # todo name von der labelfuntion als string mit speichern
+    # todo falls labelfunction in einem workflow ist -> nicht vollständig löschen
+    #  sondern nur workflow und creator reference/oder verhindern
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator')
     type = models.CharField(max_length=50)
     code = models.TextField()
     name = models.CharField(max_length=150)
+
+
+# Speichert die Labelfunktionen der verschiedenen Runs
+class Run(models.Model):
+    workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator_run')
+    labelfunctions = models.ManyToManyField(Labelfunction)
+    creation_date = models.DateField(auto_now_add=True)
+    # speichere Labelmatrix als json object
+    labelmatrix = models.TextField()
+    splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
+
+    class Meta:
+        ordering = ["-creation_date"]
+
 

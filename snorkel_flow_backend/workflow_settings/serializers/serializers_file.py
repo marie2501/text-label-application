@@ -25,10 +25,4 @@ class FileUploadSerializer(serializers.ModelSerializer):
         model = File
         fields = ['file']
 
-class FileUploadLabelfunctionSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Labelfunction
-        fields = ['file']
-
 
