@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-labelfunction-list',
@@ -15,6 +16,8 @@ export class LabelfunctionListComponent {
   modifiable: boolean = false
   @Input()
   selectable: boolean = false;
+
+  @Output() selectEvent = new EventEmitter<LabelfunctionModel[]>();
 
   labelfunctions: LabelfunctionModel[] = [];
 
@@ -37,5 +40,9 @@ export class LabelfunctionListComponent {
       console.log(respData);
     })
     window.location.reload();
+  }
+
+  onRowSelect() {
+    this.selectEvent.emit(this.selectedLabelfunction);
   }
 }

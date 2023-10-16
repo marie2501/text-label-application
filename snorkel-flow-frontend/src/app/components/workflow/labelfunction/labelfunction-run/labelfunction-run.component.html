@@ -1,1 +1,9 @@
-<p>labelfunction-run works!</p>
+<div class="container">
+<div class="flex justify-content-center mt-6">
+  <app-labelfunction-list [selectable]="true" [workflow_id]="workflow_id" [modifiable]="false"
+  (selectEvent)="onSelectChange($event)" ></app-labelfunction-list>
+</div>
+  <div class="mt-4 float-end">
+    <button styleClass="p-button-sm" pButton pRipple label="Save" (click)="onSave()" class="p-button-primary"></button>
+  </div>
+</div>

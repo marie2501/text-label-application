@@ -1,7 +1,8 @@
 <div *ngIf="labelfunctions.length > 0">
-  <div class="w-6 ml-4">
+  <div class="ml-4" [ngClass]="{'w-6': !selectable, 'w-12': selectable}">
     <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm"
-             [(selection)]="selectedLabelfunction" dataKey="id" scrollHeight="25rem">
+             [(selection)]="selectedLabelfunction" dataKey="id" scrollHeight="25rem" (onRowSelect)="onRowSelect()"
+    (onHeaderCheckboxToggle)="onRowSelect()" (onRowUnselect)="onRowSelect()">
       <ng-template pTemplate="caption">
         <th *ngIf="selectable" style="width: 2rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
