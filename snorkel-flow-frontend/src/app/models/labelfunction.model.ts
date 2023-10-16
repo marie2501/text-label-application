@@ -1,5 +1,5 @@
 export interface LabelfunctionModel {
-  id?: string;
+  id?: number;
   name?: string;
   type?: string;
   code?: string;

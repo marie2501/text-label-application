@@ -38,17 +38,6 @@ export class LabelfunctionService {
   //   return this.http.patch(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction);
   // }
   //
-  // createlabelfunctionRun(formData: FormData, workflow_id: number) {
-  //   return this.http.post(`${labelfuntionURL}/${workflow_id}/labelfunctionrun/`, formData);
-  // }
-  //
-  // getlabelfunctionRun(labelfunctionrun_id: number) {
-  //   return this.http.get<LabelfunctionModel[]>(`${labelfuntionURL}/${labelfunctionrun_id}/labelfunctionrun/`);
-  // }
-  //
-  // executelabelfunctionRun(labelfunctionrun_id: number) {
-  //   return this.http.get(`${labelfuntionURL}/${labelfunctionrun_id}/labelfunctionrun/exec/`);
-  // }
 
 
 }

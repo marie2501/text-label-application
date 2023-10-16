@@ -1,0 +1,31 @@
+import {Injectable} from "@angular/core";
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {LabelfunctionModel} from "../../models/labelfunction.model";
+import {RunModel} from "../../models/run.model";
+
+const labelfuntionURL = 'http://localhost:8080/settings/workflow';
+
+
+
+@Injectable({providedIn: "root"})
+export class RunService {
+
+
+  constructor(private http: HttpClient) {
+  }
+
+
+  createlabelfunctionRun(run: {labelfunctions: (number|undefined)[], splitting_ratio_labeled_test: number}, workflow_id: number) {
+    return this.http.post(`${labelfuntionURL}/${workflow_id}/run/`, run);
+  }
+
+  getlabelfunctionRun(run_id: number) {
+    return this.http.get<RunModel>(`${labelfuntionURL}/${run_id}/run/`);
+  }
+
+  executelabelfunctionRun(run_id: number) {
+    return this.http.get(`${labelfuntionURL}/${run_id}/run/exec/`);
+  }
+
+
+}
