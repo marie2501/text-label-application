@@ -21,6 +21,7 @@ import { LabelfunctionRunComponent } from './components/workflow/labelfunction/l
 import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-code/labelfunction-code.component';
 import { FileUploadComponent } from './components/file/file-upload/file-upload.component';
 import { FileComponent } from './components/file/file.component';
+import { LabelfunctionListComponent } from './components/workflow/labelfunction/labelfunction-list/labelfunction-list.component';
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -37,7 +38,7 @@ import { ScrollerModule } from 'primeng/scroller';
 import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
-
+import { TreeTableModule } from 'primeng/treetable';
 
 
 
@@ -56,7 +57,8 @@ import { MessagesModule } from 'primeng/messages';
     LabelfunctionRunComponent,
     LabelfunctionCodeComponent,
     FileUploadComponent,
-    FileComponent
+    FileComponent,
+    LabelfunctionListComponent
   ],
   imports: [
     BrowserModule,
@@ -79,7 +81,8 @@ import { MessagesModule } from 'primeng/messages';
     ScrollerModule,
     DropdownModule,
     StepsModule,
-    MessagesModule
+    MessagesModule,
+    TreeTableModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

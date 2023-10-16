@@ -3,25 +3,6 @@
   <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Labelfunction-Run" icon="pi pi-plus" styleClass="p-button-raised p-button-success"></p-button>
   <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-success"></p-button>
 </div>
-<div *ngIf="labelfunctions.length > 0">
-  <div class="w-6 ml-4">
-    <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm" >
-      <ng-template pTemplate="caption">
-        <div class="flex align-items-center justify-content-between">
-          Labelfunctions
-        </div>
-      </ng-template>
-      <ng-template pTemplate="body" let-labelfunctions>
-        <tr>
-          <td>{{labelfunctions.creator}}</td>
-          <td>{{labelfunctions.name}}</td>
-          <td class="break-spaces">{{labelfunctions.code}}</td>
-          <td><button styleClass="p-button-sm" pButton pRipple label="Update" [routerLink]="['/workflow', labelfunctions.id, 'update-labelfunction']" class="p-button-help"></button></td>
-          <td><button styleClass="p-button-sm" pButton pRipple label="Delete" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></button></td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-</div>
+<app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>
 
 

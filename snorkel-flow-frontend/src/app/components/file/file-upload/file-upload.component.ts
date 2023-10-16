@@ -8,7 +8,7 @@ import {FileService} from "../../../services/workflow/file.service";
 })
 export class FileUploadComponent implements OnInit{
 
-  @ Input()
+  @Input()
   workflow_id: number = 0;
   success: boolean = false;
   isLoading: boolean = false;
