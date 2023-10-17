@@ -7,7 +7,7 @@
         <div>
           <ul>
             <li *ngFor="let filename of file_names | slice:0:7">
-              {{filename}}
+              {{filename.name}}
             </li>
           </ul>
         </div>
@@ -16,7 +16,6 @@
       <div class="col-5 flex align-items-center justify-content-center">
         <button pButton type="button"
                 class="p-button-secondary ml-5" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
-
       </div>
     </div>
   </div>

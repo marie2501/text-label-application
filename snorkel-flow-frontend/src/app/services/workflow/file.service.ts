@@ -19,7 +19,7 @@ export class FileService {
   }
 
   getFileNamesByWorkflowId(workflow_id: number){
-    return this.http.get<string[]>(`${fileURL}/${workflow_id}/`);
+    return this.http.get<{id: number, name: string}[]>(`${fileURL}/${workflow_id}/`);
   }
 
 }

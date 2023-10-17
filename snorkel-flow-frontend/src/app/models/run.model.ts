@@ -6,5 +6,6 @@ export interface RunModel {
   splitting_ratio_labeled_test?: number;
   creation_date?: string;
   creator?: string;
+  used_file?: number;
 
 }
