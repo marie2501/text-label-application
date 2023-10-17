@@ -24,41 +24,39 @@ class RunView(viewsets.ViewSet):
 
 
     # todo execude function - richtig machen später
-    # def exec_labelfunction_run(self, request, *args, **kwargs):
-    #     labelfunction_run_id = kwargs['pk']
-    #     labelfunction_run = Labelfunction_Run.objects.filter(pk=labelfunction_run_id)
-    #     if labelfunction_run.exists():
-    #         l = labelfunction_run[0]
-    #         file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/Youtube05-Shakira.csv')
-    #         dataframe = pd.read_csv(file_path)
-    #         file_path_Y = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/test.yaml')
-    #         with open(file_path_Y, 'r') as file:
-    #             yaml_content = yaml.safe_load(file)
-    #
-    #         labelfunction_names = []
-    #         for item in yaml_content:
-    #             exec(item['code'])
-    #             labelfunction_names.append(item['name'])
-    #         myVars = locals()
-    #         print(type(myVars[labelfunction_names[0]]))
-    #         x = [myVars[labelfunction_names[0]], myVars[labelfunction_names[1]]]
-    #         applier = PandasLFApplier(lfs=x)
-    #         L_train = applier.apply(df=dataframe)
-    #         print(L_train)
-    #         return Response(yaml_content, status=status.HTTP_200_OK)
-    #     return HttpResponseNotFound()
+    def exec_run(self, request, *args, **kwargs):
+        run_id = kwargs['pk']
+        run = Run.objects.filter(pk=run_id)
+        if run.exists():
+            l = run[0]
+            file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/Youtube05-Shakira.csv')
+            dataframe = pd.read_csv(file_path)
+            file_path_Y = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/test.yaml')
+            with open(file_path_Y, 'r') as file:
+                yaml_content = yaml.safe_load(file)
+
+            labelfunction_names = []
+            for item in yaml_content:
+                exec(item['code'])
+                labelfunction_names.append(item['name'])
+            myVars = locals()
+            print(type(myVars[labelfunction_names[0]]))
+            x = [myVars[labelfunction_names[0]], myVars[labelfunction_names[1]]]
+            applier = PandasLFApplier(lfs=x)
+            L_train = applier.apply(df=dataframe)
+            print(L_train)
+            return Response(yaml_content, status=status.HTTP_200_OK)
+        return HttpResponseNotFound()
 
 
         # todo funktion noch nicht getestet
     def get_run(self, request, *args, **kwargs):
-        labelfunction_run_id = kwargs['pk']
-        labelfunction_run = Run.objects.filter(pk=labelfunction_run_id)
-        if labelfunction_run.exists():
-            l = labelfunction_run[0]
-            # with open(l.file.path, 'r') as file:
-            #     yaml_content = yaml.safe_load(file)
-            # print(yaml_content)
-            return Response(status=status.HTTP_200_OK)
+        run_id = kwargs['pk']
+        run = Run.objects.filter(pk=run_id)
+        if run.exists():
+            l = run[0]
+            run_serializer = RunSerializer(l)
+            return Response(run_serializer.data, status=status.HTTP_200_OK)
         return HttpResponseNotFound()
 
 

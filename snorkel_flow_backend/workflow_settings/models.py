@@ -62,6 +62,7 @@ class Run(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator_run')
     labelfunctions = models.ManyToManyField(Labelfunction)
+    used_file = models.ForeignKey(File, on_delete=models.CASCADE, default=6)
     creation_date = models.DateField(auto_now_add=True)
     # speichere Labelmatrix als json object
     labelmatrix = models.TextField()

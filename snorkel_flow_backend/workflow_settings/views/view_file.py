@@ -31,12 +31,14 @@ class FileView(APIView):
 
     def get(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
-        files = File.objects.filter(workflow_id=9)
-        print(files)
+        files = File.objects.filter(workflow_id=workflow_id)
         if files.exists():
-            names = []
+            file_objects = []
             for f in files:
-                names.append(f.__str__())
-            return Response(names, status=status.HTTP_200_OK)
+                file_dict = {}
+                file_dict['name'] = f.__str__()
+                file_dict['id'] = f.id
+                file_objects.append(file_dict)
+            return Response(file_objects, status=status.HTTP_200_OK)
         return HttpResponseNotFound()
 
