@@ -3,6 +3,19 @@
   <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Run" icon="pi pi-plus" styleClass="p-button-raised p-button-success"></p-button>
   <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-success"></p-button>
 </div>
+
 <app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>
+<div class="w-15rem runs_pos">
+  <p-panel header="Runs">
+    <div>
+      <ul>
+        <li *ngFor="let run of runs">
+          <a [routerLink]="['/workflow', workflow_id, 'run-dashboard', run.id]">{{run.id}}/{{run.creation_date}}/{{run.creator}}</a>
+        </li>
+      </ul>
+    </div>
+  </p-panel>
+</div>
+
 
 

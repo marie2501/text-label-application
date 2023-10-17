@@ -23,6 +23,10 @@ export class RunService {
     return this.http.get<RunModel>(`${labelfuntionURL}/${run_id}/run/`);
   }
 
+  listlabelfunctionRun(workflow_id: number) {
+    return this.http.get<RunModel[]>(`${labelfuntionURL}/${workflow_id}/run/list/`);
+  }
+
   executelabelfunctionRun(run_id: number) {
     return this.http.get(`${labelfuntionURL}/${run_id}/run/exec/`);
   }

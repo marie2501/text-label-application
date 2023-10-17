@@ -39,6 +39,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
 import { TreeTableModule } from 'primeng/treetable';
+import { RunDashboardComponent } from './components/workflow/run/run-dashboard/run-dashboard.component';
 
 
 
@@ -58,7 +59,8 @@ import { TreeTableModule } from 'primeng/treetable';
     LabelfunctionCodeComponent,
     FileUploadComponent,
     FileComponent,
-    LabelfunctionListComponent
+    LabelfunctionListComponent,
+    RunDashboardComponent
   ],
   imports: [
     BrowserModule,
