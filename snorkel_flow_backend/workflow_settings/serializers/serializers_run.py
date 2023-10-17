@@ -19,4 +19,4 @@ class RunSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Run
-        fields = ['creator', 'splitting_ratio_labeled_test', 'labelfunctions', 'creation_date']
+        fields = ['id', 'creator', 'splitting_ratio_labeled_test', 'labelfunctions', 'creation_date']

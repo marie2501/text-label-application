@@ -14,7 +14,7 @@ from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpRespons
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Labelfunction, Run
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
-from workflow_settings.serializers.serializers_run import RunCreateSerializer
+from workflow_settings.serializers.serializers_run import RunCreateSerializer, RunSerializer
 
 
 class RunView(viewsets.ViewSet):
@@ -60,7 +60,15 @@ class RunView(viewsets.ViewSet):
             # print(yaml_content)
             return Response(status=status.HTTP_200_OK)
         return HttpResponseNotFound()
-#
+
+
+    def list_run(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        labelfunction_run = Run.objects.filter(workflow_id=workflow_id)
+        if labelfunction_run.exists():
+            run_serializer = RunSerializer(labelfunction_run, many=True)
+            return Response(run_serializer.data,status=status.HTTP_200_OK)
+        return HttpResponseNotFound()
 
     def create_run(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
