@@ -23,33 +23,41 @@ class RunView(viewsets.ViewSet):
     parser_class = [JSONParser, FileUploadParser]
 
 
-    # todo execude function - richtig machen später
+    # todo execude function - richtig machen später -> es fehlt noch das das datenset nach einem bestimmten ratio gespalten wird
+    # Hier achten mit splitting id, da dieses labeld in test und train schon unterteil
+    # später nochmal gucken
     def exec_run(self, request, *args, **kwargs):
         run_id = kwargs['pk']
         run = Run.objects.filter(pk=run_id)
         if run.exists():
-            l = run[0]
-            file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/Youtube05-Shakira.csv')
-            dataframe = pd.read_csv(file_path)
-            file_path_Y = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/test.yaml')
-            with open(file_path_Y, 'r') as file:
-                yaml_content = yaml.safe_load(file)
 
+            run_obeject = run[0]
+            run_labelfunctions = run_obeject.labelfunctions.all()
+            file_name = run_obeject.used_file.__str__()
+            file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
+
+            dataframe = pd.read_csv(file_path)
+            # hier nur train
+            dataframe = dataframe.loc[(dataframe['splitting_id'] == 'train') | (dataframe['splitting_id'] == 'test')]
+            print(dataframe)
             labelfunction_names = []
-            for item in yaml_content:
-                exec(item['code'])
-                labelfunction_names.append(item['name'])
-            myVars = locals()
-            print(type(myVars[labelfunction_names[0]]))
-            x = [myVars[labelfunction_names[0]], myVars[labelfunction_names[1]]]
-            applier = PandasLFApplier(lfs=x)
+            for item in run_labelfunctions:
+                exec(item.code)
+                labelfunction_names.append(item.name)
+            local_vars = locals()
+            labelfunction_reference = []
+            for label in labelfunction_names:
+                labelfunction_reference.append(local_vars[label])
+            applier = PandasLFApplier(lfs=labelfunction_reference)
             L_train = applier.apply(df=dataframe)
-            print(L_train)
-            return Response(yaml_content, status=status.HTTP_200_OK)
+            labelmatrix = json.dumps(L_train.tolist())
+
+            run_obeject.labelmatrix = labelmatrix
+            run_obeject.save()
+            return Response(status=status.HTTP_200_OK)
         return HttpResponseNotFound()
 
 
-        # todo funktion noch nicht getestet
     def get_run(self, request, *args, **kwargs):
         run_id = kwargs['pk']
         run = Run.objects.filter(pk=run_id)
