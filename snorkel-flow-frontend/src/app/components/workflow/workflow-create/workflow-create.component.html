@@ -1,4 +1,3 @@
-<input type="file" accept="text/csv" hidden (change)="onLabeledFileUpload(fileUpload)" #fileUpload>
 <div class="container mt-4 mb-6">
   <h1 class="mb-6"> Create a workflow</h1>
     <form #workflowForm="ngForm" (ngSubmit)="onCreate(workflowForm)">
@@ -14,13 +13,6 @@
           <span class="flex align-items-center gap-1 mt-2">
             <p-checkbox id="isPublic" [binary]="true" ngModel [disabled]="workflow_created" name="isPublic" ></p-checkbox>
             <label style="padding-left: 0.5rem" for="isPublic">public</label>
-          </span>
-        </div>
-        <br>
-        <div class="ration-form-with">
-          <span class="p-float-label mt-2">
-            <p-inputNumber ngModel id="splittingRatio" mode="decimal" name="splittingRatio" [max]="100" [maxFractionDigits]="2" [min]="0" ></p-inputNumber>
-            <label for="splittingRatio">Splitting-Ratio in %</label>
           </span>
         </div>
       </div>

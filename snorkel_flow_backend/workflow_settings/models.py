@@ -15,7 +15,6 @@ class Workflow(models.Model):
     contributors = models.ManyToManyField(User, related_name='workflow_contributors')
     # todo diesen Punkt beim run mitspeichern alles im frontend etc hirzu entfernen
     # Prozentzahl - Anteil der Datenpunkte für das Testdatenset
-    splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
     class Meta:
         unique_together = [["title", "creator"]]

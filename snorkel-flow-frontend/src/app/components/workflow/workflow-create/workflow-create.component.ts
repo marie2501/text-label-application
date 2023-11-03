@@ -26,12 +26,11 @@ export class WorkflowCreateComponent {
       return;
     }
     const title: string = workflowForm.value.title;
-    const ratio: number = workflowForm.value.splittingRatio;
     let isPublic: boolean = false;
     if (workflowForm.value.isPublic == true) {
       isPublic = true;
     }
-    const workflow: WorkflowModel = {is_public: isPublic, title: title, splitting_ratio_labeled_test: ratio};
+    const workflow: WorkflowModel = {is_public: isPublic, title: title};
 
     this.workflowService.createWorkflow(workflow).subscribe(respData => {
       this.workflow_created = true;
@@ -42,25 +41,6 @@ export class WorkflowCreateComponent {
       () => {
         console.log('success');
       })
-  }
-
-  onLabeledFileUpload(fileUpload: HTMLInputElement) {
-    if (fileUpload.files) {
-      let conversation = 'False';
-      let file = fileUpload.files[0];
-      let formData = new FormData();
-      formData.append('file', file);
-      formData.append('workflow_id', '' + this.workflow_id);
-      this.isLoading = true;
-      this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
-        this.success = true;
-      }, error => {
-        this.isLoading = false;
-        console.log(error);
-      }, () => {
-        this.isLoading = false;
-      })
-    }
   }
 
 }

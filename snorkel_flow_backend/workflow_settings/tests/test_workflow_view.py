@@ -165,16 +165,6 @@ class WorkflowViewTest(APITestCase):
 
         self.url_2 = reverse('workflow_user', args=[2])
 
-        data = {'is_public': 'True', 'splitting_ratio_labeled_test': '80.00'}
-
-        response = self.client.patch(self.url_2, data=data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_update_by_id_split(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token_user_2.key)
-
-        self.url_2 = reverse('workflow_user', args=[2])
-
         data = {'is_public': 'True'}
 
         response = self.client.patch(self.url_2, data=data, format='json')
@@ -185,10 +175,11 @@ class WorkflowViewTest(APITestCase):
 
         self.url_2 = reverse('workflow_user', args=[2])
 
-        data = {'splitting_ratio_labeled_test': '80.00'}
+        data = {'is_public': 'True'}
 
         response = self.client.patch(self.url_2, data=data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 
     def test_add_contributer(self):
