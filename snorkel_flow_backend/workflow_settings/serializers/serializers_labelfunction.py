@@ -17,7 +17,16 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
         fields = ['id','creator','name', 'type', 'code']
 
 class LabelfunctionCreateSerializer(serializers.ModelSerializer):
+    workflow = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Workflow.objects.all())
 
     class Meta:
         model = Labelfunction
-        fields = ['name', 'type', 'code']
+        fields = ['name', 'type', 'code', 'workflow']
+
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Labelfunction.objects.all(),
+                fields=['workflow', 'name'],
+                message="A Labelfunction with this name already exists."
+            )
+        ]

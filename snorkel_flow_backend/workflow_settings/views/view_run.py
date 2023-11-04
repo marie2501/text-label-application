@@ -13,7 +13,6 @@ from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpRespons
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Labelfunction, Run
-from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 from workflow_settings.serializers.serializers_run import RunCreateSerializer, RunSerializer
 
 

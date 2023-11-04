@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction
+from workflow_settings.models import Labelfunction, Workflow
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 
 
@@ -133,11 +133,14 @@ class LabelfunctionView(viewsets.ViewSet):
 
     def add_labelfunction(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
-        serialziers_label = LabelfunctionCreateSerializer(data=request.data)
+        request_data = request.data
+        request_data['workflow'] = workflow_id
+        print(request_data)
+        serialziers_label = LabelfunctionCreateSerializer(data=request_data)
         if serialziers_label.is_valid():
-            serialziers_label.save(workflow_id=workflow_id, creator=request.user)
+            serialziers_label.save(creator=request.user)
             return Response(status=status.HTTP_201_CREATED)
-        return HttpResponseBadRequest()
+        return Response(serialziers_label.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete_labelfunction(self, request, *args, **kwargs):
         labelfunction_id = kwargs['pk']
@@ -156,11 +159,11 @@ class LabelfunctionView(viewsets.ViewSet):
         if labelfunction.exists():
             l = labelfunction[0]
             if l.creator == request.user:
-                serialziers_label = LabelfunctionSerializer(l, data=request.data, partial=True)
+                serialziers_label = LabelfunctionCreateSerializer(l, data=request.data, partial=True)
                 if serialziers_label.is_valid():
                     serialziers_label.save()
                     return Response(status=status.HTTP_200_OK)
-                return HttpResponseBadRequest()
+                return Response(serialziers_label.errors, status=status.HTTP_400_BAD_REQUEST)
             return HttpResponseForbidden()
         return HttpResponseNotFound()
 
