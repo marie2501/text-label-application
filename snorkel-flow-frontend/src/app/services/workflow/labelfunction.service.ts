@@ -18,8 +18,8 @@ export class LabelfunctionService {
     return this.http.post(`${labelfuntionURL}/labelfunction/compile/`, {pythoncode});
   }
 
-  testLabelfunction(pythoncode: string, name: string){
-    return this.http.post(`${labelfuntionURL}/labelfunction/test/`, {pythoncode, name});
+  testLabelfunction(pythoncode: string, name: string, workflow_id: number){
+    return this.http.post<number>(`${labelfuntionURL}/${workflow_id}/labelfunction/test/`, {pythoncode, name});
   }
 
   createLabelfunction(labelfunction: LabelfunctionModel, workflow_id: number) {
@@ -32,6 +32,10 @@ export class LabelfunctionService {
 
   deleteLabelfunctions(labelfunction_id: number){
     return this.http.delete(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`);
+  }
+
+  getImports(workflow_id: number){
+    return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/${workflow_id}/labelfunction/import/`);
   }
 
   // updateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel){

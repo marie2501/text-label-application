@@ -16,10 +16,18 @@ const LANGUAGE = 'ace/mode/python';
 })
 export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
+  // Editor für den Python Code
   // @ts-ignore
   @ViewChild('editor') codeEditorRef: ElementRef;
   // @ts-ignore
   private codeEditor: ace.Ace.Editor;
+
+  // Editor für import statements
+  // @ts-ignore
+  @ViewChild('imports') importEditorRef: ElementRef;
+  // @ts-ignore
+  private importEditor: ace.Ace.Editor;
+
   // @ts-ignore
   workflow_id: number = 0;
   functionName: string = '';
@@ -27,16 +35,23 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   isCompiled: boolean = false;
   isTested: boolean = false;
   // todo name of labelfunction in form field
+  // @ts-ignore
+  importLabelfunction : LabelfunctionModel;
+
+  test_coverage: number = 0;
 
   constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
-    console.log('dsdad', this.workflow_id)
+    this.labelfunctionService.getImports(this.workflow_id).subscribe(respData => {
+      this.importLabelfunction = respData;
+      console.log(respData);
+    })
   }
 
   ngAfterViewInit(): void {
-    this.workflow_id = this.route.snapshot.params['id'];
+    // code Editor
     const element = this.codeEditorRef.nativeElement;
     const editorOptions: Partial<ace.Ace.EditorOptions> = {
       highlightActiveLine: true,
@@ -52,14 +67,39 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.codeEditor.on('change', () => {
       this.isTested = false;
       this.isCompiled = false;
-    })
+    });
+    // import Editor
+    const elementImport = this.importEditorRef.nativeElement;
+    const importOptions: Partial<ace.Ace.EditorOptions> = {
+      highlightActiveLine: true,
+      minLines: 5,
+      maxLines: Infinity,
+    };
+
+    this.importEditor = ace.edit(elementImport, importOptions);
+    this.importEditor.setTheme(THEME);
+    this.importEditor.getSession().setMode(LANGUAGE);
+    this.importEditor.setShowFoldWidgets(true);
+    this.importEditor.session.setValue(this.getImport());
+    this.importEditor.on('change', () => {
+      this.isTested = false;
+      this.isCompiled = false;
+    });
   }
+
+  getImport(): string {
+  // if (this.importLabelfunction.code == undefined){
+    return "# Please write here all import statements";
+  // } else {
+  //   // let str: string = this.importLabelfunction.code
+  //   return 'str';
+  // }
+}
 
   savePythonCode() {
     const code = this.codeEditor.getValue();
     console.log(code);
     const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
-    console.log(this.workflow_id)
     this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
       console.log(respData);
     }, error => {
@@ -81,13 +121,22 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   testPythonCode() {
     const code: string = this.codeEditor.getValue();
     console.log(code);
-    let name: string = 'labelfunction_link';
-    this.labelfunctionService.testLabelfunction(code, this.functionName).subscribe(respData => {
-      console.log(respData);
+    this.labelfunctionService.testLabelfunction(code, this.functionName, this.workflow_id).subscribe(respData => {
+      this.test_coverage = respData;
       this.isTested = true;
     }, error => {
       console.log(error);
     });
   }
 
+  saveImport() {
+    const code: string = this.importEditor.getValue();
+    let name: string = 'imports';
+    const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
+    this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
+      console.log(respData);
+    }, error => {
+      console.log(error);
+    });
+  }
 }

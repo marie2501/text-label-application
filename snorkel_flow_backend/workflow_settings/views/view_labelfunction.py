@@ -1,7 +1,7 @@
 import json
 import sys
 
-from snorkel.labeling import labeling_function, PandasLFApplier
+from snorkel.labeling import labeling_function, PandasLFApplier, LFAnalysis
 import pandas as pd
 
 
@@ -48,12 +48,13 @@ class LabelfunctionView(viewsets.ViewSet):
     #     return HttpResponseNotFound()
 
     # Datenbank
-    def get_all_labelfunction_by_workflow_id(self, request, *args, **kwargs):
-        workflow_id = kwargs['pk']
-        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id).order_by('creator')
-        serialziers_label = LabelfunctionSerializer(labelfunction, many=True)
-        return Response(serialziers_label.data, status=status.HTTP_200_OK)
 
+    def get_imports(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+        if labelfunction.exists():
+            serialziers_label = LabelfunctionSerializer(labelfunction[0])
+            return Response(serialziers_label.data, status=status.HTTP_200_OK)
 
     def compile_labelfunction(self, request, *args, **kwargs):
         code = request.data['pythoncode']
@@ -66,30 +67,59 @@ class LabelfunctionView(viewsets.ViewSet):
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
 
-    # Später aufpassen, ob noch functioniert, import statement müssen bei local in die funtion geschrieben werden
-    # bei globals ist das nicht der fall, hier aber bei funktionnamen aufpassen -> unsicher ob 2 funktionen den gleichen namen haben dürfen
-    # wahrscheinlich nicht
+    # Imports und Code werden unter locals ausgeführt
     def test_labelfunction(self, request, *args, **kwargs):
-        print(request.data)
+        workflow_id = kwargs['pk']
         code = request.data['pythoncode']
         name = request.data['name']
-        try:
-            exec(code, globals())
-            file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='data_test/Youtube05-Shakira.csv')
-            dataframe = pd.read_csv(file_path)
-            local_var = locals()
-            global_var = globals()
+        print(request.data)
+        # todo später ändern
+        file_path = "{root}/{name}".format(root=MEDIA_ROOT, name='11/file/marie/test_data.csv')
 
-            x = [global_var[name]]
-            applier = PandasLFApplier(lfs=x)
-            L_train = applier.apply(df=dataframe)
-            print(L_train)
-            data = 'Compiled'
-            return Response(data, status=status.HTTP_200_OK)
-        except:
-            error = str(sys.exc_info())
-            return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        # get import Statements
+        imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+        if imports.exists():
+            try:
+                exec(imports[0].code, locals())
+                exec(code, locals())
+                print(file_path)
+                # todo übers ganze datenset laufen lassen
+                dataframe = pd.read_csv(file_path, nrows=15)
+                local_var = locals()
 
+                lfs = [local_var[name]]
+                applier = PandasLFApplier(lfs=lfs)
+
+                L_train = applier.apply(df=dataframe)
+
+                coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
+                return Response(coverage, status=status.HTTP_200_OK)
+            except:
+                error = str(sys.exc_info())
+                return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            try:
+                exec(code, locals())
+
+                dataframe = pd.read_csv(file_path, nrows=15)
+                local_var = locals()
+
+                lfs = [local_var[name]]
+                applier = PandasLFApplier(lfs=lfs)
+
+                L_train = applier.apply(df=dataframe)
+
+                coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
+                return Response(coverage, status=status.HTTP_200_OK)
+            except:
+                error = str(sys.exc_info())
+                return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_all_labelfunction_by_workflow_id(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id).order_by('creator')
+        serialziers_label = LabelfunctionSerializer(labelfunction, many=True)
+        return Response(serialziers_label.data, status=status.HTTP_200_OK)
 
     def add_labelfunction(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']

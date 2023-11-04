@@ -20,7 +20,8 @@ urlpatterns = [
                                                                        'delete': 'delete_labelfunction',
                                                                        'patch': 'update_labelfunction'}), name='labelfunction'),
     path('workflow/labelfunction/compile/', LabelfunctionView.as_view({'post': 'compile_labelfunction'}), name='labelfunction_compile'),
-    path('workflow/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
+    path('workflow/<int:pk>/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
+    path('workflow/<int:pk>/labelfunction/import/', LabelfunctionView.as_view({'get': 'get_imports'}), name='labelfunction_imports'),
 
     # run related urls
     path('workflow/<int:pk>/run/', RunView.as_view({'post': 'create_run', 'get': 'get_run'}), name='run'),

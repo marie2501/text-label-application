@@ -9,6 +9,20 @@
   </div>
 
   <h2 class="mt-4 mb-4">Python-Editor</h2>
+  <div class="grid">
+    <div class="col-6">
+      <div class="w-38" #imports></div>
+    </div>
+    <div class="col-6" >
+      <button pButton label="Save Import" class="p-button-success mt-4 mr-4" (click)="saveImport()"></button>
+    </div>
+  </div>
+
+  <br>
+
+  <div *ngIf="isTested">
+    <p><b>Coverage</b>: {{test_coverage}}</p>
+  </div>
   <div #editor></div>
 
   <button pButton label="Compile" class="p-button-success mt-4 mr-4" (click)="compilePythonCode()"></button>
