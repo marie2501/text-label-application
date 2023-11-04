@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, OnInit, AfterViewInit} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit, AfterViewInit, Input} from '@angular/core';
 import * as ace from 'ace-builds';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-dawn';
@@ -25,6 +25,12 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   // Editor für import statements
   // @ts-ignore
   @ViewChild('imports') importEditorRef: ElementRef;
+
+  // differenziere ob wir eine Funktion updaten oder erstellen
+  // bei erstellen bleibt lid = -1
+  @Input()
+  lid : number = -1;
+
   // @ts-ignore
   private importEditor: ace.Ace.Editor;
 
@@ -43,11 +49,10 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.workflow_id = this.route.snapshot.params['id'];
-    this.labelfunctionService.getImports(this.workflow_id).subscribe(respData => {
-      this.importLabelfunction = respData;
-      console.log(respData);
-    })
+    if (this.lid == 0){
+      this.lid = this.route.snapshot.params['lid'];
+    }
+    this.workflow_id = this.route.snapshot.params['wid'];
   }
 
   ngAfterViewInit(): void {
@@ -63,7 +68,18 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.codeEditor.setTheme(THEME);
     this.codeEditor.getSession().setMode(LANGUAGE);
     this.codeEditor.setShowFoldWidgets(true);
-    this.codeEditor.session.setValue("# Write your labelfunction!\n# Please write one label function at a time.");
+
+    if (this.lid != -1){
+      this.labelfunctionService.getLabelfunctionsByID(this.lid).subscribe(respData => {
+        if ((respData.code != null) && (respData.name != null)) {
+          this.codeEditor.session.setValue(respData.code);
+          this.functionName = respData.name;
+        }
+      });
+    } else {
+      this.codeEditor.session.setValue("# Write your labelfunction!\n# Please write one label function at a time.");
+    }
+
     this.codeEditor.on('change', () => {
       this.isTested = false;
       this.isCompiled = false;
@@ -76,11 +92,15 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
       maxLines: Infinity,
     };
 
+    this.labelfunctionService.getImports(this.workflow_id).subscribe(respData => {
+      this.importLabelfunction = respData;
+      this.importEditor.session.setValue(this.getImport());
+    })
+
     this.importEditor = ace.edit(elementImport, importOptions);
     this.importEditor.setTheme(THEME);
     this.importEditor.getSession().setMode(LANGUAGE);
     this.importEditor.setShowFoldWidgets(true);
-    this.importEditor.session.setValue(this.getImport());
     this.importEditor.on('change', () => {
       this.isTested = false;
       this.isCompiled = false;
@@ -88,23 +108,33 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   }
 
   getImport(): string {
-  // if (this.importLabelfunction.code == undefined){
+  if (this.importLabelfunction?.code == undefined){
     return "# Please write here all import statements";
-  // } else {
-  //   // let str: string = this.importLabelfunction.code
-  //   return 'str';
-  // }
+  } else {
+     let str: string = this.importLabelfunction.code
+    return str;
+  }
 }
 
   savePythonCode() {
     const code = this.codeEditor.getValue();
-    console.log(code);
-    const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
-    this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
-      console.log(respData);
-    }, error => {
-      console.log(error);
-    });
+
+    if (this.lid != -1){
+      const labelfunctionModel: LabelfunctionModel = {code: code, name: this.functionName}
+      this.labelfunctionService.updateLabelfunctions(this.lid, labelfunctionModel).subscribe(respData => {
+        console.log(respData);
+      }, error => {
+        console.log(error);
+      });
+
+    } else {
+      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
+      this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
+        console.log(respData);
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
   compilePythonCode() {
@@ -132,11 +162,20 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   saveImport() {
     const code: string = this.importEditor.getValue();
     let name: string = 'imports';
-    const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
-    this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
-      console.log(respData);
-    }, error => {
-      console.log(error);
-    });
+    if (this.importLabelfunction?.id == undefined){
+      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
+      this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
+        console.log(respData);
+      }, error => {
+        console.log(error);
+      });
+    } else {
+      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
+      this.labelfunctionService.updateLabelfunctions(this.importLabelfunction.id, labelfunctionModel).subscribe(respData => {
+        console.log(respData);
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 }

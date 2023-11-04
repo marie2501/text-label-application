@@ -30,6 +30,10 @@ export class LabelfunctionService {
     return this.http.get<LabelfunctionModel[]>(`${labelfuntionURL}/${workflow_id}/labelfunction/`);
   }
 
+  getLabelfunctionsByID(labelfunction_id: number){
+    return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/labelfunction/${labelfunction_id}/`);
+  }
+
   deleteLabelfunctions(labelfunction_id: number){
     return this.http.delete(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`);
   }
@@ -38,10 +42,8 @@ export class LabelfunctionService {
     return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/${workflow_id}/labelfunction/import/`);
   }
 
-  // updateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel){
-  //   return this.http.patch(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction);
-  // }
-  //
-
+  updateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel){
+    return this.http.patch(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction);
+  }
 
 }

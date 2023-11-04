@@ -40,6 +40,7 @@ import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
 import { TreeTableModule } from 'primeng/treetable';
 import { RunDashboardComponent } from './components/workflow/run/run-dashboard/run-dashboard.component';
+import { LabelfunctionUpdateComponent } from './components/workflow/labelfunction/labelfunction-update/labelfunction-update.component';
 
 
 
@@ -60,7 +61,8 @@ import { RunDashboardComponent } from './components/workflow/run/run-dashboard/r
     FileUploadComponent,
     FileComponent,
     LabelfunctionListComponent,
-    RunDashboardComponent
+    RunDashboardComponent,
+    LabelfunctionUpdateComponent
   ],
   imports: [
     BrowserModule,

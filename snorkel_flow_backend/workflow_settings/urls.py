@@ -22,6 +22,7 @@ urlpatterns = [
     path('workflow/labelfunction/compile/', LabelfunctionView.as_view({'post': 'compile_labelfunction'}), name='labelfunction_compile'),
     path('workflow/<int:pk>/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
     path('workflow/<int:pk>/labelfunction/import/', LabelfunctionView.as_view({'get': 'get_imports'}), name='labelfunction_imports'),
+    path('workflow/labelfunction/<int:pk>/', LabelfunctionView.as_view({'get': 'get_labelfunction_by_id'}), name='labelfunction_id'),
 
     # run related urls
     path('workflow/<int:pk>/run/', RunView.as_view({'post': 'create_run', 'get': 'get_run'}), name='run'),

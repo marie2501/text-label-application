@@ -12,6 +12,9 @@ import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/
 import {FileComponent} from "./components/file/file.component";
 import {LabelfunctionRunComponent} from "./components/workflow/labelfunction/labelfunction-run/labelfunction-run.component";
 import {RunDashboardComponent} from "./components/workflow/run/run-dashboard/run-dashboard.component";
+import {
+  LabelfunctionUpdateComponent
+} from "./components/workflow/labelfunction/labelfunction-update/labelfunction-update.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -24,7 +27,8 @@ const routes: Routes = [
       {path: 'create', component: WorkflowCreateComponent},
       {path: ':id/file', component: FileComponent},
       {path: ':id/dashboard', component: WorkflowDashboardComponent},
-      {path: ':id/create-labelfunction', component: LabelfunctionCreateComponent},
+      {path: ':wid/create-labelfunction', component: LabelfunctionCreateComponent},
+      {path: ':wid/:lid/update-labelfunction', component: LabelfunctionUpdateComponent},
       {path: ':id/labelfunction-run', component: LabelfunctionRunComponent},
       {path: ':id/run-dashboard/:runID', component: RunDashboardComponent},
     ]},

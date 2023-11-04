@@ -55,6 +55,7 @@ class LabelfunctionView(viewsets.ViewSet):
         if labelfunction.exists():
             serialziers_label = LabelfunctionSerializer(labelfunction[0])
             return Response(serialziers_label.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def compile_labelfunction(self, request, *args, **kwargs):
         code = request.data['pythoncode']
@@ -120,6 +121,15 @@ class LabelfunctionView(viewsets.ViewSet):
         labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id).order_by('creator')
         serialziers_label = LabelfunctionSerializer(labelfunction, many=True)
         return Response(serialziers_label.data, status=status.HTTP_200_OK)
+
+    def get_labelfunction_by_id(self, request, *args, **kwargs):
+        labelfunction = kwargs['pk']
+        labelfunction = Labelfunction.objects.filter(pk= labelfunction)
+        if labelfunction.exists():
+            serialziers_label = LabelfunctionSerializer(labelfunction[0])
+            return Response(serialziers_label.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
     def add_labelfunction(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
