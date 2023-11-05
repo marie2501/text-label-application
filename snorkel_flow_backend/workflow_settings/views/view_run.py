@@ -1,7 +1,9 @@
 import json
 import sys
+from io import StringIO
 
-from snorkel.labeling import labeling_function, PandasLFApplier
+import numpy as np
+from snorkel.labeling import labeling_function, PandasLFApplier, LFAnalysis
 import pandas as pd
 
 
@@ -57,11 +59,14 @@ class RunView(viewsets.ViewSet):
 
                         applier = PandasLFApplier(lfs=labelfunction_reference)
                         L_train = applier.apply(df=dataframe)
-                        labelmatrix = json.dumps(L_train.tolist())
 
+                        summary = LFAnalysis(L=L_train, lfs=labelfunction_reference).lf_summary()
+
+                        labelmatrix = json.dumps(L_train.tolist())
+                        run_obeject.labelfunction_summary = summary.to_json(orient='split')
                         run_obeject.labelmatrix = labelmatrix
                         run_obeject.save()
-                        return Response(L_train, status=status.HTTP_200_OK)
+                        return Response(summary, status=status.HTTP_200_OK)
                     except:
                         error = str(sys.exc_info())
                         return Response(error, status=status.HTTP_400_BAD_REQUEST)
@@ -83,16 +88,30 @@ class RunView(viewsets.ViewSet):
 
                         applier = PandasLFApplier(lfs=labelfunction_reference)
                         L_train = applier.apply(df=dataframe)
+
                         labelmatrix = json.dumps(L_train.tolist())
 
+                        summary = LFAnalysis(L=L_train, lfs=labelfunction_reference).lf_summary()
+                        run_obeject.labelfunction_summary = summary.to_json(orient='split')
                         run_obeject.labelmatrix = labelmatrix
                         run_obeject.save()
-                        return Response(L_train, status=status.HTTP_200_OK)
+                        return Response(summary, status=status.HTTP_200_OK)
                     except:
                         error = str(sys.exc_info())
                         return Response(error, status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_404_NOT_FOUND)
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get_analysis(self, request, *args, **kwargs):
+        run_id = kwargs['pk']
+        run = Run.objects.filter(pk=run_id)
+        if run.exists():
+            run_obeject_summary = run[0].labelfunction_summary
+            summary = pd.read_json(StringIO(run_obeject_summary), orient='split')
+            summary['index'] = summary.index
+            return Response(summary, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
 
 
     def get_run(self, request, *args, **kwargs):

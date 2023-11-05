@@ -57,6 +57,7 @@ class Run(models.Model):
     creation_date = models.DateField(auto_now_add=True)
     # speichere Labelmatrix als json object
     labelmatrix = models.TextField()
+    labelfunction_summary = models.TextField(null=True)
     # splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
     class Meta:

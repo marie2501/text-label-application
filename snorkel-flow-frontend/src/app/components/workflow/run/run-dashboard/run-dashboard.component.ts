@@ -4,6 +4,7 @@ import {LabelfunctionService} from "../../../../services/workflow/labelfunction.
 import {ActivatedRoute} from "@angular/router";
 import {RunModel} from "../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
+import {AnalysisModel} from "../../../../models/analysis.model";
 
 @Component({
   selector: 'app-run-dashboard',
@@ -17,6 +18,10 @@ export class RunDashboardComponent implements OnInit{
   run: RunModel;
   runLoaded!: Promise<boolean>;
   labelfunctions: LabelfunctionModel[] = [];
+
+  // @ts-ignore
+   analysisModel: AnalysisModel;
+   analysisLoaded!: Promise<boolean>;
 
 
   constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) {
@@ -37,7 +42,16 @@ export class RunDashboardComponent implements OnInit{
 
   executeRun() {
     this.runService.executelabelfunctionRun(this.run_id).subscribe(respData => {
-      console.log(respData);
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  getAnalysis() {
+    this.runService.getAnalysisRun(this.run_id).subscribe(respData => {
+      this.analysisModel = respData;
+      console.log(this.analysisModel)
+      this.analysisLoaded = Promise.resolve(true);
     }, error => {
       console.log(error);
     });
