@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 import pandas as pd
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.serializers.serializers_file import FileUploadSerializer
+from workflow_settings.serializers.serializers_file import FileUploadSerializer, FileUpdateSerializer
 from workflow_settings.models import File
 
 # Dataset: corpus_id, entity_id, text, splitting_id
@@ -22,12 +22,34 @@ class FileView(APIView):
         file_serializer = FileUploadSerializer(data=request.data)
         if file_serializer.is_valid():
             file = file_serializer.save(creator=request.user, workflow_id=workflow_id)
-            # if File.objects.filter(pk= file.id).exists():
-            #     file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file.__str__())
-            #     dataframe = pd.read_csv(file_path)
             return Response(status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        file_id = kwargs['pk']
+        print(1, request.data)
+        workflow_id = request.data['workflow_id']
+        file = File.objects.get(pk=file_id)
+        if file.creator == request.user:
+            file.file = request.data['file']
+            file.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+
+    # def get(self, request, *args, **kwargs):
+    #     workflow_id = kwargs['pk']
+    #     files = File.objects.filter(workflow_id=workflow_id)
+    #     if files.exists():
+    #         file_objects = []
+    #         for f in files:
+    #             file_dict = {}
+    #             file_dict['name'] = f.__str__()
+    #             file_dict['id'] = f.id
+    #             file_objects.append(file_dict)
+    #         return Response(file_objects, status=status.HTTP_200_OK)
+    #     return HttpResponseNotFound()
 
     def get(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
@@ -39,6 +61,6 @@ class FileView(APIView):
                 file_dict['name'] = f.__str__()
                 file_dict['id'] = f.id
                 file_objects.append(file_dict)
-            return Response(file_objects, status=status.HTTP_200_OK)
-        return HttpResponseNotFound()
+            return Response(file_objects[0], status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 

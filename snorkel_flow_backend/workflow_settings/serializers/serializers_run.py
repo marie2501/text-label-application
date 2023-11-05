@@ -7,7 +7,7 @@ class RunCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Run
-        fields = ['splitting_ratio_labeled_test', 'labelfunctions', 'used_file']
+        fields = ['labelfunctions']
 
 
 class RunSerializer(serializers.ModelSerializer):
@@ -18,4 +18,4 @@ class RunSerializer(serializers.ModelSerializer):
     labelfunctions = LabelfunctionSerializer(many=True, read_only=True)
     class Meta:
         model = Run
-        fields = ['id', 'creator', 'splitting_ratio_labeled_test', 'labelfunctions', 'creation_date', 'used_file']
+        fields = ['id', 'creator', 'labelfunctions', 'creation_date']

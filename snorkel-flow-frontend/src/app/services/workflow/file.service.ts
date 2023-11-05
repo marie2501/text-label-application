@@ -18,8 +18,16 @@ export class FileService {
     return this.http.post(`${fileURL}/${workflow_id}/`, formData);
   }
 
+  fileUpdate(formData: FormData, workflow_id: number) {
+    return this.http.put(`${fileURL}/${workflow_id}/`, formData);
+  }
+
+  // getFileNamesByWorkflowId(workflow_id: number){
+  //   return this.http.get<{id: number, name: string}[]>(`${fileURL}/${workflow_id}/`);
+  // }
+
   getFileNamesByWorkflowId(workflow_id: number){
-    return this.http.get<{id: number, name: string}[]>(`${fileURL}/${workflow_id}/`);
+    return this.http.get<{id: number, name: string}>(`${fileURL}/${workflow_id}/`);
   }
 
 }

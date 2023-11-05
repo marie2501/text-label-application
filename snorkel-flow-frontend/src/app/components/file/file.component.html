@@ -1,21 +1,26 @@
-<div class="container mt-4">
-  <app-file-upload [workflow_id]="workflow_id"></app-file-upload>
-  <div class="mt-8">
-    <div class="grid">
-      <div class="col-6">
-      <p-panel header="Uploaded Datasets">
-        <div>
-          <ul>
-            <li *ngFor="let filename of file_names | slice:0:7">
-              {{filename.name}}
-            </li>
-          </ul>
+<div *ngIf="fileLoaded|async">
+  <div class="container mt-4">
+    <app-file-upload [workflow_id]="workflow_id" [file_id]="file_names!.id" [update]="true"></app-file-upload>
+    <div class="mt-8">
+      <div class="grid">
+        <div class="col-6" *ngIf="file_names.id != -1">
+        <p-panel header="Uploaded Dataset" >
+          <div>
+            <ul>
+  <!--            <li *ngFor="let filename of file_names | slice:0:7">-->
+  <!--              {{filename.name}}-->
+  <!--            </li>-->
+              <li>
+                {{file_names.name}}
+              </li>
+            </ul>
+          </div>
+        </p-panel>
+      </div>
+        <div class="col-5 flex align-items-center justify-content-center">
+          <button pButton type="button"
+                  class="p-button-secondary ml-5" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
         </div>
-      </p-panel>
-    </div>
-      <div class="col-5 flex align-items-center justify-content-center">
-        <button pButton type="button"
-                class="p-button-secondary ml-5" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
       </div>
     </div>
   </div>

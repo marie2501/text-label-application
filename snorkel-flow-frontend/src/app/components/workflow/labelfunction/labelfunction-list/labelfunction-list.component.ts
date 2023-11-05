@@ -32,7 +32,7 @@ export class LabelfunctionListComponent {
       console.log(respData);
     }, error => {
       console.log(error);
-    })
+    });
   }
 
   deleteButton(id: number) {

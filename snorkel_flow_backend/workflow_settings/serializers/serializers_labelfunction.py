@@ -3,7 +3,7 @@ from django.core.exceptions import NON_FIELD_ERRORS
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from workflow_settings.models import Workflow, Labelfunction, Run
+from workflow_settings.models import Workflow, Labelfunction
 
 
 class LabelfunctionSerializer(serializers.ModelSerializer):

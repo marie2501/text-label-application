@@ -6,14 +6,29 @@ import {FileService} from "../../../services/workflow/file.service";
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css']
 })
-export class FileUploadComponent implements OnInit{
+export class FileUploadComponent implements OnInit {
 
   @Input()
   workflow_id: number = 0;
+
+  @Input()
+  update: boolean = false;
+
+  @Input()
+  file_id: number = -1;
+
   success: boolean = false;
   isLoading: boolean = false;
 
+  type: string = 'Upload';
+
   constructor(private fileService: FileService) {
+  }
+
+  ngOnInit(): void {
+    if (this.file_id != -1){
+      this.type = 'Change Dataset'
+    }
   }
 
   onFileUpload(fileUpload: HTMLInputElement) {
@@ -24,19 +39,28 @@ export class FileUploadComponent implements OnInit{
       formData.append('file', file);
       formData.append('workflow_id', '' + this.workflow_id);
       this.isLoading = true;
-      this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
-        this.success = true;
-      }, error => {
-        this.isLoading = false;
-        console.log(error);
-      }, () => {
-        this.isLoading = false;
-      })
+      if (this.file_id == -1){
+        this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
+          this.success = true;
+        }, error => {
+          this.isLoading = false;
+          console.log(error);
+        }, () => {
+          this.isLoading = false;
+        });
+      } else {
+        formData.append('id', this.file_id.toString());
+        this.fileService.fileUpdate(formData, this.workflow_id).subscribe(respData => {
+          this.success = true;
+        }, error => {
+          this.isLoading = false;
+          console.log(error);
+        }, () => {
+          this.isLoading = false;
+        });
+      }
     }
   }
 
-  ngOnInit(): void {
-    console.log(this.workflow_id)
-  }
 
 }

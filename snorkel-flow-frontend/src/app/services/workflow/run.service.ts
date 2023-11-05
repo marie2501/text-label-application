@@ -14,7 +14,7 @@ export class RunService {
   }
 
 
-  createlabelfunctionRun(run: {labelfunctions: (number|undefined)[], splitting_ratio_labeled_test: number, file_id: number}, workflow_id: number) {
+  createlabelfunctionRun(run: {labelfunctions: (number|undefined)[]}, workflow_id: number) {
     return this.http.post(`${labelfuntionURL}/${workflow_id}/run/`, run);
   }
 

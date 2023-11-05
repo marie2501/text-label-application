@@ -1,30 +1,30 @@
 <div class="container">
-  <div class="flex justify-content-center mt-6">
-    <label for="splittingRatio" class="mr-4 font-semibold">Splitting-Ratio: </label>
-    <p-inputNumber [(ngModel)]="splitting_ratio_labeled_test" id="splittingRatio" suffix=" %"  mode="decimal" name="splittingRatio" [max]="100" [maxFractionDigits]="2" [min]="0" ></p-inputNumber>
-  </div>
+<!--  <div class="flex justify-content-center mt-6">-->
+<!--    <label for="splittingRatio" class="mr-4 font-semibold">Splitting-Ratio: </label>-->
+<!--    <p-inputNumber [(ngModel)]="splitting_ratio_labeled_test" id="splittingRatio" suffix=" %"  mode="decimal" name="splittingRatio" [max]="100" [maxFractionDigits]="2" [min]="0" ></p-inputNumber>-->
+<!--  </div>-->
   <div class="flex justify-content-center mt-6">
   <app-labelfunction-list [selectable]="true" [workflow_id]="workflow_id" [modifiable]="false"
   (selectEvent)="onSelectChange($event)" ></app-labelfunction-list>
   </div>
-  <div class="flex justify-content-center mt-6">
-    <div *ngIf="file_names.length > 0">
-      <div class="m-4">
-        <p-table [value]="file_names" [scrollable]="true" styleClass="p-datatable-sm" selectionMode="single"
-                 [(selection)]="file"  scrollHeight="25rem" (onRowSelect)="onRowSelect()"
-                 (onRowUnselect)="onRowSelect()">
-          <ng-template pTemplate="caption">
-            <th> Datasets </th>
-          </ng-template>
-          <ng-template pTemplate="body" let-file_names>
-            <tr [pSelectableRow]="file_names">
-              <td>{{file_names.name}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </div>
-  </div>
+<!--  <div class="flex justify-content-center mt-6">-->
+<!--    <div *ngIf="file_names.length > 0">-->
+<!--      <div class="m-4">-->
+<!--        <p-table [value]="file_names" [scrollable]="true" styleClass="p-datatable-sm" selectionMode="single"-->
+<!--                 [(selection)]="file"  scrollHeight="25rem" (onRowSelect)="onRowSelect()"-->
+<!--                 (onRowUnselect)="onRowSelect()">-->
+<!--          <ng-template pTemplate="caption">-->
+<!--            <th> Datasets </th>-->
+<!--          </ng-template>-->
+<!--          <ng-template pTemplate="body" let-file_names>-->
+<!--            <tr [pSelectableRow]="file_names">-->
+<!--              <td>{{file_names.name}}</td>-->
+<!--            </tr>-->
+<!--          </ng-template>-->
+<!--        </p-table>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
   <div class="mt-4 float-end mr-13">
     <button [disabled]="created" styleClass="p-button-sm" pButton pRipple label="Save" (click)="onSave()" class="p-button-primary"></button>
   </div>

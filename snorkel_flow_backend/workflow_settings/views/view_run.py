@@ -12,7 +12,7 @@ from rest_framework.response import Response
 from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction, Run
+from workflow_settings.models import Labelfunction, Run, File
 from workflow_settings.serializers.serializers_run import RunCreateSerializer, RunSerializer
 
 
@@ -29,40 +29,78 @@ class RunView(viewsets.ViewSet):
         run_id = kwargs['pk']
         run = Run.objects.filter(pk=run_id)
         if run.exists():
-
             run_obeject = run[0]
             run_labelfunctions = run_obeject.labelfunctions.all()
-            file_name = run_obeject.used_file.__str__()
-            file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
+            file = File.objects.filter(workflow_id=run[0].workflow_id)
+            if file.exists():
+                Labelfunction.objects.filter()
+                file_name = file[0].__str__()
+                file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
+                imports = Labelfunction.objects.filter(workflow_id=run[0].workflow_id, type='import')
+                if imports.exists():
+                    try:
+                        exec(imports[0].code, locals())
 
-            dataframe = pd.read_csv(file_path)
-            # hier nur train
-            dataframe = dataframe.loc[(dataframe['splitting_id'] == 'train') | (dataframe['splitting_id'] == 'test')]
-            print(dataframe)
-            labelfunction_names = []
-            for item in run_labelfunctions:
-                exec(item.code)
-                labelfunction_names.append(item.name)
-            local_vars = locals()
-            labelfunction_reference = []
-            for label in labelfunction_names:
-                labelfunction_reference.append(local_vars[label])
-            applier = PandasLFApplier(lfs=labelfunction_reference)
-            L_train = applier.apply(df=dataframe)
-            labelmatrix = json.dumps(L_train.tolist())
+                        dataframe = pd.read_csv(file_path)
+                        # hier nur unlabeled data
+                        dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
 
-            run_obeject.labelmatrix = labelmatrix
-            run_obeject.save()
-            return Response(status=status.HTTP_200_OK)
-        return HttpResponseNotFound()
+                        labelfunction_names = []
+                        for item in run_labelfunctions:
+                            exec(item.code, locals())
+                            labelfunction_names.append(item.name)
+                        local_vars = locals()
+
+                        labelfunction_reference = []
+                        for label in labelfunction_names:
+                            labelfunction_reference.append(local_vars[label])
+
+                        applier = PandasLFApplier(lfs=labelfunction_reference)
+                        L_train = applier.apply(df=dataframe)
+                        labelmatrix = json.dumps(L_train.tolist())
+
+                        run_obeject.labelmatrix = labelmatrix
+                        run_obeject.save()
+                        return Response(L_train, status=status.HTTP_200_OK)
+                    except:
+                        error = str(sys.exc_info())
+                        return Response(error, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    try:
+                        dataframe = pd.read_csv(file_path)
+                        # hier nur unlabeled data
+                        dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+
+                        labelfunction_names = []
+                        for item in run_labelfunctions:
+                            exec(item.code, locals())
+                            labelfunction_names.append(item.name)
+                        local_vars = locals()
+
+                        labelfunction_reference = []
+                        for label in labelfunction_names:
+                            labelfunction_reference.append(local_vars[label])
+
+                        applier = PandasLFApplier(lfs=labelfunction_reference)
+                        L_train = applier.apply(df=dataframe)
+                        labelmatrix = json.dumps(L_train.tolist())
+
+                        run_obeject.labelmatrix = labelmatrix
+                        run_obeject.save()
+                        return Response(L_train, status=status.HTTP_200_OK)
+                    except:
+                        error = str(sys.exc_info())
+                        return Response(error, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def get_run(self, request, *args, **kwargs):
         run_id = kwargs['pk']
         run = Run.objects.filter(pk=run_id)
         if run.exists():
-            l = run[0]
-            run_serializer = RunSerializer(l)
+            run_obj = run[0]
+            run_serializer = RunSerializer(run_obj)
             return Response(run_serializer.data, status=status.HTTP_200_OK)
         return HttpResponseNotFound()
 
@@ -70,6 +108,7 @@ class RunView(viewsets.ViewSet):
     def list_run(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
         labelfunction_run = Run.objects.filter(workflow_id=workflow_id)
+        print(labelfunction_run)
         if labelfunction_run.exists():
             run_serializer = RunSerializer(labelfunction_run, many=True)
             return Response(run_serializer.data,status=status.HTTP_200_OK)
@@ -78,7 +117,6 @@ class RunView(viewsets.ViewSet):
     def create_run(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
         run_serializer = RunCreateSerializer(data=request.data)
-        print(run_serializer)
         if run_serializer.is_valid():
             run = run_serializer.save(creator=request.user, workflow_id=workflow_id)
             return Response(status=status.HTTP_201_CREATED)
