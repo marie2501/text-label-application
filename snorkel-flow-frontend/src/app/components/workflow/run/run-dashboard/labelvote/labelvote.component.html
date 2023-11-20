@@ -1,0 +1,12 @@
+<p-card header="Combine Labelfunction Outputs"  [style]="{ width: '360px' }">
+  <ng-template pTemplate="header">
+    <button pButton pRipple type="button" (click)="onClose()"  icon="pi pi-times" class="close p-button-rounded p-button-danger p-button-outlined p-button-sm"></button>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p>Combine the output of the Labelfunctions into one label per data point</p>
+    <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button label="Save" class="" icon="pi pi-check" (onClick)="saveModel()"></p-button>
+  </ng-template>
+</p-card>

@@ -22,6 +22,7 @@ export class RunDashboardComponent implements OnInit{
   // @ts-ignore
    analysisModel: AnalysisModel;
    analysisLoaded!: Promise<boolean>;
+  isLabelModelHidden: boolean = false;
 
 
   constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) {
@@ -55,5 +56,13 @@ export class RunDashboardComponent implements OnInit{
     }, error => {
       console.log(error);
     });
+  }
+
+  openLabelModel() {
+    this.isLabelModelHidden = true;
+  }
+
+  closeLabelModel($event: boolean) {
+    this.isLabelModelHidden = $event;
   }
 }

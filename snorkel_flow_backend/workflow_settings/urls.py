@@ -2,7 +2,9 @@ from django.urls import path
 
 from workflow_settings.views.view_file import FileView
 from workflow_settings.views.view_labelfunction import LabelfunctionView
+from workflow_settings.views.view_labelsummary import LabelView
 from workflow_settings.views.view_run import RunView
+from workflow_settings.views.view_text_features import TextFeatureView
 from workflow_settings.views.view_workflow import WorkflowView
 
 urlpatterns = [
@@ -29,5 +31,14 @@ urlpatterns = [
     path('workflow/<int:pk>/run/list/', RunView.as_view({'get': 'list_run'}), name='list_run'),
     path('workflow/<int:pk>/run/exec/', RunView.as_view({'get': 'exec_run'}), name='run_exec'),
     path('workflow/<int:pk>/run/analysis/', RunView.as_view({'get': 'get_analysis'}), name='run_analysis'),
+
+    # labelModel
+    path('workflow/<int:pk>/run/labelmodel/', LabelView.as_view({'get': 'getLabelModel',
+                                                                 'post': 'label_model',
+                                                                 'put': 'majority_vote'}), name='run_labelmodel'),
+
+    # feature generation
+    path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'get': 'bag_of_words_featurization'}), name='bag_of_words'),
+    path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'get': 'tfidf_featurization'}), name='tfidf'),
 
 ]

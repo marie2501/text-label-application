@@ -57,7 +57,6 @@ class LabelfunctionView(viewsets.ViewSet):
                 try:
                     exec(imports[0].code, locals())
                     exec(code, locals())
-                    print(file_path)
                     # todo übers ganze datenset laufen lassen - unlabeld laufen lassen
                     dataframe = pd.read_csv(file_path)
                     dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
@@ -77,7 +76,8 @@ class LabelfunctionView(viewsets.ViewSet):
                 try:
                     exec(code, locals())
 
-                    dataframe = pd.read_csv(file_path, nrows=15)
+                    dataframe = pd.read_csv(file_path)
+                    dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
                     local_var = locals()
 
                     lfs = [local_var[name]]

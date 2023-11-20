@@ -1,4 +1,5 @@
 from django.core.exceptions import NON_FIELD_ERRORS
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -13,7 +14,8 @@ class Workflow(models.Model):
     is_public = models.BooleanField()
     # contributer : dürfen alles außer Workflow löschen
     contributors = models.ManyToManyField(User, related_name='workflow_contributors')
-    # todo diesen Punkt beim run mitspeichern alles im frontend etc hirzu entfernen
+    # todo implementiern bei frontend und backend
+    # description = models.TextField(null=True)
 
     class Meta:
         unique_together = [["title", "creator"]]
@@ -48,6 +50,12 @@ class Labelfunction(models.Model):
     class Meta:
         unique_together = [["workflow", "name"]]
 
+class LabelSummary(models.Model):
+    # speichere die zusammenfassung der Labelmatrix -> jeder datenpunkt bildet nur noch auf ein label ab
+    # Majority_vote
+    label_summary = models.TextField(null=True)
+    choices = [('M', 'Majority Vote'), ('P', 'Probabilistic')]
+    type = models.CharField(max_length=2, choices=choices)
 
 # Speichert die Labelfunktionen der verschiedenen Runs
 class Run(models.Model):
@@ -58,9 +66,22 @@ class Run(models.Model):
     # speichere Labelmatrix als json object
     labelmatrix = models.TextField()
     labelfunction_summary = models.TextField(null=True)
+    labelsummary = models.ForeignKey(LabelSummary, on_delete=models.CASCADE, null=True)
+
     # splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
     class Meta:
         ordering = ["-creation_date"]
+
+class Feature(models.Model):
+    choices = [('BW', 'Bag of Words'), ('TF', 'tfidf')]
+    type = models.CharField(max_length=2, choices=choices)
+    features_unlabeled = models.TextField(null=True)
+    features_train = models.TextField(null=True)
+    features_test = models.TextField(null=True)
+    # todo validate das x <= y sein muss
+    range_x = models.IntegerField(validators=[MinValueValidator(1)], default=1)
+    range_y = models.IntegerField(validators=[MinValueValidator(1)], default=1)
+    run = models.ForeignKey(Run, on_delete=models.CASCADE)
 
 

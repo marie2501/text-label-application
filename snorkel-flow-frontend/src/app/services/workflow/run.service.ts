@@ -35,5 +35,18 @@ export class RunService {
     return this.http.get<AnalysisModel>(`${labelfuntionURL}/${run_id}/run/analysis/`);
   }
 
+  getLabelModel(run_id: number){
+    return this.http.get<{ type: string }>(`${labelfuntionURL}/${run_id}/run/labelmodel/`);
+  }
+
+  // todo anpassen später
+  postLabelModel(run_id: number){
+    return this.http.post(`${labelfuntionURL}/${run_id}/run/labelmodel/`,{});
+  }
+
+  postMajorityModel(run_id: number){
+    return this.http.put(`${labelfuntionURL}/${run_id}/run/labelmodel/`, {});
+  }
+
 
 }

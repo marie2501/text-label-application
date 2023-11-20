@@ -15,12 +15,14 @@ import {RunDashboardComponent} from "./components/workflow/run/run-dashboard/run
 import {
   LabelfunctionUpdateComponent
 } from "./components/workflow/labelfunction/labelfunction-update/labelfunction-update.component";
+import {LabelvoteComponent} from "./components/workflow/run/run-dashboard/labelvote/labelvote.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
   {path: 'login', component: LoginComponent, canActivate: [loginGuardHomepage]},
   {path: 'sign-up', component: SignUpComponent, canActivate: [loginGuardHomepage]},
   {path: 'dashboard', component: UserDashboardComponent, canActivate: [loginGuard]},
+  {path: 'hhh', component: LabelvoteComponent, canActivate: [loginGuard]},
   {path: 'workflow', component: WorkflowHomeComponent,
     canActivate: [loginGuard], canActivateChild: [loginGuard],
     children: [

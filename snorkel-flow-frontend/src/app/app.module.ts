@@ -22,6 +22,10 @@ import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/
 import { FileUploadComponent } from './components/file/file-upload/file-upload.component';
 import { FileComponent } from './components/file/file.component';
 import { LabelfunctionListComponent } from './components/workflow/labelfunction/labelfunction-list/labelfunction-list.component';
+import { RunDashboardComponent } from './components/workflow/run/run-dashboard/run-dashboard.component';
+import { LabelfunctionUpdateComponent } from './components/workflow/labelfunction/labelfunction-update/labelfunction-update.component';
+import { LabelvoteComponent } from './components/workflow/run/run-dashboard/labelvote/labelvote.component';
+import { FeaturizeComponent } from './components/workflow/run/run-dashboard/featurize/featurize.component';
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -39,8 +43,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
 import { TreeTableModule } from 'primeng/treetable';
-import { RunDashboardComponent } from './components/workflow/run/run-dashboard/run-dashboard.component';
-import { LabelfunctionUpdateComponent } from './components/workflow/labelfunction/labelfunction-update/labelfunction-update.component';
+
 
 
 
@@ -62,7 +65,9 @@ import { LabelfunctionUpdateComponent } from './components/workflow/labelfunctio
     FileComponent,
     LabelfunctionListComponent,
     RunDashboardComponent,
-    LabelfunctionUpdateComponent
+    LabelfunctionUpdateComponent,
+    LabelvoteComponent,
+    FeaturizeComponent
   ],
   imports: [
     BrowserModule,
