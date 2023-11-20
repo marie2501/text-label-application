@@ -58,7 +58,7 @@ class LabelView(viewsets.ViewSet):
 
     def label_model(self, request, *args, **kwargs):
         run_id = kwargs['pk']
-        # todo speichere cardinality mit in der datenbank -> Referenz welche klassen es gibt
+        # todo speichere cardinality mit in der datenbank, n_epochs... selber wählen -> Referenz welche klassen es gibt
         run = Run.objects.filter(pk=run_id)
         if run.exists():
             run = run[0]

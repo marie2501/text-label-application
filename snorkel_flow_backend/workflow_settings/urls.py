@@ -38,7 +38,7 @@ urlpatterns = [
                                                                  'put': 'majority_vote'}), name='run_labelmodel'),
 
     # feature generation
-    path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'get': 'bag_of_words_featurization'}), name='bag_of_words'),
-    path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'get': 'tfidf_featurization'}), name='tfidf'),
+    path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'post': 'bag_of_words_featurization'}), name='bag_of_words'),
+    path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'post': 'tfidf_featurization'}), name='tfidf'),
 
 ]

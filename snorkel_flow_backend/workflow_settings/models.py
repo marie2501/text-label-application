@@ -57,6 +57,16 @@ class LabelSummary(models.Model):
     choices = [('M', 'Majority Vote'), ('P', 'Probabilistic')]
     type = models.CharField(max_length=2, choices=choices)
 
+class Feature(models.Model):
+    choices = [('BW', 'Bag of Words'), ('TF', 'tfidf')]
+    type = models.CharField(max_length=2, choices=choices)
+    features_unlabeled = models.TextField(null=True)
+    features_train = models.TextField(null=True)
+    features_test = models.TextField(null=True)
+    # todo validate das x <= y sein muss
+    range_x = models.IntegerField(validators=[MinValueValidator(1)], default=1)
+    range_y = models.IntegerField(validators=[MinValueValidator(1)], default=1)
+
 # Speichert die Labelfunktionen der verschiedenen Runs
 class Run(models.Model):
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
@@ -67,21 +77,12 @@ class Run(models.Model):
     labelmatrix = models.TextField()
     labelfunction_summary = models.TextField(null=True)
     labelsummary = models.ForeignKey(LabelSummary, on_delete=models.CASCADE, null=True)
+    feature = models.ForeignKey(Feature, on_delete=models.CASCADE, null=True)
 
     # splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
 
     class Meta:
         ordering = ["-creation_date"]
 
-class Feature(models.Model):
-    choices = [('BW', 'Bag of Words'), ('TF', 'tfidf')]
-    type = models.CharField(max_length=2, choices=choices)
-    features_unlabeled = models.TextField(null=True)
-    features_train = models.TextField(null=True)
-    features_test = models.TextField(null=True)
-    # todo validate das x <= y sein muss
-    range_x = models.IntegerField(validators=[MinValueValidator(1)], default=1)
-    range_y = models.IntegerField(validators=[MinValueValidator(1)], default=1)
-    run = models.ForeignKey(Run, on_delete=models.CASCADE)
 
 

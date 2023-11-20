@@ -14,7 +14,7 @@ from rest_framework.response import Response
 from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction, Workflow, File, Feature
+from workflow_settings.models import Labelfunction, Workflow, File, Feature, Run
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 
 
@@ -31,7 +31,10 @@ class TextFeatureView(viewsets.ViewSet):
         range_y = request.data['range_y']
 
         file = File.objects.filter(workflow_id=workflow_id)
+        run = Run.objects.filter(pk=run_id)
         if file.exists():
+            run = run[0]
+
             file_name = file[0].__str__()
             file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
 
@@ -55,10 +58,12 @@ class TextFeatureView(viewsets.ViewSet):
             features_train_json = json.dumps(features_train.toarray().tolist())
             features_unlabeled_json = json.dumps(features_unlabeled.toarray().tolist())
 
-            Feature.objects.get_or_create(range_x=range_x, range_y=range_y, type='BW',
+            feature = Feature.objects.get_or_create(range_x=range_x, range_y=range_y, type='BW',
                                           features_train=features_train_json,
-                                          features_test=features_test_json, features_unlabeled=features_unlabeled_json,
-                                          run_id=run_id)
+                                          features_test=features_test_json, features_unlabeled=features_unlabeled_json)
+
+            run.feature = feature[0]
+            run.save()
 
             return Response(status=status.HTTP_200_OK)
 
@@ -70,7 +75,10 @@ class TextFeatureView(viewsets.ViewSet):
         range_y = request.data['range_y']
 
         file = File.objects.filter(workflow_id=workflow_id)
+        run = Run.objects.filter(pk=run_id)
         if file.exists():
+            run = run[0]
+
             file_name = file[0].__str__()
             file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
 
@@ -94,9 +102,11 @@ class TextFeatureView(viewsets.ViewSet):
             features_train_json = json.dumps(features_train.toarray().tolist())
             features_unlabeled_json = json.dumps(features_unlabeled.toarray().tolist())
 
-            Feature.objects.get_or_create(range_x=range_x, range_y=range_y, type='TF', features_train=features_train_json,
-                                          features_test=features_test_json, features_unlabeled=features_unlabeled_json,
-                                          run_id=run_id)
+            feature = Feature.objects.get_or_create(range_x=range_x, range_y=range_y, type='TF', features_train=features_train_json,
+                                          features_test=features_test_json, features_unlabeled=features_unlabeled_json)
+
+            run.feature = feature[0]
+            run.save()
 
             return Response(status=status.HTTP_200_OK)
 

@@ -43,6 +43,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
 import { TreeTableModule } from 'primeng/treetable';
+import { ClassifierComponent } from './components/workflow/run/run-dashboard/classifier/classifier.component';
 
 
 
@@ -67,7 +68,8 @@ import { TreeTableModule } from 'primeng/treetable';
     RunDashboardComponent,
     LabelfunctionUpdateComponent,
     LabelvoteComponent,
-    FeaturizeComponent
+    FeaturizeComponent,
+    ClassifierComponent
   ],
   imports: [
     BrowserModule,
