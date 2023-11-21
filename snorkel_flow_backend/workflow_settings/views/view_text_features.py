@@ -49,7 +49,8 @@ class TextFeatureView(viewsets.ViewSet):
             text_corpus = dataframe['text'].tolist()
 
             vectorizer = CountVectorizer(ngram_range=(range_x, range_y))
-            vectorizer.fit(text_corpus)
+            #vectorizer.fit(text_corpus)
+            vectorizer.fit(text_list_unlabeled)
             features_unlabeled = vectorizer.transform(text_list_unlabeled)
             features_train = vectorizer.transform(text_list_train)
             features_test = vectorizer.transform(text_list_test)
@@ -93,7 +94,8 @@ class TextFeatureView(viewsets.ViewSet):
             text_corpus = dataframe['text'].tolist()
 
             vectorizer = TfidfVectorizer()
-            vectorizer.fit(text_corpus)
+            #vectorizer.fit(text_corpus)
+            vectorizer.fit(text_list_unlabeled)
             features_unlabeled = vectorizer.transform(text_list_unlabeled)
             features_train = vectorizer.transform(text_list_train)
             features_test = vectorizer.transform(text_list_test)

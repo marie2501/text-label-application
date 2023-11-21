@@ -55,6 +55,10 @@ export class RunService {
     return this.http.post(`${labelfuntionURL}/${workflow_id}/run/${run_id}/bagofwords/`, input);
   }
 
+  naiveBayesClassifier(run_id: number){
+    return this.http.get(`${labelfuntionURL}/run/${run_id}/naivebayes/`);
+  }
+
 
 
 }

@@ -24,6 +24,7 @@ export class RunDashboardComponent implements OnInit{
    analysisLoaded!: Promise<boolean>;
   isLabelModelHidden: boolean = false;
   isFeatureHidden: boolean = false;
+  isClassifierHidden: boolean = false;
 
 
   constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) {
@@ -73,6 +74,14 @@ export class RunDashboardComponent implements OnInit{
 
   closeFeature($event: boolean) {
     this.isFeatureHidden = $event;
-
   }
+
+  openClassifier() {
+    this.isClassifierHidden = true;
+  }
+
+  closeClassifier($event: boolean) {
+    this.isClassifierHidden = $event;
+  }
+
 }

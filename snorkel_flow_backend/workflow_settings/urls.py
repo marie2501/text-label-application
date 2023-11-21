@@ -1,5 +1,6 @@
 from django.urls import path
 
+from workflow_settings.views.view_classifier import ClassiferView
 from workflow_settings.views.view_file import FileView
 from workflow_settings.views.view_labelfunction import LabelfunctionView
 from workflow_settings.views.view_labelsummary import LabelView
@@ -40,5 +41,8 @@ urlpatterns = [
     # feature generation
     path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'post': 'bag_of_words_featurization'}), name='bag_of_words'),
     path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'post': 'tfidf_featurization'}), name='tfidf'),
+
+    # classifier
+    path('workflow/run/<int:pk>/naivebayes/', ClassiferView.as_view({'get': 'naive_bayes'}), name='naive_bayes'),
 
 ]

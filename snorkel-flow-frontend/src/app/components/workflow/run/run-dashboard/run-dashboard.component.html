@@ -77,6 +77,12 @@
             <app-featurize [run_id]="run_id" [workflow_id]="workflow_id" (closeEvent)="closeFeature($event)"></app-featurize>
           </div>
         </div>
+        <div class="mt-4">
+          <p-button class="ml-4" [hidden]="isClassifierHidden"  (onClick)="openClassifier()" label="Extract Features" styleClass="p-button-raised p-button-success"></p-button>
+          <div *ngIf="isClassifierHidden">
+            <app-classifier [run_id]="run_id"  (closeEvent)="closeClassifier($event)"></app-classifier>
+          </div>
+        </div>
       </div>
     </div>
   </div>

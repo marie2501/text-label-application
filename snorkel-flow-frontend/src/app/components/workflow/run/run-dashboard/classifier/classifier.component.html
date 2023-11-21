@@ -1,0 +1,12 @@
+<p-card header="Train a Classifier"  [style]="{ width: '360px' }">
+  <ng-template pTemplate="header">
+    <button pButton pRipple type="button" (click)="onClose()"  icon="pi pi-times" class="close p-button-rounded p-button-danger p-button-outlined p-button-sm"></button>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p>Train a Classifier</p>
+    <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button label="Train" class="" icon="pi pi-check" (onClick)="trainClassifier()"></p-button>
+  </ng-template>
+</p-card>
