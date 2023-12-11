@@ -65,26 +65,9 @@
             </ng-template>
           </p-table>
         </div>
-        <div class="mt-4">
-          <p-button class="ml-4" [hidden]="isLabelModelHidden"  (onClick)="openLabelModel()" label="Choose LabelModel" styleClass="p-button-raised p-button-success"></p-button>
-          <div *ngIf="isLabelModelHidden">
-            <app-labelvote [run_id]="run_id" (closeEvent)="closeLabelModel($event)"></app-labelvote>
-          </div>
-        </div>
-        <div class="mt-4">
-          <p-button class="ml-4" [hidden]="isFeatureHidden"  (onClick)="openFeaturExraction()" label="Extract Features" styleClass="p-button-raised p-button-success"></p-button>
-          <div *ngIf="isFeatureHidden">
-            <app-featurize [run_id]="run_id" [workflow_id]="workflow_id" (closeEvent)="closeFeature($event)"></app-featurize>
-          </div>
-        </div>
-        <div class="mt-4">
-          <p-button class="ml-4" [hidden]="isClassifierHidden"  (onClick)="openClassifier()" label="Extract Features" styleClass="p-button-raised p-button-success"></p-button>
-          <div *ngIf="isClassifierHidden">
-            <app-classifier [run_id]="run_id"  (closeEvent)="closeClassifier($event)"></app-classifier>
-          </div>
-        </div>
       </div>
     </div>
   </div>
+  <app-model-settings [run_id]="run_id"></app-model-settings>
 </div>
 

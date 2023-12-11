@@ -35,28 +35,14 @@ export class RunService {
     return this.http.get<AnalysisModel>(`${labelfuntionURL}/${run_id}/run/analysis/`);
   }
 
-  getLabelModel(run_id: number){
-    return this.http.get<{ type: string }>(`${labelfuntionURL}/${run_id}/run/labelmodel/`);
-  }
+  // getLabelModel(run_id: number){
+  //   return this.http.get<{ type: string }>(`${labelfuntionURL}/${run_id}/run/labelmodel/`);
+  // }
 
-  postLabelModel(run_id: number){
-    return this.http.post(`${labelfuntionURL}/${run_id}/run/labelmodel/`,{});
-  }
-
-  postMajorityModel(run_id: number){
-    return this.http.put(`${labelfuntionURL}/${run_id}/run/labelmodel/`, {});
-  }
-
-  postTFIDF(run_id: number, workflow_id: number, input: {range_x: number, range_y: number}){
-    return this.http.post(`${labelfuntionURL}/${workflow_id}/run/${run_id}/tfidf/`, input);
-  }
-
-  postBOW(run_id: number, workflow_id: number, input: {range_x: number, range_y: number}){
-    return this.http.post(`${labelfuntionURL}/${workflow_id}/run/${run_id}/bagofwords/`, input);
-  }
-
-  naiveBayesClassifier(run_id: number){
-    return this.http.get(`${labelfuntionURL}/run/${run_id}/naivebayes/`);
+  naiveBayesClassifier(run_id: number,
+                       data: {selectedModelClassifier: string, selectedModelLabel: string,
+                         selectedModelFeaturize: string, range_x: number, range_y: number}){
+    return this.http.post(`${labelfuntionURL}/run/${run_id}/naivebayes/`, data);
   }
 
 

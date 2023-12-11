@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {RunService} from "../../../../../services/workflow/run.service";
 
 @Component({
@@ -6,15 +6,13 @@ import {RunService} from "../../../../../services/workflow/run.service";
   templateUrl: './classifier.component.html',
   styleUrls: ['./classifier.component.css']
 })
-export class ClassifierComponent implements OnInit {
+export class ClassifierComponent implements OnInit, DoCheck {
 
   model: string[] = ['Naive Bayes'];
   selectedModel: string = '';
 
-  @Input()
-  run_id: number = 0;
   @Output()
-  closeEvent = new EventEmitter<boolean>();
+  changeEvent = new EventEmitter<string>();
 
   constructor(private runService: RunService) {
   }
@@ -22,17 +20,7 @@ export class ClassifierComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  trainClassifier() {
-    if (this.selectedModel == 'Naive Bayes'){
-      this.runService.naiveBayesClassifier(this.run_id).subscribe(respData => {
-        console.log(respData);
-      }, error => {
-        console.log(error);
-      });
-    }
-  }
-
-  onClose() {
-    this.closeEvent.emit(false);
+  ngDoCheck(): void {
+    this.changeEvent.emit(this.selectedModel);
   }
 }

@@ -18,6 +18,7 @@ import {
 import {LabelvoteComponent} from "./components/workflow/run/run-dashboard/labelvote/labelvote.component";
 import {FeaturizeComponent} from "./components/workflow/run/run-dashboard/featurize/featurize.component";
 import {ClassifierComponent} from "./components/workflow/run/run-dashboard/classifier/classifier.component";
+import {ModelSettingsComponent} from "./components/workflow/run/run-dashboard/model-settings/model-settings.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},

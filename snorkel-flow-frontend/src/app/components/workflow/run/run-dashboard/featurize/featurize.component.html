@@ -1,7 +1,4 @@
 <p-card header="Feature extraction"  [style]="{ width: '360px' }">
-  <ng-template pTemplate="header">
-    <button pButton pRipple type="button" (click)="onClose()"  icon="pi pi-times" class="close p-button-rounded p-button-danger p-button-outlined p-button-sm"></button>
-  </ng-template>
   <ng-template pTemplate="content">
     <p>Extract features from the text data.</p>
     <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a feature reprasentation"></p-dropdown>
@@ -10,9 +7,6 @@
       <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_x" [min]="1"> </p-inputNumber>
       <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_y" [min]="1"> </p-inputNumber>
     </div>
-  </ng-template>
-  <ng-template pTemplate="footer">
-    <p-button label="Save" class="" icon="pi pi-check" (onClick)="saveModel()"></p-button>
   </ng-template>
 </p-card>
 

@@ -34,15 +34,15 @@ urlpatterns = [
     path('workflow/<int:pk>/run/analysis/', RunView.as_view({'get': 'get_analysis'}), name='run_analysis'),
 
     # labelModel
-    path('workflow/<int:pk>/run/labelmodel/', LabelView.as_view({'get': 'getLabelModel',
-                                                                 'post': 'label_model',
-                                                                 'put': 'majority_vote'}), name='run_labelmodel'),
-
-    # feature generation
-    path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'post': 'bag_of_words_featurization'}), name='bag_of_words'),
-    path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'post': 'tfidf_featurization'}), name='tfidf'),
+    # path('workflow/<int:pk>/run/labelmodel/', LabelView.as_view({'get': 'getLabelModel',
+    #                                                              'post': 'label_model',
+    #                                                              'put': 'majority_vote'}), name='run_labelmodel'),
+    #
+    # # feature generation
+    # path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'post': 'bag_of_words_featurization'}), name='bag_of_words'),
+    # path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'post': 'tfidf_featurization'}), name='tfidf'),
 
     # classifier
-    path('workflow/run/<int:pk>/naivebayes/', ClassiferView.as_view({'get': 'naive_bayes'}), name='naive_bayes'),
+    path('workflow/run/<int:pk>/naivebayes/', ClassiferView.as_view({'post': 'naive_bayes'}), name='naive_bayes'),
 
 ]

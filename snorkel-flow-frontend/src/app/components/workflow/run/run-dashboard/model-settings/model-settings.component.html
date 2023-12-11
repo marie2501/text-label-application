@@ -1,0 +1,29 @@
+<div class="container mt-6">
+  <div class="float-end">
+    <button pButton pRipple type="button" (click)="onClose()"  icon="pi pi-times" class="close p-button-rounded p-button-danger p-button-outlined p-button-sm"></button>
+  </div>
+
+  <div class="flex align-items-center justify-content-center">
+    <div>
+      <app-labelvote (changeEvent)="onChangeLabelvote($event)"></app-labelvote>
+    </div>
+    <p-divider layout="vertical">
+      <i class="pi pi-arrow-right" style="font-size: 1.1rem"></i>
+    </p-divider>
+    <div>
+      <app-featurize (changeEvent)="onChangeFuturize($event)"></app-featurize>
+    </div>
+    <p-divider layout="vertical">
+      <i class="pi pi-arrow-right" style="font-size: 1.1rem"></i>
+    </p-divider>
+    <div>
+      <app-classifier (changeEvent)="onChangeClassifier($event)"></app-classifier>
+    </div>
+
+  </div>
+  <div class="float-end">
+    <p-button label="Save" class="" icon="pi pi-check" (onClick)="saveModel()"></p-button>
+  </div>
+</div>
+
+
