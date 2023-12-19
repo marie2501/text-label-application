@@ -26,6 +26,9 @@ import { RunDashboardComponent } from './components/workflow/run/run-dashboard/r
 import { LabelfunctionUpdateComponent } from './components/workflow/labelfunction/labelfunction-update/labelfunction-update.component';
 import { LabelvoteComponent } from './components/workflow/run/run-dashboard/labelvote/labelvote.component';
 import { FeaturizeComponent } from './components/workflow/run/run-dashboard/featurize/featurize.component';
+import { ClassifierComponent } from './components/workflow/run/run-dashboard/classifier/classifier.component';
+import { ModelSettingsComponent } from './components/workflow/run/run-dashboard/model-settings/model-settings.component';
+
 
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -42,9 +45,8 @@ import { ScrollerModule } from 'primeng/scroller';
 import { DropdownModule } from 'primeng/dropdown';
 import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
+import { TagModule } from 'primeng/tag';
 import { TreeTableModule } from 'primeng/treetable';
-import { ClassifierComponent } from './components/workflow/run/run-dashboard/classifier/classifier.component';
-import { ModelSettingsComponent } from './components/workflow/run/run-dashboard/model-settings/model-settings.component';
 
 
 
@@ -95,7 +97,8 @@ import { ModelSettingsComponent } from './components/workflow/run/run-dashboard/
     DropdownModule,
     StepsModule,
     MessagesModule,
-    TreeTableModule
+    TreeTableModule,
+    TagModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]

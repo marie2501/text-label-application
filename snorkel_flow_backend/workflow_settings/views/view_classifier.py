@@ -1,7 +1,5 @@
 import json
-import sys
 
-from snorkel.labeling import labeling_function, PandasLFApplier, LFAnalysis
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -14,12 +12,9 @@ from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Labelfunction, Workflow, File, Feature, Run, LabelSummary, Classifier
-from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, \
-    LabelfunctionCreateSerializer
 
 
 class ClassiferView(viewsets.ViewSet):
@@ -71,11 +66,8 @@ class ClassiferView(viewsets.ViewSet):
             text_list_test_class = dataframe_test['CLASS'].tolist()
 
             clf = MultinomialNB()
-
             clf.fit(features_unlabeled, preds_unlabeled)
-
             score_train = clf.score(features_train, text_list_train_class)
-
             score_test = clf.score(features_test, text_list_test_class)
 
             print(score_train, score_test)

@@ -20,8 +20,10 @@ export class RunDashboardComponent implements OnInit{
   labelfunctions: LabelfunctionModel[] = [];
 
   // @ts-ignore
-   analysisModel: AnalysisModel;
-   analysisLoaded!: Promise<boolean>;
+  analysisModel_unlabeled: AnalysisModel;
+  // @ts-ignore
+  analysisModel_train: AnalysisModel;
+  analysisLoaded!: Promise<boolean>;
   isLabelModelHidden: boolean = false;
   isFeatureHidden: boolean = false;
   isClassifierHidden: boolean = false;
@@ -52,8 +54,8 @@ export class RunDashboardComponent implements OnInit{
 
   getAnalysis() {
     this.runService.getAnalysisRun(this.run_id).subscribe(respData => {
-      this.analysisModel = respData;
-      console.log(this.analysisModel)
+      this.analysisModel_unlabeled = respData.summary;
+      this.analysisModel_train = respData.summary_train
       this.analysisLoaded = Promise.resolve(true);
     }, error => {
       console.log(error);

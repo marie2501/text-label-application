@@ -45,7 +45,9 @@ class RunView(viewsets.ViewSet):
 
                         dataframe = pd.read_csv(file_path)
                         # hier nur unlabeled data
-                        dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                        dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                        dataframe_train = dataframe.loc[(dataframe['splitting_id'] == 'train')]
+                        text_list_train_gold_labels = np.array(dataframe_train['CLASS'].tolist())
 
                         labelfunction_names = []
                         for item in run_labelfunctions:
@@ -58,13 +60,15 @@ class RunView(viewsets.ViewSet):
                             labelfunction_reference.append(local_vars[label])
 
                         applier = PandasLFApplier(lfs=labelfunction_reference)
-                        L_train = applier.apply(df=dataframe)
+                        L_train_unlabeled = applier.apply(df=dataframe_unlabeled)
+                        L_train_train = applier.apply(df=dataframe_train)
 
-                        summary = LFAnalysis(L=L_train, lfs=labelfunction_reference).lf_summary()
-
-                        labelmatrix = json.dumps(L_train.tolist())
+                        summary = LFAnalysis(L=L_train_unlabeled, lfs=labelfunction_reference).lf_summary()
+                        summary_train = LFAnalysis(L=L_train_train, lfs=labelfunction_reference).lf_summary(Y=text_list_train_gold_labels)
+                        labelmatrix = json.dumps(L_train_unlabeled.tolist())
                         run_obeject.labelfunction_summary = summary.to_json(orient='split')
                         run_obeject.labelmatrix = labelmatrix
+                        run_obeject.labelfunction_summary_train = summary_train.to_json(orient='split')
                         run_obeject.save()
                         return Response(summary, status=status.HTTP_200_OK)
                     except:
@@ -74,7 +78,9 @@ class RunView(viewsets.ViewSet):
                     try:
                         dataframe = pd.read_csv(file_path)
                         # hier nur unlabeled data
-                        dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                        dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                        dataframe_train = dataframe.loc[(dataframe['splitting_id'] == 'train')]
+                        text_list_train_gold_labels = np.array(dataframe_train['CLASS'].tolist())
 
                         labelfunction_names = []
                         for item in run_labelfunctions:
@@ -87,13 +93,16 @@ class RunView(viewsets.ViewSet):
                             labelfunction_reference.append(local_vars[label])
 
                         applier = PandasLFApplier(lfs=labelfunction_reference)
-                        L_train = applier.apply(df=dataframe)
+                        L_train_unlabeled = applier.apply(df=dataframe_unlabeled)
+                        L_train_train = applier.apply(df=dataframe_train)
 
-                        labelmatrix = json.dumps(L_train.tolist())
-
-                        summary = LFAnalysis(L=L_train, lfs=labelfunction_reference).lf_summary()
+                        summary = LFAnalysis(L=L_train_unlabeled, lfs=labelfunction_reference).lf_summary()
+                        summary_train = LFAnalysis(L=L_train_train, lfs=labelfunction_reference).lf_summary(
+                            Y=text_list_train_gold_labels)
+                        labelmatrix = json.dumps(L_train_unlabeled.tolist())
                         run_obeject.labelfunction_summary = summary.to_json(orient='split')
                         run_obeject.labelmatrix = labelmatrix
+                        run_obeject.labelfunction_summary_train = summary_train.to_json(orient='split')
                         run_obeject.save()
                         return Response(summary, status=status.HTTP_200_OK)
                     except:
@@ -107,9 +116,14 @@ class RunView(viewsets.ViewSet):
         run = Run.objects.filter(pk=run_id)
         if run.exists():
             run_obeject_summary = run[0].labelfunction_summary
+            run_obeject_summary_train = run[0].labelfunction_summary_train
             summary = pd.read_json(StringIO(run_obeject_summary), orient='split')
+            summary_train = pd.read_json(StringIO(run_obeject_summary_train), orient='split')
             summary['index'] = summary.index
-            return Response(summary, status=status.HTTP_200_OK)
+            summary_train = summary_train.rename(columns={"Emp. Acc.": "EmpAcc"})
+            summary_train['index'] = summary_train.index
+            print(summary_train)
+            return Response({'summary': summary, 'summary_train': summary_train}, status=status.HTTP_200_OK)
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 

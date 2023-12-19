@@ -3,6 +3,8 @@ export interface AnalysisModel {
   Conflicts: string[];
   Polarity: string[];
   Overlaps: string[];
+  Correct?: number[];
+  Incorrect?: number[];
+  EmpAcc?: string[];
   index: string[];
-
 }

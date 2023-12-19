@@ -32,7 +32,7 @@ export class RunService {
   }
 
   getAnalysisRun(run_id: number) {
-    return this.http.get<AnalysisModel>(`${labelfuntionURL}/${run_id}/run/analysis/`);
+    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${labelfuntionURL}/${run_id}/run/analysis/`);
   }
 
   // getLabelModel(run_id: number){

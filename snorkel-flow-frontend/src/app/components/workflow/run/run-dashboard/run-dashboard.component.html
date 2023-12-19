@@ -12,7 +12,7 @@
       <div *ngIf="labelfunctions.length > 0">
         <div>
           <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm"
-                   dataKey="id" scrollHeight="25rem">
+                   dataKey="id" scrollHeight="35rem">
             <ng-template pTemplate="caption">
               <th> Labelfunctions </th>
             </ng-template>
@@ -30,15 +30,18 @@
     <div class="col-7">
       <div *ngIf="analysisLoaded|async">
         <div>
-          <p-table [value]="analysisModel.index" [scrollable]="true" styleClass="p-datatable-sm"
-                   dataKey="index" scrollHeight="10rem">
+          <p-table [value]="analysisModel_unlabeled.index" rowGroupMode="rowspan" [scrollable]="true" styleClass="p-datatable-sm"
+                   dataKey="index" scrollHeight="15rem">
             <ng-template pTemplate="caption">
               <th> Analysis </th>
             </ng-template>
-            <ng-template pTemplate="header" let-columns>
+            <ng-template pTemplate="header">
               <tr>
                 <th>
                   {{ 'Labelfunction' }}
+                </th>
+                <th>
+                  {{ 'Dataset' }}
                 </th>
                 <th>
                   {{ 'Coverage' }}
@@ -52,15 +55,36 @@
                 <th>
                   {{ 'Polarity' }}
                 </th>
+                <th>
+                  {{ 'Incorrect' }}
+                </th>
+                <th>
+                  {{ 'Correct' }}
+                </th>
+                <th>
+                  {{ 'EmpAcc' }}
+                </th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-i="rowIndex">
               <tr>
-                <td>{{analysisModel.index[i]}}</td>
-                <td>{{analysisModel.Coverage[i]}}</td>
-                <td>{{analysisModel.Conflicts[i]}}</td>
-                <td>{{analysisModel.Overlaps[i]}}</td>
-                <td>{{analysisModel.Polarity[i]}}</td>
+                <td>{{analysisModel_unlabeled.index[i]}}</td>
+                <td><p-tag severity="primary" value="Unlabeled"></p-tag></td>
+                <td>{{analysisModel_unlabeled.Coverage[i]}}</td>
+                <td>{{analysisModel_unlabeled.Conflicts[i]}}</td>
+                <td>{{analysisModel_unlabeled.Overlaps[i]}}</td>
+                <td colspan="4">{{analysisModel_unlabeled.Polarity[i]}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><p-tag severity="danger" value="Train"></p-tag></td>
+                <td>{{analysisModel_train.Coverage[i]}}</td>
+                <td>{{analysisModel_train.Conflicts[i]}}</td>
+                <td>{{analysisModel_train.Overlaps[i]}}</td>
+                <td>{{analysisModel_train.Polarity[i]}}</td>
+                <td>{{analysisModel_train.Incorrect![i]}}</td>
+                <td>{{analysisModel_train.Correct![i]}}</td>
+                <td>{{analysisModel_train.EmpAcc![i]}}</td>
               </tr>
             </ng-template>
           </p-table>
