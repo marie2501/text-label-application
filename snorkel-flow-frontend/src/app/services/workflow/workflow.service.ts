@@ -12,6 +12,8 @@ const fileURL = 'http://localhost:8080/settings/file_upload';
 @Injectable({providedIn: "root"})
 export class WorkflowService {
 
+  currentWorkflow = new Subject<{isOnWorkflow: boolean, id: number}>();
+
 
   constructor(private http: HttpClient) {
   }
@@ -22,6 +24,10 @@ export class WorkflowService {
 
   getWorkflows(){
     return this.http.get<WorkflowModel[]>(`${workflowURL}/`);
+  }
+
+  updateCurrentWorkflow(isOnWorkflow: boolean, id: number){
+    return this.currentWorkflow.next({isOnWorkflow: isOnWorkflow, id: id});
   }
 
 }

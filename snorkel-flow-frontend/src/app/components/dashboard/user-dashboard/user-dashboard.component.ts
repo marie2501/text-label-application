@@ -17,6 +17,7 @@ export class UserDashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.workflowService.updateCurrentWorkflow(false,0);
     this.workflowService.getWorkflows().subscribe((respData) => {
       this.workflows = respData;
       this.workflowLoaded = Promise.resolve(true);
