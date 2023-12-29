@@ -70,12 +70,10 @@ class ClassiferView(viewsets.ViewSet):
             score_train = clf.score(features_train, text_list_train_class)
             score_test = clf.score(features_test, text_list_test_class)
 
-            print(score_train, score_test)
-
             self.store_run_setting_information(range_x, range_y, run, score_test, score_train, selectedModelClassifier,
                                                selectedModelFeaturize, selectedModelLabel)
 
-            return Response(status=status.HTTP_200_OK)
+            return Response({'score_train': score_train, 'score_test': score_test},status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_404_NOT_FOUND)
 

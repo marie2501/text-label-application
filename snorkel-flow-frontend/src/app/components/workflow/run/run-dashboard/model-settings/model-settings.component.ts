@@ -22,6 +22,8 @@ export class ModelSettingsComponent {
   range_x: number = 1;
   range_y: number = 1;
   errorMessage: Message[] = [];
+  classfierData: Message[] = [];
+  classifierResult: { score_train: number, score_test: number } = {score_train: -1, score_test: -1};
 
   // todo implemnt function und backend + datenbank änderung -> zeige dies in run dashboard
   saveModel() {
@@ -33,6 +35,13 @@ export class ModelSettingsComponent {
       this.range_x >= 1 && this.range_y >= 1){
       if (this.selectedClassifier == 'Naive Bayes'){
         this.runservices.naiveBayesClassifier(this.run_id, data).subscribe(respData => {
+          this.classifierResult = respData;
+          console.log(respData);
+          if(this.classifierResult.score_test != -1){
+            this.classfierData = [];
+            this.classfierData = [
+              {severity: 'info', summary: 'Results', detail: `Trainings-Score: ${this.classifierResult.score_train}  und  Test-Score: ${this.classifierResult.score_test}` }];
+          }
           this.showSuccessMessage();
         }, error => {
           this.showErrorMessage(error);

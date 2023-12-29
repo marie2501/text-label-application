@@ -42,7 +42,7 @@ export class RunService {
   naiveBayesClassifier(run_id: number,
                        data: {selectedModelClassifier: string, selectedModelLabel: string,
                          selectedModelFeaturize: string, range_x: number, range_y: number}){
-    return this.http.post(`${labelfuntionURL}/run/${run_id}/naivebayes/`, data);
+    return this.http.post<{score_train: number, score_test: number}>(`${labelfuntionURL}/run/${run_id}/naivebayes/`, data);
   }
 
 
