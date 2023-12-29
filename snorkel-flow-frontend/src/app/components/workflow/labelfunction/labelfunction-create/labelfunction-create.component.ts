@@ -8,22 +8,12 @@ import {MenuItem} from "primeng/api";
 })
 export class LabelfunctionCreateComponent implements OnInit{
 
-  items: MenuItem[] = [];
 
   constructor() {
   }
 
   ngOnInit(): void {
-    this.items = [
-      {
-        label: 'Type',
-        routerLink: 'type'
-      },
-      {
-        label: 'Template',
-        routerLink: 'template'
-      }
-    ];
+
   }
 
 }

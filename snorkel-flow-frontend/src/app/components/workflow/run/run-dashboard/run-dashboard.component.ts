@@ -6,6 +6,7 @@ import {RunModel} from "../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {AnalysisModel} from "../../../../models/analysis.model";
 import {Message, MessageService} from "primeng/api";
+import {WorkflowService} from "../../../../services/workflow/workflow.service";
 
 @Component({
   selector: 'app-run-dashboard',
@@ -30,12 +31,13 @@ export class RunDashboardComponent implements OnInit{
 
 
   constructor(private runService: RunService, private labelfunctionService: LabelfunctionService,
-              private route: ActivatedRoute, private messageService: MessageService) {
+              private route: ActivatedRoute, private messageService: MessageService, private workflowService: WorkflowService) {
   }
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
     this.run_id = this.route.snapshot.params['runID'];
+    this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
       this.run = respData;
       this.labelfunctions = this.run.labelfunctions!;

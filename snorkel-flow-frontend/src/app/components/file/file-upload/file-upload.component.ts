@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileService} from "../../../services/workflow/file.service";
 import {Message, MessageService} from "primeng/api";
+import {WorkflowService} from "../../../services/workflow/workflow.service";
 
 @Component({
   selector: 'app-file-upload',
@@ -24,13 +25,14 @@ export class FileUploadComponent implements OnInit {
   type: string = 'Upload';
   errorMessage: Message[] = [];
 
-  constructor(private fileService: FileService, private messageService: MessageService) {
+  constructor(private fileService: FileService, private messageService: MessageService, private workflowService: WorkflowService) {
   }
 
   ngOnInit(): void {
     if (this.file_id != -1){
       this.type = 'Change Dataset'
     }
+    this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
   }
 
   onFileUpload(fileUpload: HTMLInputElement) {

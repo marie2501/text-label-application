@@ -4,6 +4,7 @@ import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {RunService} from "../../../../services/workflow/run.service";
 import {FileService} from "../../../../services/workflow/file.service";
 import {Message, MessageService} from "primeng/api";
+import {WorkflowService} from "../../../../services/workflow/workflow.service";
 
 @Component({
   selector: 'app-labelfunction-run',
@@ -18,11 +19,12 @@ export class LabelfunctionRunComponent implements OnInit{
 
 
   constructor(private route: ActivatedRoute, private runservice: RunService, private fileService: FileService,
-              private messageService: MessageService) {
+              private messageService: MessageService, private workflowService: WorkflowService) {
   }
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
+    this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
   }
 
   onSave() : void {

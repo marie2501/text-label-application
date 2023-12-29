@@ -6,6 +6,7 @@ import {LabelfunctionService} from "../../../../../services/workflow/labelfuncti
 import {ActivatedRoute} from "@angular/router";
 import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
 import {Message, MessageService} from "primeng/api";
+import {WorkflowService} from "../../../../../services/workflow/workflow.service";
 
 const THEME = 'ace/theme/dawn';
 const LANGUAGE = 'ace/mode/python';
@@ -48,13 +49,15 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   test_coverage: number = 0;
   errorMessage: Message[] = [];
 
-  constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute, private messageService: MessageService) { }
+  constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute,
+              private messageService: MessageService, private workflowService: WorkflowService) { }
 
   ngOnInit(): void {
     if (this.lid == 0){
       this.lid = this.route.snapshot.params['lid'];
     }
     this.workflow_id = this.route.snapshot.params['wid'];
+    this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
   }
 
   ngAfterViewInit(): void {
