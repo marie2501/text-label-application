@@ -43,10 +43,6 @@ export class ModelSettingsComponent {
     }
   }
 
-  onClose() {
-
-  }
-
 
   onChangeLabelvote($event: string) {
     this.selectedLabelModel = $event;
