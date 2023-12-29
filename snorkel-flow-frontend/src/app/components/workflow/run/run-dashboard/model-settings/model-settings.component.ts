@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {RunService} from "../../../../../services/workflow/run.service";
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-model-settings',
@@ -8,7 +9,7 @@ import {RunService} from "../../../../../services/workflow/run.service";
 })
 export class ModelSettingsComponent {
 
-  constructor(private runservices: RunService) {
+  constructor(private runservices: RunService, private messageService: MessageService) {
   }
 
   @Input()
@@ -20,6 +21,7 @@ export class ModelSettingsComponent {
 
   range_x: number = 1;
   range_y: number = 1;
+  errorMessage: Message[] = [];
 
   // todo implemnt function und backend + datenbank änderung -> zeige dies in run dashboard
   saveModel() {
@@ -31,7 +33,9 @@ export class ModelSettingsComponent {
       this.range_x >= 1 && this.range_y >= 1){
       if (this.selectedClassifier == 'Naive Bayes'){
         this.runservices.naiveBayesClassifier(this.run_id, data).subscribe(respData => {
-          console.log(respData);
+          this.showSuccessMessage();
+        }, error => {
+          this.showErrorMessage(error);
         })
       }
     } else {
@@ -58,4 +62,16 @@ export class ModelSettingsComponent {
     this.range_y = $event.range_y;
     this.selectedFeaturize = $event.selectedModel;
   }
+
+  private showErrorMessage(error: any) {
+    this.errorMessage = [];
+    this.errorMessage = [
+      {severity: 'error', summary: 'Error', detail: error.error }];
+  }
+
+  showSuccessMessage(){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: 'Classifier has been successfully trained' });
+  }
+
 }

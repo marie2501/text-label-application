@@ -29,4 +29,6 @@
   <button pButton label="Test" class="p-button-success mt-4 mr-4" [disabled]="!isCompiled"  (click)="testPythonCode()"></button>
   <button pButton label="Save" class="p-button-success mt-4" [disabled]="!isTested" (click)="savePythonCode()"></button>
 </div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<p-messages [(value)]="errorMessage"></p-messages>
 

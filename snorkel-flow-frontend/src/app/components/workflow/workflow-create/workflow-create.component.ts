@@ -4,6 +4,7 @@ import {WorkflowModel} from "../../../models/workflow.model";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {Router} from "@angular/router";
 import {FileService} from "../../../services/workflow/file.service";
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-workflow-create',
@@ -16,9 +17,10 @@ export class WorkflowCreateComponent {
   workflow_created: boolean = false;
   success: boolean = false;
   isLoading: boolean = false;
+  errorMessage: Message[] = [];
 
 
-  constructor(private workflowService: WorkflowService, private router: Router, private fileService: FileService) {
+  constructor(private workflowService: WorkflowService, private messageService: MessageService) {
   }
 
   onCreate(workflowForm: NgForm) {
@@ -35,12 +37,19 @@ export class WorkflowCreateComponent {
     this.workflowService.createWorkflow(workflow).subscribe(respData => {
       this.workflow_created = true;
       this.workflow_id = respData.workflow_id;
+      this.showSuccessMessage();
     }, error => {
-      console.log(error);
-      },
+        this.errorMessage = [];
+        this.errorMessage = [
+            { severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+        },
       () => {
-        console.log('success');
       })
+  }
+
+  showSuccessMessage(){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: 'Workflow has been successfully created' });
   }
 
 }

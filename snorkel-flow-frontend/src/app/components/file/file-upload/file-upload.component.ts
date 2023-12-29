@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FileService} from "../../../services/workflow/file.service";
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-file-upload',
@@ -21,8 +22,9 @@ export class FileUploadComponent implements OnInit {
   isLoading: boolean = false;
 
   type: string = 'Upload';
+  errorMessage: Message[] = [];
 
-  constructor(private fileService: FileService) {
+  constructor(private fileService: FileService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -33,7 +35,6 @@ export class FileUploadComponent implements OnInit {
 
   onFileUpload(fileUpload: HTMLInputElement) {
     if (fileUpload.files) {
-      let conversation = 'False';
       let file = fileUpload.files[0];
       let formData = new FormData();
       formData.append('file', file);
@@ -42,25 +43,38 @@ export class FileUploadComponent implements OnInit {
       if (this.file_id == -1){
         this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
           this.success = true;
+          this.isLoading = false;
+          this.showSuccessMessage();
         }, error => {
           this.isLoading = false;
-          console.log(error);
+          this.showErrorMessage(error);
         }, () => {
-          this.isLoading = false;
         });
       } else {
         formData.append('id', this.file_id.toString());
         this.fileService.fileUpdate(formData, this.workflow_id).subscribe(respData => {
           this.success = true;
+          this.isLoading = false;
+          this.showSuccessMessage();
         }, error => {
           this.isLoading = false;
-          console.log(error);
+          this.showErrorMessage(error);
         }, () => {
-          this.isLoading = false;
+
         });
       }
     }
   }
 
+  private showErrorMessage(error: any) {
+    this.errorMessage = [];
+    this.errorMessage = [
+      {severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+  }
+
+  showSuccessMessage(){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: 'Dataset has been successfully uploaded' });
+  }
 
 }

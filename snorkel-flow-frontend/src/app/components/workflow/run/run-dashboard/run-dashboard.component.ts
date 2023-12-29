@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {RunModel} from "../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {AnalysisModel} from "../../../../models/analysis.model";
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-run-dashboard',
@@ -24,19 +25,18 @@ export class RunDashboardComponent implements OnInit{
   // @ts-ignore
   analysisModel_train: AnalysisModel;
   analysisLoaded!: Promise<boolean>;
-  isLabelModelHidden: boolean = false;
-  isFeatureHidden: boolean = false;
-  isClassifierHidden: boolean = false;
+  errorMessage: Message[] = [];
 
 
-  constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) {
+
+  constructor(private runService: RunService, private labelfunctionService: LabelfunctionService,
+              private route: ActivatedRoute, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
     this.run_id = this.route.snapshot.params['runID'];
     this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
-      console.log(respData);
       this.run = respData;
       this.labelfunctions = this.run.labelfunctions!;
       this.runLoaded = Promise.resolve(true);
@@ -47,8 +47,9 @@ export class RunDashboardComponent implements OnInit{
 
   executeRun() {
     this.runService.executelabelfunctionRun(this.run_id).subscribe(respData => {
+      this.showSuccessMessage();
     }, error => {
-      console.log(error);
+      this.showErrorMessage(error);
     });
   }
 
@@ -58,32 +59,19 @@ export class RunDashboardComponent implements OnInit{
       this.analysisModel_train = respData.summary_train
       this.analysisLoaded = Promise.resolve(true);
     }, error => {
-      console.log(error);
+      this.showErrorMessage(error);
     });
   }
 
-  openLabelModel() {
-    this.isLabelModelHidden = true;
+  private showErrorMessage(error: any) {
+    this.errorMessage = [];
+    this.errorMessage = [
+      {severity: 'error', summary: 'Error', detail: error.error }];
   }
 
-  closeLabelModel($event: boolean) {
-    this.isLabelModelHidden = $event;
-  }
-
-  openFeaturExraction() {
-    this.isFeatureHidden = true;
-  }
-
-  closeFeature($event: boolean) {
-    this.isFeatureHidden = $event;
-  }
-
-  openClassifier() {
-    this.isClassifierHidden = true;
-  }
-
-  closeClassifier($event: boolean) {
-    this.isClassifierHidden = $event;
+  showSuccessMessage(){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: 'Run has been successfully executed' });
   }
 
 }

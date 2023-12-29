@@ -5,6 +5,7 @@ import 'ace-builds/src-noconflict/theme-dawn';
 import {LabelfunctionService} from "../../../../../services/workflow/labelfunction.service";
 import {ActivatedRoute} from "@angular/router";
 import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
+import {Message, MessageService} from "primeng/api";
 
 const THEME = 'ace/theme/dawn';
 const LANGUAGE = 'ace/mode/python';
@@ -45,8 +46,9 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   importLabelfunction : LabelfunctionModel;
 
   test_coverage: number = 0;
+  errorMessage: Message[] = [];
 
-  constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute) { }
+  constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute, private messageService: MessageService) { }
 
   ngOnInit(): void {
     if (this.lid == 0){
@@ -122,17 +124,17 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     if (this.lid != -1){
       const labelfunctionModel: LabelfunctionModel = {code: code, name: this.functionName}
       this.labelfunctionService.updateLabelfunctions(this.lid, labelfunctionModel).subscribe(respData => {
-        console.log(respData);
+        this.showSuccessMessage('Labelfunction has been saved');
       }, error => {
-        console.log(error);
+        this.showErrorMessage(error);
       });
 
     } else {
       const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
       this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
-        console.log(respData);
+        this.showSuccessMessage('Labelfunction has been saved');
       }, error => {
-        console.log(error);
+        this.showErrorMessage(error);
       });
     }
   }
@@ -141,10 +143,10 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     const code: string = this.codeEditor.getValue();
     console.log(code);
     this.labelfunctionService.compileLabelfunction(code).subscribe(respData => {
-      console.log(respData);
       this.isCompiled = true;
+      this.showSuccessMessage('Python code runs trough');
     }, error => {
-      console.log(error);
+      this.showErrorMessage(error);
     });
   }
 
@@ -154,8 +156,9 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.labelfunctionService.testLabelfunction(code, this.functionName, this.workflow_id).subscribe(respData => {
       this.test_coverage = respData;
       this.isTested = true;
+      this.showSuccessMessage('Python code runs on the dataset');
     }, error => {
-      console.log(error);
+      this.showErrorMessage(error);
     });
   }
 
@@ -165,17 +168,30 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     if (this.importLabelfunction?.id == undefined){
       const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
       this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
-        console.log(respData);
+        this.showSuccessMessage('Imports have been saved');
       }, error => {
-        console.log(error);
+        this.showErrorMessage(error);
       });
     } else {
       const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
       this.labelfunctionService.updateLabelfunctions(this.importLabelfunction.id, labelfunctionModel).subscribe(respData => {
-        console.log(respData);
+        this.showSuccessMessage('Imports have been saved');
       }, error => {
-        console.log(error);
+        this.showErrorMessage(error);
       });
     }
   }
+
+
+  showSuccessMessage(successMessage: string){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: successMessage });
+  }
+
+  private showErrorMessage(error: any) {
+    this.errorMessage = [];
+    this.errorMessage = [
+      {severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+  }
+
 }

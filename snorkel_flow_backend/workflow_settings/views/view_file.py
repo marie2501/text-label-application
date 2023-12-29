@@ -27,29 +27,17 @@ class FileView(APIView):
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs):
-        file_id = kwargs['pk']
-        print(1, request.data)
-        workflow_id = request.data['workflow_id']
-        file = File.objects.get(pk=file_id)
+        workflow_id = kwargs['pk']
+        file = File.objects.get(workflow_id=workflow_id)
+        file_serializer = FileUploadSerializer(data=request.data)
         if file.creator == request.user:
-            file.file = request.data['file']
-            file.save()
-            return Response(status=status.HTTP_201_CREATED)
+            if file_serializer.is_valid():
+                file = file_serializer.update(instance=file, validated_data=file_serializer.validated_data)
+                return Response(status=status.HTTP_201_CREATED)
+            else:
+                return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
-
-    # def get(self, request, *args, **kwargs):
-    #     workflow_id = kwargs['pk']
-    #     files = File.objects.filter(workflow_id=workflow_id)
-    #     if files.exists():
-    #         file_objects = []
-    #         for f in files:
-    #             file_dict = {}
-    #             file_dict['name'] = f.__str__()
-    #             file_dict['id'] = f.id
-    #             file_objects.append(file_dict)
-    #         return Response(file_objects, status=status.HTTP_200_OK)
-    #     return HttpResponseNotFound()
 
     def get(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']

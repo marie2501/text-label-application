@@ -47,6 +47,8 @@ import { StepsModule } from 'primeng/steps';
 import { MessagesModule } from 'primeng/messages';
 import { TagModule } from 'primeng/tag';
 import { TreeTableModule } from 'primeng/treetable';
+import { ToastModule } from 'primeng/toast';
+import {MessageService} from "primeng/api";
 
 
 
@@ -98,9 +100,10 @@ import { TreeTableModule } from 'primeng/treetable';
     StepsModule,
     MessagesModule,
     TreeTableModule,
-    TagModule
+    TagModule,
+    ToastModule
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

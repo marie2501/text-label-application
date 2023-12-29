@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {RunService} from "../../../services/workflow/run.service";
 import {RunModel} from "../../../models/run.model";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-workflow-dashboard',

@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
 import { Output, EventEmitter } from '@angular/core';
+import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-labelfunction-list',
@@ -22,8 +23,9 @@ export class LabelfunctionListComponent {
   labelfunctions: LabelfunctionModel[] = [];
 
   selectedLabelfunction: LabelfunctionModel[] = [];
+  errorMessage: Message[] = [];
 
-  constructor(private labelfuntionService: LabelfunctionService) {
+  constructor(private labelfuntionService: LabelfunctionService, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class LabelfunctionListComponent {
 
   deleteButton(id: number) {
     this.labelfuntionService.deleteLabelfunctions(id).subscribe(respData => {
-      console.log(respData);
+      this.showSuccessMessage();
     })
     window.location.reload();
   }
@@ -45,4 +47,12 @@ export class LabelfunctionListComponent {
   onRowSelect() {
     this.selectEvent.emit(this.selectedLabelfunction);
   }
+
+
+
+  showSuccessMessage(){
+    this.messageService.add({ key: 'bc', severity: 'success',
+      summary: 'Success', detail: 'Labelfunction has been deleted' });
+  }
+
 }

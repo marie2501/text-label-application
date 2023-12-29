@@ -19,6 +19,7 @@
       <br>
       <button pButton class="p-button-secondary mt-2"  [disabled]="workflow_created" type="submit">Submit</button>
     </form>
+  <p-messages [(value)]="errorMessage"></p-messages>
 </div>
 <div *ngIf="workflow_created">
   <p-divider></p-divider>
@@ -32,4 +33,5 @@
     </div>
   </div>
 </div>
+<p-toast position="bottom-center" key="bc"></p-toast>
 
