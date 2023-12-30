@@ -32,6 +32,13 @@ class ClassiferView(viewsets.ViewSet):
         selectedModelFeaturize = request.data['selectedModelFeaturize']
         range_x = request.data['range_x']
         range_y = request.data['range_y']
+        n_epochs = request.data['n_epochs']
+        log_freq = request.data['log_freq']
+        seed = request.data['seed']
+        base_learning_rate = request.data['base_learning_rate']
+        l2 = request.data['l2']
+
+
         if run.exists():
             run = run[0]
 
@@ -44,7 +51,7 @@ class ClassiferView(viewsets.ViewSet):
             dataframe = pd.read_csv(file_path)
 
             # 1. Labelmodel
-            preds_unlabeled = self.train_label_model(run, selectedModelLabel)
+            preds_unlabeled = self.train_label_model(run, selectedModelLabel, n_epochs, log_freq, seed, base_learning_rate, l2)
 
             # 2. Featurize
             dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
@@ -73,7 +80,7 @@ class ClassiferView(viewsets.ViewSet):
             self.store_run_setting_information(range_x, range_y, run, score_test, score_train, selectedModelClassifier,
                                                selectedModelFeaturize, selectedModelLabel)
 
-            return Response({'score_train': score_train, 'score_test': score_test},status=status.HTTP_200_OK)
+            return Response({'score_train': score_train, 'score_test': score_test}, status=status.HTTP_200_OK)
 
         return Response(status=status.HTTP_404_NOT_FOUND)
 
@@ -118,7 +125,8 @@ class ClassiferView(viewsets.ViewSet):
             return features_test, features_train, features_unlabeled
 
     # todo speichere cardinality mit in der datenbank, n_epochs... selber wählen -> Referenz welche klassen es gibt
-    def train_label_model(self, run, selectedModelLabel):
+    def train_label_model(self, run, selectedModelLabel, n_epochs=100, log_freq=10, seed=123,
+                          base_learning_rate=0.01, l2=0.0):
         if selectedModelLabel == 'Majority Vote':
             majority_model = MajorityLabelVoter()
             labelmatrix_json = json.loads(run.labelmatrix)
@@ -129,6 +137,7 @@ class ClassiferView(viewsets.ViewSet):
             label_model = LabelModel(cardinality=2, verbose=True)
             labelmatrix_json = json.loads(run.labelmatrix)
             labelmatrix = np.array(labelmatrix_json)
-            label_model.fit(L_train=labelmatrix, n_epochs=500, log_freq=100, seed=123)
+            label_model.fit(L_train=labelmatrix, n_epochs=n_epochs, log_freq=log_freq,
+                            seed=seed, lr=base_learning_rate, l2=l2)
             preds_unlabeled = label_model.predict(L=labelmatrix)
             return preds_unlabeled
