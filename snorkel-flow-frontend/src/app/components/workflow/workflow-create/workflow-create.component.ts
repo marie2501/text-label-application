@@ -16,7 +16,6 @@ export class WorkflowCreateComponent {
   workflow_id: number = 0;
   workflow_created: boolean = false;
   success: boolean = false;
-  isLoading: boolean = false;
   errorMessage: Message[] = [];
 
 
@@ -29,9 +28,9 @@ export class WorkflowCreateComponent {
     }
     const title: string = workflowForm.value.title;
     let isPublic: boolean = false;
-    if (workflowForm.value.isPublic == true) {
-      isPublic = true;
-    }
+    // if (workflowForm.value.isPublic == true) {
+    //   isPublic = true;
+    // }
     const workflow: WorkflowModel = {is_public: isPublic, title: title};
 
     this.workflowService.createWorkflow(workflow).subscribe(respData => {

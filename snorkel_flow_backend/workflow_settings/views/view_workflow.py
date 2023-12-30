@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.http import HttpResponseForbidden, HttpResponseNotFound
 
 from workflow_settings.models import Workflow
+from workflow_settings.serializers.serializers_labelfunction import LabelfunctionCreateSerializer
 from workflow_settings.serializers.serializers_workflow import WorkflowSerializer, WorkflowCreateSerializer, UserAddRelSerializers
 
 
@@ -27,6 +28,10 @@ class WorkflowView(viewsets.ViewSet):
         workflow_serializer = WorkflowCreateSerializer(data=request.data)
         if workflow_serializer.is_valid():
             workflow = workflow_serializer.save()
+            labelfunction_import_standard = {'name' : 'imports', 'type': 'import', 'code': 'from snorkel.labeling import labeling_function', 'workflow': workflow.id}
+            serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
+            if serialziers_label.is_valid():
+                serialziers_label.save(creator=request.user)
             return Response({'workflow_id': workflow.id}, status=status.HTTP_201_CREATED)
         return Response(workflow_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

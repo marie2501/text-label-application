@@ -111,7 +111,6 @@ class LabelfunctionView(viewsets.ViewSet):
         workflow_id = kwargs['pk']
         request_data = request.data
         request_data['workflow'] = workflow_id
-        print(request_data)
         serialziers_label = LabelfunctionCreateSerializer(data=request_data)
         if serialziers_label.is_valid():
             serialziers_label.save(creator=request.user)
@@ -134,7 +133,7 @@ class LabelfunctionView(viewsets.ViewSet):
         labelfunction = Labelfunction.objects.filter(pk=labelfunction_id)
         if labelfunction.exists():
             l = labelfunction[0]
-            if l.creator == request.user:
+            if (l.creator == request.user) or (l.type == 'import'):
                 serialziers_label = LabelfunctionCreateSerializer(l, data=request.data, partial=True)
                 if serialziers_label.is_valid():
                     serialziers_label.save()

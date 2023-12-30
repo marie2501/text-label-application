@@ -88,6 +88,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.codeEditor.on('change', () => {
       this.isTested = false;
       this.isCompiled = false;
+      this.getfunctionName();
     });
     // import Editor
     const elementImport = this.importEditorRef.nativeElement;
@@ -194,7 +195,18 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   private showErrorMessage(error: any) {
     this.errorMessage = [];
     this.errorMessage = [
-      {severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+      {severity: 'error', summary: 'Error', detail: error.error }];
+  }
+
+  private getfunctionName(){
+    const code: string = this.codeEditor.getValue();
+    const i = code.indexOf('def');
+    const j = code.indexOf(':');
+    if (i < j){
+      const substring = code.substring(i, j);
+      const k = substring.indexOf('(');
+      this.functionName = substring.substring(4, k).toString().trim();
+    }
   }
 
 }
