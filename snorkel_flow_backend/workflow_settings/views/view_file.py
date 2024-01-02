@@ -8,7 +8,7 @@ import pandas as pd
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.serializers.serializers_file import FileUploadSerializer, FileUpdateSerializer
-from workflow_settings.models import File
+from workflow_settings.models import File, Workflow
 
 # Dataset: corpus_id, entity_id, text, splitting_id
 
@@ -20,11 +20,16 @@ class FileView(APIView):
     def post(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
         file_serializer = FileUploadSerializer(data=request.data)
-        if file_serializer.is_valid():
-            file = file_serializer.save(creator=request.user, workflow_id=workflow_id)
-            return Response(status=status.HTTP_201_CREATED)
-        else:
-            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        workflow = Workflow.objects.filter(pk=workflow_id)
+        if workflow.exists():
+            if workflow[0].creator == request.user:
+                if file_serializer.is_valid():
+                    file = file_serializer.save(creator=request.user, workflow_id=workflow_id)
+                    return Response(status=status.HTTP_201_CREATED)
+                else:
+                    return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def put(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']

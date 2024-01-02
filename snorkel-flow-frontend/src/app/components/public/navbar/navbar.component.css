@@ -2,3 +2,7 @@
   background: none;
   border: none;
 }
+
+:host ::ng-deep ul {
+  padding-left: 0;
+}

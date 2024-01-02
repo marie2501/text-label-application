@@ -1,9 +1,9 @@
 <div *ngIf="runLoaded|async">
   <div class="grid m-4">
-    <div class="col-2 col-offset-4">
+    <div *ngIf="username == run.creator"  class="col-2 col-offset-4">
       <p-button class="ml-4" (onClick)="executeRun()" label="Execute Run" styleClass="p-button-raised p-button-info"></p-button>
     </div>
-    <div class="col-2">
+    <div class="col-2" [ngClass]="{'col-offset-5': run.creator != username}">
       <p-button class="ml-4" (onClick)="getAnalysis()" label="Get Analysis" styleClass="p-button-raised p-button-info"></p-button>
     </div>
   </div>
@@ -94,8 +94,12 @@
       </div>
     </div>
   </div>
-  <p-messages [(value)]="errorMessage"></p-messages>
-  <p-toast position="bottom-center" key="bc"></p-toast>
-  <app-model-settings [run_id]="run_id"></app-model-settings>
+  <div class="container">
+    <p-messages [(value)]="errorMessage"></p-messages>
+    <p-toast position="bottom-center" key="bc"></p-toast>
+  </div>
+  <div *ngIf="username == run.creator">
+    <app-model-settings [run_id]="run_id"></app-model-settings>
+  </div>
 </div>
 

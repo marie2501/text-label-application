@@ -28,6 +28,8 @@ export class RunDashboardComponent implements OnInit{
   analysisLoaded!: Promise<boolean>;
   errorMessage: Message[] = [];
 
+  username: string = '';
+
 
 
   constructor(private runService: RunService, private labelfunctionService: LabelfunctionService,
@@ -37,6 +39,7 @@ export class RunDashboardComponent implements OnInit{
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
     this.run_id = this.route.snapshot.params['runID'];
+    this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
       this.run = respData;
@@ -44,7 +47,7 @@ export class RunDashboardComponent implements OnInit{
       this.runLoaded = Promise.resolve(true);
     }, error => {
       console.log(error);
-    })
+    });
   }
 
   executeRun() {
@@ -74,6 +77,14 @@ export class RunDashboardComponent implements OnInit{
   showSuccessMessage(){
     this.messageService.add({ key: 'bc', severity: 'success',
       summary: 'Success', detail: 'Run has been successfully executed' });
+  }
+
+  getLoggedInUser(){
+    const userData = JSON.parse(localStorage.getItem('userData') ?? '');
+    if (userData) {
+      return userData.username;
+    }
+    return '';
   }
 
 }

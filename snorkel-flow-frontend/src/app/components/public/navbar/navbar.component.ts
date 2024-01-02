@@ -86,6 +86,7 @@ export class NavbarComponent implements OnInit, OnDestroy{
     this.authService.logout().subscribe({
       complete: () => {
         this.router.navigate(['/'])
+        this.workflowService.updateCurrentWorkflow(false, 0)
       }
     });
   }

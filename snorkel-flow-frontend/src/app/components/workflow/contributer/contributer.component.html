@@ -11,7 +11,7 @@
           {{ group.value }}
           <div *ngIf="allowedToChange == true">
             <p-button *ngIf="group.label == 'user'" icon="pi pi-check" class="ml-4" (click)="addButton(group.value)" [rounded]="true" [text]="true" severity="success "></p-button>
-            <p-button *ngIf="group.label == 'contributer'" icon="pi pi-times" class="ml-4" (click)="deleteButton(group.value)" [rounded]="true" [text]="true" severity="danger "></p-button>
+            <p-button *ngIf="group.label == 'contributer' && username != group.value" icon="pi pi-times" class="ml-4" (click)="deleteButton(group.value)" [rounded]="true" [text]="true" severity="danger "></p-button>
           </div>
         </div>
       </ng-template>

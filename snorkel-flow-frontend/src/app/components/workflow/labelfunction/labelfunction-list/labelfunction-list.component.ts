@@ -25,6 +25,8 @@ export class LabelfunctionListComponent {
   selectedLabelfunction: LabelfunctionModel[] = [];
   errorMessage: Message[] = [];
 
+  username: string = '';
+
   constructor(private labelfuntionService: LabelfunctionService, private messageService: MessageService) {
   }
 
@@ -35,6 +37,7 @@ export class LabelfunctionListComponent {
     }, error => {
       console.log(error);
     });
+    this.username = this.getLoggedInUser();
   }
 
   deleteButton(id: number) {
@@ -53,6 +56,14 @@ export class LabelfunctionListComponent {
   showSuccessMessage(){
     this.messageService.add({ key: 'bc', severity: 'success',
       summary: 'Success', detail: 'Labelfunction has been deleted' });
+  }
+
+  getLoggedInUser(){
+    const userData = JSON.parse(localStorage.getItem('userData') ?? '');
+    if (userData) {
+      return userData.username;
+    }
+    return '';
   }
 
 }

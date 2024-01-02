@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {ActivatedRoute} from "@angular/router";
+import {retry} from "rxjs/operators";
 
 @Component({
   selector: 'app-contributer',
@@ -11,6 +12,8 @@ export class ContributerComponent implements OnInit{
 
   workflow_id: number = 0;
   users: {items: { label: string, value: string }[], label: string}[] = [];
+
+  username: string = '';
 
   @Input()
   allowedToChange: boolean = true;
@@ -23,7 +26,9 @@ export class ContributerComponent implements OnInit{
     this.workflowService.getAllUsers(this.workflow_id).subscribe(respData => {
       this.users = respData;
       console.log(respData)
-    })
+    });
+    this.username = this.getLoggedInUser();
+    console.log(this.username);
   }
 
   addButton(username_not_con: string | undefined) {
@@ -45,4 +50,13 @@ export class ContributerComponent implements OnInit{
       })
     }
   }
+
+  getLoggedInUser(){
+    const userData = JSON.parse(localStorage.getItem('userData') ?? '');
+    if (userData) {
+     return userData.username;
+    }
+    return '';
+  }
+
 }
