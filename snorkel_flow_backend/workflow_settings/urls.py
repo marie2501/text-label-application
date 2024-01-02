@@ -15,7 +15,8 @@ urlpatterns = [
     # workflow related urls
     path('workflow/', WorkflowView.as_view({'get': 'list_all_by_user', 'post': 'create'}), name='workflow'),
     path('workflow/<int:pk>/', WorkflowView.as_view({'get': 'get_by_id', 'delete': 'delete_by_id', 'patch': 'update_by_id'}), name='workflow_user'),
-    path('workflow/<int:pk>/contributer/', WorkflowView.as_view({'post': 'add_contributer_by_id', 'delete': 'remove_contributer_by_id'}), name='workflow_contibuter'),
+    path('workflow/<int:pk>/isCreator/', WorkflowView.as_view({'get': 'user_is_workflow_creator'}), name='workflow_creator'),
+    path('workflow/<int:pk>/contributer/', WorkflowView.as_view({'get': 'get_all_users','post': 'add_contributer_by_id', 'delete': 'remove_contributer_by_id'}), name='workflow_contibuter'),
 
     # labelfunction related urls
     path('workflow/<int:pk>/labelfunction/', LabelfunctionView.as_view({'post': 'add_labelfunction',
@@ -32,15 +33,6 @@ urlpatterns = [
     path('workflow/<int:pk>/run/list/', RunView.as_view({'get': 'list_run'}), name='list_run'),
     path('workflow/<int:pk>/run/exec/', RunView.as_view({'get': 'exec_run'}), name='run_exec'),
     path('workflow/<int:pk>/run/analysis/', RunView.as_view({'get': 'get_analysis'}), name='run_analysis'),
-
-    # labelModel
-    # path('workflow/<int:pk>/run/labelmodel/', LabelView.as_view({'get': 'getLabelModel',
-    #                                                              'post': 'label_model',
-    #                                                              'put': 'majority_vote'}), name='run_labelmodel'),
-    #
-    # # feature generation
-    # path('workflow/<int:w_pk>/run/<int:r_pk>/bagofwords/', TextFeatureView.as_view({'post': 'bag_of_words_featurization'}), name='bag_of_words'),
-    # path('workflow/<int:w_pk>/run/<int:r_pk>/tfidf/', TextFeatureView.as_view({'post': 'tfidf_featurization'}), name='tfidf'),
 
     # classifier
     path('workflow/run/<int:pk>/naivebayes/', ClassiferView.as_view({'post': 'naive_bayes'}), name='naive_bayes'),

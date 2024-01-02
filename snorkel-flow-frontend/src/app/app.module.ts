@@ -28,6 +28,8 @@ import { LabelvoteComponent } from './components/workflow/run/run-dashboard/labe
 import { FeaturizeComponent } from './components/workflow/run/run-dashboard/featurize/featurize.component';
 import { ClassifierComponent } from './components/workflow/run/run-dashboard/classifier/classifier.component';
 import { ModelSettingsComponent } from './components/workflow/run/run-dashboard/model-settings/model-settings.component';
+import { ContributerComponent } from './components/workflow/contributer/contributer.component';
+
 
 
 import { MenuModule } from 'primeng/menu';
@@ -49,6 +51,7 @@ import { TagModule } from 'primeng/tag';
 import { TreeTableModule } from 'primeng/treetable';
 import { ToastModule } from 'primeng/toast';
 import {MessageService} from "primeng/api";
+import { ListboxModule } from 'primeng/listbox';
 
 
 
@@ -75,7 +78,8 @@ import {MessageService} from "primeng/api";
     LabelvoteComponent,
     FeaturizeComponent,
     ClassifierComponent,
-    ModelSettingsComponent
+    ModelSettingsComponent,
+    ContributerComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +105,8 @@ import {MessageService} from "primeng/api";
     MessagesModule,
     TreeTableModule,
     TagModule,
-    ToastModule
+    ToastModule,
+    ListboxModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

@@ -82,8 +82,6 @@ class Run(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE, null=True)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE, null=True)
 
-    # splitting_ratio_labeled_test = models.DecimalField(max_digits=4, decimal_places=2, default=50.00)
-
     class Meta:
         ordering = ["-creation_date"]
 

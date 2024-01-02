@@ -54,12 +54,19 @@ export class NavbarComponent implements OnInit, OnDestroy{
       { label: 'Sign up', routerLink: ['/sign-up'], style: {position: 'relative', left: '75em'},
         disabled: this.isUserLoggedIn, visible: !this.isUserLoggedIn},
 
-      { label: 'Logout', style: {position: 'relative', left: '75rem'},
+      { label: 'Logout', style: {position: 'relative', left: this.positionLeft()},
         disabled: !this.isUserLoggedIn, visible: this.isUserLoggedIn,
         command: (event) => {
           this.onLogout()
         }}
     ];
+  }
+
+  positionLeft(){
+    if (this.workflow.isOnWorkflow){
+      return '65rem'
+    }
+    return '75rem'
   }
 
 

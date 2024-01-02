@@ -40,6 +40,15 @@ class WorkflowView(viewsets.ViewSet):
         serialziers_workflow = WorkflowSerializer(workflows, many=True)
         return Response(serialziers_workflow.data, status=status.HTTP_200_OK)
 
+    def user_is_workflow_creator(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        workflow = Workflow.objects.filter(pk=workflow_id)
+        if workflow.exists():
+            if workflow[0].creator == request.user:
+                return Response({'isCreator': True }, status=status.HTTP_200_OK)
+            return Response({'isCreator': False}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
     def get_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
         workflow = Workflow.objects.filter(pk=workflow_id)
@@ -83,7 +92,8 @@ class WorkflowView(viewsets.ViewSet):
 
     def remove_contributer_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
-        contributer_username = self.request.data['username']
+        contributer_username = request.data['username']
+        print(request.data)
         workflow = Workflow.objects.filter(pk=workflow_id)
         if workflow.exists():
             if workflow[0].creator == request.user:
@@ -100,7 +110,7 @@ class WorkflowView(viewsets.ViewSet):
 
     def add_contributer_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
-        contributer_username = self.request.data['username']
+        contributer_username = request.data['username']
         workflow = Workflow.objects.filter(pk=workflow_id)
         if workflow.exists():
             if workflow[0].creator == request.user:
@@ -117,6 +127,34 @@ class WorkflowView(viewsets.ViewSet):
                 return HttpResponseForbidden()
         else:
             return HttpResponseNotFound()
+
+    def get_all_users(self, request, *args, **kwargs):
+        workflow_id = kwargs['pk']
+        workflow = Workflow.objects.filter(pk=workflow_id)
+        if workflow.exists():
+            workflow = workflow[0]
+            workflow_contributer = workflow.contributors.order_by('username').values_list('username', flat=True)
+
+            all_contributer = []
+            for contributer in workflow_contributer:
+                dic = {}
+                dic['label'] = 'contributer'
+                dic['value'] = contributer
+                all_contributer.append(dic)
+            all_contributer.append({'label': 'contributer', 'value': workflow.creator.username})
+
+            all_users = []
+            if workflow.creator == request.user:
+                users_not_contributer = User.objects.filter(Q(is_staff=False), ~Q(username=request.user), ~Q(username__in=workflow_contributer)).order_by('username').values_list('username', flat=True)
+
+                all_users = []
+                for contributer in users_not_contributer:
+                    dic = {}
+                    dic['label'] = 'user'
+                    dic['value'] = contributer
+                    all_users.append(dic)
+            return Response([{'label': 'contributer', 'items': all_contributer}, {'label': 'user', 'items': all_users}],status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 

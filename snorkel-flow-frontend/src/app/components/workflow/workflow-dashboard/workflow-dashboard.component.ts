@@ -14,6 +14,7 @@ export class WorkflowDashboardComponent implements OnInit{
 
   workflow_id: number = 0;
   runs: RunModel[] = [];
+  isCreator: boolean = false;
 
   constructor(private route: ActivatedRoute, private runService: RunService, private workflowService: WorkflowService) {
   }
@@ -22,10 +23,14 @@ export class WorkflowDashboardComponent implements OnInit{
     this.workflow_id = this.route.snapshot.params['id'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.listlabelfunctionRun(this.workflow_id).subscribe(respData => {
-      console.log(respData);
       this.runs = respData;
     }, error => {
       console.log(error);
     });
+    this.workflowService.isWorkflowCreator(this.workflow_id).subscribe(respData => {
+      this.isCreator = respData.isCreator;
+    }, error => {
+      console.log(error);
+    })
   }
 }

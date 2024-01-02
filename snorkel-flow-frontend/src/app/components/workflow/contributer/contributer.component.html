@@ -1,0 +1,24 @@
+<div>
+
+    <p-listbox [options]="users" [group]="true" [listStyle]="{ 'max-height': '250px' }" [style]="{ width: '15rem' } ">
+      <ng-template let-group pTemplate="group">
+        <div class="flex align-items-center">
+          <span>{{ group.label }}</span>
+        </div>
+      </ng-template>
+      <ng-template let-group pTemplate="item">
+        <div class="flex align-items-center">
+          {{ group.value }}
+          <div *ngIf="allowedToChange == true">
+            <p-button *ngIf="group.label == 'user'" icon="pi pi-check" class="ml-4" (click)="addButton(group.value)" [rounded]="true" [text]="true" severity="success "></p-button>
+            <p-button *ngIf="group.label == 'contributer'" icon="pi pi-times" class="ml-4" (click)="deleteButton(group.value)" [rounded]="true" [text]="true" severity="danger "></p-button>
+          </div>
+        </div>
+      </ng-template>
+    </p-listbox>
+
+</div>
+
+
+
+
