@@ -1,7 +1,6 @@
-import json
 import sys
 
-from snorkel.labeling import labeling_function, PandasLFApplier, LFAnalysis
+from snorkel.labeling import PandasLFApplier, LFAnalysis
 import pandas as pd
 
 
@@ -9,10 +8,9 @@ from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction, Workflow, File
+from workflow_settings.models import Labelfunction, File
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 
 
@@ -31,10 +29,19 @@ class LabelfunctionView(viewsets.ViewSet):
 
     def compile_labelfunction(self, request, *args, **kwargs):
         code = request.data['pythoncode']
+        workflow_id = kwargs['pk']
+        imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+        print(imports)
         try:
-            exec(code)
-            data = 'Compiled'
-            return Response(data, status=status.HTTP_200_OK)
+            if imports.exists():
+                exec(imports[0].code, locals())
+                exec(code, locals())
+                data = 'Compiled'
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                exec(code, locals())
+                data = 'Compiled'
+                return Response(data, status=status.HTTP_200_OK)
         except:
             error = str(sys.exc_info())
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
@@ -125,8 +132,8 @@ class LabelfunctionView(viewsets.ViewSet):
             if l.creator == request.user:
                 l.delete()
                 return Response(status=status.HTTP_200_OK)
-            return HttpResponseForbidden()
-        return HttpResponseNotFound()
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def update_labelfunction(self, request, *args, **kwargs):
         labelfunction_id = kwargs['pk']
@@ -139,7 +146,7 @@ class LabelfunctionView(viewsets.ViewSet):
                     serialziers_label.save()
                     return Response(status=status.HTTP_200_OK)
                 return Response(serialziers_label.errors, status=status.HTTP_400_BAD_REQUEST)
-            return HttpResponseForbidden()
-        return HttpResponseNotFound()
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 

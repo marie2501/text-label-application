@@ -130,6 +130,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
       this.labelfunctionService.updateLabelfunctions(this.lid, labelfunctionModel).subscribe(respData => {
         this.showSuccessMessage('Labelfunction has been saved');
       }, error => {
+        console.log(error)
         this.showErrorMessage(error);
       });
 
@@ -146,7 +147,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   compilePythonCode() {
     const code: string = this.codeEditor.getValue();
     console.log(code);
-    this.labelfunctionService.compileLabelfunction(code).subscribe(respData => {
+    this.labelfunctionService.compileLabelfunction(code, this.workflow_id).subscribe(respData => {
       this.isCompiled = true;
       this.showSuccessMessage('Python code runs trough');
     }, error => {
@@ -195,7 +196,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   private showErrorMessage(error: any) {
     this.errorMessage = [];
     this.errorMessage = [
-      {severity: 'error', summary: 'Error', detail: error.error }];
+      {severity: 'error', summary: 'Error', detail: error, closable: true }];
   }
 
   private getfunctionName(){

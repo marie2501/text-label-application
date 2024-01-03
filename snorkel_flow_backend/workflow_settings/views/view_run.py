@@ -3,7 +3,7 @@ import sys
 from io import StringIO
 
 import numpy as np
-from snorkel.labeling import labeling_function, PandasLFApplier, LFAnalysis
+from snorkel.labeling import PandasLFApplier, LFAnalysis
 import pandas as pd
 
 
@@ -11,7 +11,6 @@ from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from django.http import HttpResponseForbidden, HttpResponseNotFound, HttpResponseBadRequest
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Labelfunction, Run, File
@@ -106,7 +105,8 @@ class RunView(viewsets.ViewSet):
                         except:
                             error = str(sys.exc_info())
                             return Response(error, status=status.HTTP_400_BAD_REQUEST)
-            return Response(status=status.HTTP_404_NOT_FOUND)
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get_analysis(self, request, *args, **kwargs):
@@ -122,7 +122,8 @@ class RunView(viewsets.ViewSet):
                 summary_train = summary_train.rename(columns={"Emp. Acc.": "EmpAcc"})
                 summary_train['index'] = summary_train.index
                 return Response({'summary': summary, 'summary_train': summary_train}, status=status.HTTP_200_OK)
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            error = 'The run has not yet been executed by the creator.'
+            return Response(error,status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_404_NOT_FOUND)
 
 
@@ -134,7 +135,7 @@ class RunView(viewsets.ViewSet):
             run_obj = run[0]
             run_serializer = RunSerializer(run_obj)
             return Response(run_serializer.data, status=status.HTTP_200_OK)
-        return HttpResponseNotFound()
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def list_run(self, request, *args, **kwargs):
@@ -143,7 +144,7 @@ class RunView(viewsets.ViewSet):
         if labelfunction_run.exists():
             run_serializer = RunSerializer(labelfunction_run, many=True)
             return Response(run_serializer.data,status=status.HTTP_200_OK)
-        return HttpResponseNotFound()
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
     def create_run(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']

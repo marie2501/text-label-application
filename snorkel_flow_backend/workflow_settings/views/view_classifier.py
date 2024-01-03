@@ -2,19 +2,18 @@ import json
 
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.naive_bayes import MultinomialNB
 from snorkel.labeling.model import MajorityLabelVoter
 import numpy as np
 from snorkel.labeling.model import LabelModel
 
 from rest_framework import status, authentication, viewsets
-from rest_framework.parsers import JSONParser, FileUploadParser
+from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction, Workflow, File, Feature, Run, LabelSummary, Classifier
+from workflow_settings.models import File, Feature, Run, LabelSummary, Classifier
 
 
 class ClassiferView(viewsets.ViewSet):

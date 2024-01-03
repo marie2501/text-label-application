@@ -1,4 +1,3 @@
-import json
 
 from django.contrib.auth.models import User
 from django.http import QueryDict
@@ -7,7 +6,6 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
-from django.http import HttpResponseForbidden, HttpResponseNotFound
 
 from workflow_settings.models import Workflow
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionCreateSerializer
@@ -20,7 +18,6 @@ class WorkflowView(viewsets.ViewSet):
     parser_class = [JSONParser]
 
 
-# todo testen, und dafür sorgen das Datenpunkte in Datenbanken eingelesen werden
     def create(self, request, *args, **kwargs):
         if isinstance(request.data, QueryDict):
             request.data._mutable = True
@@ -59,9 +56,9 @@ class WorkflowView(viewsets.ViewSet):
                 serialziers_workflow = WorkflowSerializer(workflow[0])
                 return Response(serialziers_workflow.data, status=status.HTTP_200_OK)
             else:
-                return HttpResponseForbidden()
+                return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            return HttpResponseNotFound()
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def delete_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
@@ -71,9 +68,9 @@ class WorkflowView(viewsets.ViewSet):
                 workflow[0].delete()
                 return Response(status=status.HTTP_200_OK)
             else:
-                return HttpResponseForbidden()
+                return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            return HttpResponseNotFound()
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
     def update_by_id(self, request, *args, **kwargs):
@@ -86,7 +83,7 @@ class WorkflowView(viewsets.ViewSet):
                 workflow_serializer.save()
                 return Response(workflow_serializer.data, status=status.HTTP_200_OK)
             return Response(workflow_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return HttpResponseNotFound()
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -102,11 +99,11 @@ class WorkflowView(viewsets.ViewSet):
                     workflow[0].contributors.remove(user[0])
                     return Response(status=status.HTTP_200_OK)
                 else:
-                    return HttpResponseNotFound()
+                    return Response(status=status.HTTP_404_NOT_FOUND)
             else:
-                return HttpResponseForbidden()
+                return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            return HttpResponseNotFound()
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def add_contributer_by_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
@@ -122,11 +119,11 @@ class WorkflowView(viewsets.ViewSet):
                     else:
                         return Response(status=status.HTTP_400_BAD_REQUEST)
                 else:
-                    return HttpResponseNotFound()
+                    return Response(status=status.HTTP_404_NOT_FOUND)
             else:
-                return HttpResponseForbidden()
+                return Response(status=status.HTTP_403_FORBIDDEN)
         else:
-            return HttpResponseNotFound()
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get_all_users(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']

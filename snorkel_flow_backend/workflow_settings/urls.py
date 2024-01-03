@@ -3,9 +3,7 @@ from django.urls import path
 from workflow_settings.views.view_classifier import ClassiferView
 from workflow_settings.views.view_file import FileView
 from workflow_settings.views.view_labelfunction import LabelfunctionView
-from workflow_settings.views.view_labelsummary import LabelView
 from workflow_settings.views.view_run import RunView
-from workflow_settings.views.view_text_features import TextFeatureView
 from workflow_settings.views.view_workflow import WorkflowView
 
 urlpatterns = [
@@ -23,7 +21,7 @@ urlpatterns = [
                                                                        'get': 'get_all_labelfunction_by_workflow_id',
                                                                        'delete': 'delete_labelfunction',
                                                                        'patch': 'update_labelfunction'}), name='labelfunction'),
-    path('workflow/labelfunction/compile/', LabelfunctionView.as_view({'post': 'compile_labelfunction'}), name='labelfunction_compile'),
+    path('workflow/labelfunction/<int:pk>/compile/', LabelfunctionView.as_view({'post': 'compile_labelfunction'}), name='labelfunction_compile'),
     path('workflow/<int:pk>/labelfunction/test/', LabelfunctionView.as_view({'post': 'test_labelfunction'}), name='labelfunction_test'),
     path('workflow/<int:pk>/labelfunction/import/', LabelfunctionView.as_view({'get': 'get_imports'}), name='labelfunction_imports'),
     path('workflow/labelfunction/<int:pk>/', LabelfunctionView.as_view({'get': 'get_labelfunction_by_id'}), name='labelfunction_id'),
