@@ -3,6 +3,7 @@ import sys
 from snorkel.labeling import PandasLFApplier, LFAnalysis
 import pandas as pd
 
+from zen_queries import fetch, queries_disabled
 
 from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser, FileUploadParser
@@ -30,11 +31,12 @@ class LabelfunctionView(viewsets.ViewSet):
     def compile_labelfunction(self, request, *args, **kwargs):
         code = request.data['pythoncode']
         workflow_id = kwargs['pk']
+
         imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
-        print(imports)
         try:
             if imports.exists():
-                exec(imports[0].code, locals())
+                import_code = imports[0].code
+                exec(import_code, locals())
                 exec(code, locals())
                 data = 'Compiled'
                 return Response(data, status=status.HTTP_200_OK)
@@ -62,7 +64,9 @@ class LabelfunctionView(viewsets.ViewSet):
             imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
             if imports.exists():
                 try:
-                    exec(imports[0].code, locals())
+                    import_code = imports[0].code
+
+                    exec(import_code, locals())
                     exec(code, locals())
                     # todo übers ganze datenset laufen lassen - unlabeld laufen lassen
                     dataframe = pd.read_csv(file_path)
@@ -70,9 +74,9 @@ class LabelfunctionView(viewsets.ViewSet):
                     local_var = locals()
 
                     lfs = [local_var[name]]
-                    applier = PandasLFApplier(lfs=lfs)
-
-                    L_train = applier.apply(df=dataframe)
+                    with queries_disabled():
+                        applier = PandasLFApplier(lfs=lfs)
+                        L_train = applier.apply(df=dataframe)
 
                     coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
                     return Response(coverage, status=status.HTTP_200_OK)
@@ -88,9 +92,10 @@ class LabelfunctionView(viewsets.ViewSet):
                     local_var = locals()
 
                     lfs = [local_var[name]]
-                    applier = PandasLFApplier(lfs=lfs)
 
-                    L_train = applier.apply(df=dataframe)
+                    with queries_disabled():
+                        applier = PandasLFApplier(lfs=lfs)
+                        L_train = applier.apply(df=dataframe)
 
                     coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
                     return Response(coverage, status=status.HTTP_200_OK)

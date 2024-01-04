@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_cleanup.apps.CleanupConfig',
     'corsheaders',
     'workflow_settings',
+    'zen_queries',
 ]
 
 MIDDLEWARE = [
