@@ -12,6 +12,7 @@ urlpatterns = [
 
     # workflow related urls
     path('workflow/', WorkflowView.as_view({'get': 'list_all_by_user', 'post': 'create'}), name='workflow'),
+    path('workflow/package/', WorkflowView.as_view({'get': 'get_installed_packages'}), name='package'),
     path('workflow/<int:pk>/', WorkflowView.as_view({'get': 'get_by_id', 'delete': 'delete_by_id', 'patch': 'update_by_id'}), name='workflow_user'),
     path('workflow/<int:pk>/isCreator/', WorkflowView.as_view({'get': 'user_is_workflow_creator'}), name='workflow_creator'),
     path('workflow/<int:pk>/contributer/', WorkflowView.as_view({'get': 'get_all_users','post': 'add_contributer_by_id', 'delete': 'remove_contributer_by_id'}), name='workflow_contibuter'),

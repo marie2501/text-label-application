@@ -5,5 +5,6 @@ export interface WorkflowModel {
   creation_date?: string;
   contributors?: string[];
   creator?: string;
+  description?: string;
 
 }

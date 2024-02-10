@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
 
+from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Workflow
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionCreateSerializer
 from workflow_settings.serializers.serializers_workflow import WorkflowSerializer, WorkflowCreateSerializer, UserAddRelSerializers
@@ -153,6 +154,12 @@ class WorkflowView(viewsets.ViewSet):
             return Response([{'label': 'contributer', 'items': all_contributer}, {'label': 'user', 'items': all_users}],status=status.HTTP_200_OK)
         return Response(status=status.HTTP_404_NOT_FOUND)
 
+    def get_installed_packages(self, request, *args, **kwargs):
+        packages = []
+        filepath = "{root}/../{name}".format(root=MEDIA_ROOT, name='django_requirements_installed_packages.txt')
+        with open(filepath, 'r') as file:
+            packages = file.readlines()
+        return Response(packages, status=status.HTTP_200_OK)
 
 
 

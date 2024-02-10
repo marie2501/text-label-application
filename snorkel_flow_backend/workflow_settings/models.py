@@ -14,7 +14,7 @@ class Workflow(models.Model):
     # contributer : dürfen alles außer Workflow löschen
     contributors = models.ManyToManyField(User, related_name='workflow_contributors')
     # todo implementiern bei frontend und backend
-    # description = models.TextField(null=True)
+    description = models.TextField(null=True)
 
     class Meta:
         unique_together = [["title", "creator"]]

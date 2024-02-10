@@ -27,11 +27,12 @@ export class WorkflowCreateComponent {
       return;
     }
     const title: string = workflowForm.value.title;
+    const description: string = workflowForm.value.description;
     let isPublic: boolean = false;
     // if (workflowForm.value.isPublic == true) {
     //   isPublic = true;
     // }
-    const workflow: WorkflowModel = {is_public: isPublic, title: title};
+    const workflow: WorkflowModel = {is_public: isPublic, title: title, description: description};
 
     this.workflowService.createWorkflow(workflow).subscribe(respData => {
       this.workflow_created = true;
@@ -47,7 +48,7 @@ export class WorkflowCreateComponent {
   }
 
   showSuccessMessage(){
-    this.messageService.add({ key: 'bc', severity: 'success',
+    this.messageService.add({ severity: 'success',
       summary: 'Success', detail: 'Workflow has been successfully created' });
   }
 

@@ -20,7 +20,7 @@ class WorkflowCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workflow
-        fields = ['creator', 'is_public', 'title']
+        fields = ['creator', 'is_public', 'title', 'description']
 
         validators = [
             UniqueTogetherValidator(

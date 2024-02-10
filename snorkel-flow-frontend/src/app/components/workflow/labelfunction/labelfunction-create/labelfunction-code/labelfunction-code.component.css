@@ -8,3 +8,7 @@ editor {
 .w-38{
   width: 38rem !important;
 }
+
+.break-spaces {
+  white-space: break-spaces;
+}

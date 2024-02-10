@@ -49,6 +49,10 @@ export class WorkflowService {
     return this.http.delete(`${workflowURL}/${workflow_id}/contributer/`, {'body': {'username': username}}).pipe(catchError(this.handleError));
   }
 
+  getInstalledPackages(){
+    return this.http.get<string[]>(`${workflowURL}/package/`);
+  }
+
   private handleError(error: HttpErrorResponse){
     if (error.status == 403){
       return throwError(() => new Error('You do not have authorization to access this resource'));

@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../../services/workflow/workflow.service";
+import {WorkflowModel} from "../../../../../models/workflow.model";
 
 const THEME = 'ace/theme/dawn';
 const LANGUAGE = 'ace/mode/python';
@@ -43,11 +44,14 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   isCompiled: boolean = false;
   isTested: boolean = false;
   // todo name of labelfunction in form field
-  // @ts-ignore
-  importLabelfunction : LabelfunctionModel;
+  importLabelfunction!: LabelfunctionModel;
 
   test_coverage: number = 0;
   errorMessage: Message[] = [];
+  sidebarVisible: boolean = false;
+  description: string = '';
+  //loaded!: Promise<boolean>;
+  packages: string[] = []
 
   constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute,
               private messageService: MessageService, private workflowService: WorkflowService) { }
@@ -58,6 +62,12 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     }
     this.workflow_id = this.route.snapshot.params['wid'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
+    this.workflowService.getWorkflowById(this.workflow_id).subscribe(respData => {
+      this.description = respData.description ?? '';
+    });
+    this.workflowService.getInstalledPackages().subscribe(respData => {
+      this.packages = respData;
+    })
   }
 
   ngAfterViewInit(): void {

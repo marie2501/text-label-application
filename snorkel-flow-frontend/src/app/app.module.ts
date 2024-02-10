@@ -52,6 +52,8 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ToastModule } from 'primeng/toast';
 import {MessageService} from "primeng/api";
 import { ListboxModule } from 'primeng/listbox';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { SidebarModule } from 'primeng/sidebar';
 
 
 
@@ -106,7 +108,9 @@ import { ListboxModule } from 'primeng/listbox';
     TreeTableModule,
     TagModule,
     ToastModule,
-    ListboxModule
+    ListboxModule,
+    InputTextareaModule,
+    SidebarModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

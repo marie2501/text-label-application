@@ -2,6 +2,20 @@
 
 <div class="container">
 
+  <p-sidebar [(visible)]="sidebarVisible" position="right">
+    <h3>Additional information</h3>
+    <div class="mt-4">
+      <h5>Problemdescription & Annotationschema</h5>
+      <p class="break-spaces mt-2">{{description}}</p>
+    </div>
+    <div class="mt-4">
+      <h5>Installed Packages</h5>
+      <ul *ngFor="let modul of packages">
+        <li>{{modul}}</li>
+      </ul>
+    </div>
+  </p-sidebar>
+
   <div class="flex flex-column gap-2">
     <label for="name">Name of the function</label>
     <input pInputText id="name" aria-describedby="username-help" [(ngModel)]="functionName" />
@@ -15,6 +29,7 @@
     </div>
     <div class="col-6" >
       <button pButton label="Save Import" class="p-button-success mt-4 mr-4" (click)="saveImport()"></button>
+      <button pButton class="p-button-success" (click)="sidebarVisible = true" icon="pi pi-arrow-left"></button>
     </div>
   </div>
 
