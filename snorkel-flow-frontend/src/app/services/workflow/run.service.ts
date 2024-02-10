@@ -2,8 +2,9 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {RunModel} from "../../models/run.model";
 import {AnalysisModel} from "../../models/analysis.model";
-import {throwError} from "rxjs";
+import {Subject, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {LabelfunctionModel} from "../../models/labelfunction.model";
 
 const labelfuntionURL = 'http://localhost:8080/settings/workflow';
 
@@ -19,6 +20,10 @@ export class RunService {
 
   createlabelfunctionRun(run: {labelfunctions: (number|undefined)[]}, workflow_id: number) {
     return this.http.post(`${labelfuntionURL}/${workflow_id}/run/`, run).pipe(catchError(this.handleError));
+  }
+
+  updatelabelfunctionRun(run: {labelfunctions: (number|undefined)[]}, run_id: number) {
+    return this.http.put(`${labelfuntionURL}/${run_id}/run/`, run).pipe(catchError(this.handleError));
   }
 
   getlabelfunctionRun(run_id: number) {

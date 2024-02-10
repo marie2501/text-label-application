@@ -154,4 +154,16 @@ class RunView(viewsets.ViewSet):
             return Response(status=status.HTTP_201_CREATED)
         return Response(run_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
+    def update_run(self, request, *args, **kwargs):
+        run_id = kwargs['pk']
+        run_obj = Run.objects.filter(pk=run_id)
+        if run_obj.exists():
+            run = run_obj[0]
+            if run.creator == request.user:
+                run_serializer = RunCreateSerializer(run, data=request.data, partial=True)
+                if run_serializer.is_valid():
+                    run_serializer.save()
+                    return Response(status=status.HTTP_201_CREATED)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return Response(status=status.HTTP_404_NOT_FOUND)

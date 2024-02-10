@@ -33,7 +33,6 @@ export class LabelfunctionListComponent {
   ngOnInit(): void {
     this.labelfuntionService.getLabelfunctions(this.workflow_id).subscribe((respData) => {
       this.labelfunctions = respData;
-      console.log(respData);
     }, error => {
       console.log(error);
     });

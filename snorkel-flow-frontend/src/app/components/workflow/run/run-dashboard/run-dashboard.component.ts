@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {RunService} from "../../../../services/workflow/run.service";
 import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {RunModel} from "../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {AnalysisModel} from "../../../../models/analysis.model";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../services/workflow/workflow.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-run-dashboard',
@@ -32,7 +33,7 @@ export class RunDashboardComponent implements OnInit{
 
 
 
-  constructor(private runService: RunService, private labelfunctionService: LabelfunctionService,
+  constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private router: Router,
               private route: ActivatedRoute, private messageService: MessageService, private workflowService: WorkflowService) {
   }
 
@@ -85,6 +86,10 @@ export class RunDashboardComponent implements OnInit{
       return userData.username;
     }
     return '';
+  }
+
+  updateLabelfunktion() {
+    this.router.navigate(['/workflow', this.workflow_id , 'labelfunction-run'], {queryParams: {run_id: this.run_id}});
   }
 
 }
