@@ -3,8 +3,10 @@
   <app-labelfunction-list [selectable]="true" [workflow_id]="workflow_id" [modifiable]="false"
   (selectEvent)="onSelectChange($event)" ></app-labelfunction-list>
   </div>
-  <div class="mt-4 float-end mr-13">
-    <button [disabled]="created" styleClass="p-button-sm" pButton pRipple label="Save" (click)="onSave()" class="p-button-primary"></button>
+  <div class="mt-4 float-end mr-2h">
+    <button [disabled]="created" pButton pRipple label="Save" (click)="onSave()" class="p-button-info p-button-sm w-6rem"></button>
+    <button pButton type="button"
+            class="p-button-secondary ml-2 p-button-sm" icon="pi pi-arrow-left" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
   </div>
   <p-messages [(value)]="errorMessage"></p-messages>
   <p-toast position="bottom-center" key="bc"></p-toast>

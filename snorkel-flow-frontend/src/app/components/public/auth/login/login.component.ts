@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {AuthService} from "../../../../services/auth/auth.service";
 import {Router} from "@angular/router";
-import { Message } from 'primeng/api';
+import {Message} from 'primeng/api';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent {
   errorMessage: Message[] = [];

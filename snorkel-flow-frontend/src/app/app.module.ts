@@ -85,6 +85,7 @@ import { SidebarModule } from 'primeng/sidebar';
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,

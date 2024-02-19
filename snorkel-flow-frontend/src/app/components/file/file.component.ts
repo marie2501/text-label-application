@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FileService} from "../../services/workflow/file.service";
 
 @Component({
   selector: 'app-file',
   templateUrl: './file.component.html',
-  styleUrls: ['./file.component.css']
+  styleUrls: ['./file.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class FileComponent implements OnInit{
 

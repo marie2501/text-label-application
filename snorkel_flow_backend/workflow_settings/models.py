@@ -20,8 +20,6 @@ class Workflow(models.Model):
         unique_together = [["title", "creator"]]
         ordering = ["-creation_date"]
 
-
-
 def upload_to_file(instance, filename):
     return "{workflow_id}/file/{filename}".format(workflow_id=instance.workflow.id, filename=filename)
 

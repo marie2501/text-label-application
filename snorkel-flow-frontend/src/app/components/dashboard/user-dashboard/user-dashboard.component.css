@@ -1,0 +1,21 @@
+p-card >div {
+  border: 0.1px solid #929292;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 10rem;
+}
+
+
+.heightcard .p-card .p-card-content{
+  display: grid;
+  align-content: space-between;
+  height: 12rem;
+}
+
+.heightcard .p-card .p-card-body{
+  height: 17rem;
+}
+
+

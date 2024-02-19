@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {NgForm} from "@angular/forms";
 import {WorkflowModel} from "../../../models/workflow.model";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
-import {Router} from "@angular/router";
-import {FileService} from "../../../services/workflow/file.service";
 import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-workflow-create',
   templateUrl: './workflow-create.component.html',
-  styleUrls: ['./workflow-create.component.css']
+  styleUrls: ['./workflow-create.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WorkflowCreateComponent {
 

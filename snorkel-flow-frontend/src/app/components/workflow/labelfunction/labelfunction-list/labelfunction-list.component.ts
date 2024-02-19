@@ -1,13 +1,13 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
-import { Output, EventEmitter } from '@angular/core';
 import {Message, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-labelfunction-list',
   templateUrl: './labelfunction-list.component.html',
-  styleUrls: ['./labelfunction-list.component.css']
+  styleUrls: ['./labelfunction-list.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LabelfunctionListComponent {
 

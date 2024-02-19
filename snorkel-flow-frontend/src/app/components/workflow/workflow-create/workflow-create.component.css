@@ -1,3 +1,18 @@
-.ration-form-with {
-  width: 20%;
+
+.width {
+  width: 38rem;
+}
+
+p-card >div {
+  border: 0.1px solid #929292;
+}
+
+p-messages button {
+  margin-left: auto;
+}
+
+.button-cancel {
+  margin-left: 1rem;
+  background-color: #818181;
+  border: #818181;
 }

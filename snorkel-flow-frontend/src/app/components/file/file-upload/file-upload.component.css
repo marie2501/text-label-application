@@ -1,0 +1,7 @@
+p-card >div {
+  border: 0.1px solid #929292;
+}
+
+p-messages button {
+  margin-left: auto;
+}

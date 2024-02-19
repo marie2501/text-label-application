@@ -5,38 +5,41 @@
     </div>
     <div class="container card_width">
       <p-card header="Sign up">
-          <form #signUpForm="ngForm" (ngSubmit)="onSignUp(signUpForm)">
+          <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
             <div class="p-fluid">
               <div>
                 <span class="p-float-label">
-                  <input type="text" id="username" pInputText name="username" ngModel required
+                  <input type="text" id="username" pInputText name="username" required formControlName="username"
                          [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   <label for="username">Username</label>
                 </span>
+                <span *ngIf="!signUpForm.get('username')!.valid && signUpForm.get('username')!.touched" class="text-red-500">The length of the user name must be at least 4 characters. In addition, only upper or lower case letters and numbers are allowed. </span>
               </div>
               <br>
               <div>
                 <span class="p-float-label">
-                  <input type="email" id="email" pInputText name="email" ngModel email required
+                  <input type="email" id="email" pInputText name="email" formControlName="email" email required
                          [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   <label for="email">Email</label>
                 </span>
+                <span *ngIf="!signUpForm.get('email')!.valid && signUpForm.get('email')!.touched" class="text-red-500">Enter a valid email</span>
               </div>
               <br>
               <div>
                 <span class="p-float-label">
-                  <p-password id="password" ngModel name="password" [toggleMask]="true" required
+                  <p-password id="password" formControlName="password" name="password" [toggleMask]="true" required
                               [ngClass]="{'ng-dirty': invalidForm, 'ng-invalid': invalidForm}">
                   </p-password>
                   <label for="password">Password</label>
                 </span>
+                <span *ngIf="!signUpForm.get('password')!.valid && signUpForm.get('password')!.touched" class="text-red-500">The length of the user name must be at least 8 characters. In addition, only upper or lower case letters, numbers and special characters are allowed.</span>
               </div>
             </div>
             <div>
               <a routerLink="/login" class="button_position">Already signed up? Go to Login</a>
             </div>
             <br>
-            <button pButton class="button_position p-button-sm" icon="pi pi-user" label="Sign-in" type="submit"></button>
+            <button pButton class="button_position p-button-sm p-button-info" icon="pi pi-user" label="Sign-in" type="submit" [disabled]="!signUpForm.valid"></button>
         </form>
       </p-card>
     </div>

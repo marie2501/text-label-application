@@ -1,7 +1,6 @@
 .component_position {
-  width: 50rem;
   position: relative;
-  top: 4rem;
+  top: 2rem;
 }
 
 .card_width {
@@ -12,3 +11,25 @@
   position: relative;
   top: 1rem;
 }
+
+p-messages button {
+  margin-left: auto;
+}
+
+p-messages >div {
+  margin-bottom: 2rem;
+}
+
+p-card >div {
+  border: 0.1px solid #929292;
+}
+
+/*p-card .p-button {*/
+/*  background-color: #f0fbff;*/
+/*  border: #f0fbff;*/
+/*}*/
+
+/*p-card .p-button:hover  {*/
+/*  background-color: #c6eaf5;*/
+/*  border: #c6eaf5;*/
+/*}*/

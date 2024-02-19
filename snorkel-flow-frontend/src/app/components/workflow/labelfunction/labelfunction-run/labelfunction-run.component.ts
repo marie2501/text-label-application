@@ -1,16 +1,16 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {RunService} from "../../../../services/workflow/run.service";
 import {FileService} from "../../../../services/workflow/file.service";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../services/workflow/workflow.service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-labelfunction-run',
   templateUrl: './labelfunction-run.component.html',
-  styleUrls: ['./labelfunction-run.component.css']
+  styleUrls: ['./labelfunction-run.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LabelfunctionRunComponent implements OnInit{
   workflow_id: number = 0;

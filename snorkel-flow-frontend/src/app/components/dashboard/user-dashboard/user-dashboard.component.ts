@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {WorkflowModel} from "../../../models/workflow.model";
 
@@ -6,7 +6,8 @@ import {WorkflowModel} from "../../../models/workflow.model";
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
-  styleUrls: ['./user-dashboard.component.css']
+  styleUrls: ['./user-dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class UserDashboardComponent implements OnInit{
 

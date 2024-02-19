@@ -1,8 +1,13 @@
-:host ::ng-deep .p-menubar {
+.p-menubar {
   background: none;
-  border: none;
+  border: none ;
 }
 
-:host ::ng-deep ul {
+p-menubar div p-menubarsub ul {
   padding-left: 0;
+}
+
+.container-fluid {
+  height: 3.75rem;
+  background: #f0fbff !important
 }

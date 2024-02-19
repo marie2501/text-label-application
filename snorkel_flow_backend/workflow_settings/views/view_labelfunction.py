@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import Labelfunction, File
+from workflow_settings.models import Labelfunction, File, Run
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 
 
@@ -135,8 +135,9 @@ class LabelfunctionView(viewsets.ViewSet):
         if labelfunction.exists():
             l = labelfunction[0]
             if l.creator == request.user:
-                l.delete()
-                return Response(status=status.HTTP_200_OK)
+                if not Run.objects.filter(workflow_id=l.workflow_id).filter(labelfunctions__in=[l]).exists():
+                    l.delete()
+                    return Response(status=status.HTTP_200_OK)
             return Response(status=status.HTTP_403_FORBIDDEN)
         return Response(status=status.HTTP_404_NOT_FOUND)
 

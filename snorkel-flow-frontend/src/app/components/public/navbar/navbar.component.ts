@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {MenuItem, PrimeIcons} from 'primeng/api';
 import {Subscription} from "rxjs";
 import {AuthService} from "../../../services/auth/auth.service";
@@ -8,7 +8,8 @@ import {WorkflowService} from "../../../services/workflow/workflow.service";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit, OnDestroy{
   menuItems: MenuItem[] = [];

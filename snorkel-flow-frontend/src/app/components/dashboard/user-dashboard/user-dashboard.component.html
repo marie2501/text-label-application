@@ -1,23 +1,26 @@
 <div *ngIf="workflowLoaded|async">
-  <div class="container">
-  <div class="grid">
-    <div class="col-3 mt-4">
-      <p-panel header="Recent workflows">
+  <div class="grid mt-4">
+    <div class="col-3 col-offset-2">
+      <div class="heightcard">
+      <p-card header="Recent Workflows" class="height">
         <div>
-          <ul>
-            <li *ngFor="let workflow of workflows | slice:0:7">
+          <ul class="scroll">
+            <li *ngFor="let workflow of workflows">
               <a [routerLink]="['/workflow', workflow.id, 'dashboard']">{{workflow.title}}</a>
             </li>
           </ul>
         </div>
-      </p-panel>
+      </p-card>
+      </div>
     </div>
-    <div class="col-offset-7 mt-4 align-content-center">
-      <p-button [routerLink]="['/workflow', 'create']" label="New Workflow" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
+      <div class="col-3 col-offset-2 heightcard">
+        <p-card header="Create a Workflow">
+          <p> Create a new workflow. You can then add everything for the annotation process to this workflow. </p>
+          <p-button [routerLink]="['/workflow', 'create']" label="New Workflow" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
+        </p-card>
+      </div>
     </div>
   </div>
-  </div>
-</div>
 
 
 
