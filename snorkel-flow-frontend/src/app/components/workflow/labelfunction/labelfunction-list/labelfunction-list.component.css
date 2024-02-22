@@ -7,6 +7,6 @@
   border: solid 1px #f0fbff;
 }
 
-.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+.list .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
   background-color: #607d8b14;
 }

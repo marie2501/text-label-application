@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RunModel} from "../../../../../models/run.model";
 import {AnalysisModel} from "../../../../../models/analysis.model";
 import {Message, MessageService} from "primeng/api";
@@ -10,7 +10,8 @@ import {WorkflowService} from "../../../../../services/workflow/workflow.service
 @Component({
   selector: 'app-run-eval',
   templateUrl: './run-eval.component.html',
-  styleUrls: ['./run-eval.component.css']
+  styleUrls: ['./run-eval.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RunEvalComponent implements OnInit{
 

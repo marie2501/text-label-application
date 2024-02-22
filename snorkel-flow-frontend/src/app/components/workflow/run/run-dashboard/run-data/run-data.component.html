@@ -9,8 +9,8 @@
 <div class="grid m-4">
   <div class="col-6 col-offset-3">
     <div *ngIf="labelfunctions.length > 0">
-      <div>
-        <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm"
+      <div class="list">
+        <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm p-datatable-striped"
                  dataKey="id" scrollHeight="20rem">
           <ng-template pTemplate="caption">
             <th> Labelfunctions </th>

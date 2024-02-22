@@ -1,24 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RunService} from "../../../../services/workflow/run.service";
-import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {RunModel} from "../../../../models/run.model";
-import {LabelfunctionModel} from "../../../../models/labelfunction.model";
-import {AnalysisModel} from "../../../../models/analysis.model";
-import {MenuItem, Message, MessageService} from "primeng/api";
+import {MenuItem, Message} from "primeng/api";
 import {WorkflowService} from "../../../../services/workflow/workflow.service";
-import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-run-dashboard',
   templateUrl: './run-dashboard.component.html',
-  styleUrls: ['./run-dashboard.component.css']
+  styleUrls: ['./run-dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RunDashboardComponent implements OnInit{
   workflow_id: number = 0;
   run_id: number = 0;
   run!: RunModel;
-  errorMessage: Message[] = [];
   username: string = '';
   runSteps: MenuItem[] = [];
   runLoaded!: Promise<boolean>;

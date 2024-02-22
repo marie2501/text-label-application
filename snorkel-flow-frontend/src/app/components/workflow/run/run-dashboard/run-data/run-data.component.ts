@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RunModel} from "../../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
 import {Message, MessageService} from "primeng/api";
@@ -10,7 +10,8 @@ import {WorkflowService} from "../../../../../services/workflow/workflow.service
 @Component({
   selector: 'app-run-data',
   templateUrl: './run-data.component.html',
-  styleUrls: ['./run-data.component.css']
+  styleUrls: ['./run-data.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RunDataComponent implements OnInit{
 

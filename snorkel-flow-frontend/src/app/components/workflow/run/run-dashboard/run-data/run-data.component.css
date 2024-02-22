@@ -1,0 +1,8 @@
+.p-datatable .p-datatable-header {
+  background-color: #f0fbff;
+  border: solid 1px #f0fbff;
+}
+
+.list .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  background-color: #607d8b14;
+}

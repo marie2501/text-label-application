@@ -1,5 +1,5 @@
 <div *ngIf="labelfunctions.length > 0">
-  <div class="ml-4" [ngClass]="{'w-6': !selectable, 'w-12': selectable}">
+  <div class="ml-4 list" [ngClass]="{'w-6': !selectable, 'w-12': selectable}">
     <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm p-datatable-striped"
              [(selection)]="selectedLabelfunction" dataKey="id" scrollHeight="25rem" (onRowSelect)="onRowSelect()"
     (onHeaderCheckboxToggle)="onRowSelect()" (onRowUnselect)="onRowSelect()">

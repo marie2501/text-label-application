@@ -1,7 +1,4 @@
-.break-spaces {
-  white-space: break-spaces;
-}
 
-.w-33rem{
-  width: 33rem;
+.p-steps .p-steps-item.p-highlight .p-steps-number {
+  background: #f0fbff;
 }

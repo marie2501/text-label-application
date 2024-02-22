@@ -11,3 +11,7 @@ p-menubar div p-menubarsub ul {
   height: 3.75rem;
   background: #f0fbff !important
 }
+
+a {
+  text-decoration: None;
+}
