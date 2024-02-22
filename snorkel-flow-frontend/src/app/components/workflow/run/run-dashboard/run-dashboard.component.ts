@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {RunModel} from "../../../../models/run.model";
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {AnalysisModel} from "../../../../models/analysis.model";
-import {Message, MessageService} from "primeng/api";
+import {MenuItem, Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../services/workflow/workflow.service";
 import {Subscription} from "rxjs";
 
@@ -17,24 +17,15 @@ import {Subscription} from "rxjs";
 export class RunDashboardComponent implements OnInit{
   workflow_id: number = 0;
   run_id: number = 0;
-  // @ts-ignore
-  run: RunModel;
-  runLoaded!: Promise<boolean>;
-  labelfunctions: LabelfunctionModel[] = [];
-
-  // @ts-ignore
-  analysisModel_unlabeled: AnalysisModel;
-  // @ts-ignore
-  analysisModel_train: AnalysisModel;
-  analysisLoaded!: Promise<boolean>;
+  run!: RunModel;
   errorMessage: Message[] = [];
-
   username: string = '';
+  runSteps: MenuItem[] = [];
+  runLoaded!: Promise<boolean>;
 
 
 
-  constructor(private runService: RunService, private labelfunctionService: LabelfunctionService, private router: Router,
-              private route: ActivatedRoute, private messageService: MessageService, private workflowService: WorkflowService) {
+  constructor(private route: ActivatedRoute, private workflowService: WorkflowService, private runService: RunService,) {
   }
 
   ngOnInit(): void {
@@ -44,40 +35,18 @@ export class RunDashboardComponent implements OnInit{
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
       this.run = respData;
-      this.labelfunctions = this.run.labelfunctions!;
+      this.runSteps = [
+        { label: 'Info',
+          routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'data']},
+        { label: 'Eval',
+          routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'eval']},
+        { label: 'Model',
+          routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'model'],
+          disabled: this.username != this.run!.creator}];
       this.runLoaded = Promise.resolve(true);
     }, error => {
-      console.log(error);
     });
-  }
 
-  executeRun() {
-    this.runService.executelabelfunctionRun(this.run_id).subscribe(respData => {
-      this.showSuccessMessage();
-    }, error => {
-      this.showErrorMessage(error);
-    });
-  }
-
-  getAnalysis() {
-    this.runService.getAnalysisRun(this.run_id).subscribe(respData => {
-      this.analysisModel_unlabeled = respData.summary;
-      this.analysisModel_train = respData.summary_train
-      this.analysisLoaded = Promise.resolve(true);
-    }, error => {
-      this.showErrorMessage(error);
-    });
-  }
-
-  private showErrorMessage(error: any) {
-    this.errorMessage = [];
-    this.errorMessage = [
-      {severity: 'error', summary: 'Error', detail: error.error }];
-  }
-
-  showSuccessMessage(){
-    this.messageService.add({ key: 'bc', severity: 'success',
-      summary: 'Success', detail: 'Run has been successfully executed' });
   }
 
   getLoggedInUser(){
@@ -86,10 +55,6 @@ export class RunDashboardComponent implements OnInit{
       return userData.username;
     }
     return '';
-  }
-
-  updateLabelfunktion() {
-    this.router.navigate(['/workflow', this.workflow_id , 'labelfunction-run'], {queryParams: {run_id: this.run_id}});
   }
 
 }

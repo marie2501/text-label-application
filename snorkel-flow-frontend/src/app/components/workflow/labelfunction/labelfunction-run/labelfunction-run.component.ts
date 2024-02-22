@@ -45,7 +45,7 @@ export class LabelfunctionRunComponent implements OnInit{
       }, error => {
         this.showErrorMessage(error);
       });
-      this.router.navigate(['/workflow', this.workflow_id , 'run-dashboard', this.run_id])
+      this.router.navigate(['/workflow', this.workflow_id , 'run-dashboard', this.run_id, 'data'])
     } else {
       this.runservice.createlabelfunctionRun(run, this.workflow_id).subscribe(respData => {
         this.created = true;

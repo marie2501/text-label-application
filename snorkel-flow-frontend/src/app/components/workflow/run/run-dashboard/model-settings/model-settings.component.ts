@@ -1,18 +1,15 @@
-import {Component, Input} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RunService} from "../../../../../services/workflow/run.service";
 import {Message, MessageService} from "primeng/api";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-model-settings',
   templateUrl: './model-settings.component.html',
   styleUrls: ['./model-settings.component.css']
 })
-export class ModelSettingsComponent {
+export class ModelSettingsComponent implements OnInit{
 
-  constructor(private runservices: RunService, private messageService: MessageService) {
-  }
-
-  @Input()
   run_id: number = 0;
 
   selectedLabelModel: string = '';
@@ -33,6 +30,16 @@ export class ModelSettingsComponent {
   classifierResult: { score_train: number, score_test: number } = {score_train: -1, score_test: -1};
 
   // todo implemnt function und backend + datenbank änderung -> zeige dies in run dashboard
+
+  constructor(private runservices: RunService, private messageService: MessageService, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(): void {
+    this.route.parent?.params.subscribe((params) => {
+      this.run_id = params['runID'];
+    }).unsubscribe();
+  }
+
   saveModel() {
     let data: {selectedModelClassifier: string, selectedModelLabel: string,
       selectedModelFeaturize: string, range_x: number, range_y: number, n_epochs : number, log_freq : number,
@@ -40,6 +47,7 @@ export class ModelSettingsComponent {
       selectedModelLabel: this.selectedLabelModel, l2: this.l2, seed: this.seed, n_epochs: this.n_epochs,
       base_learning_rate: this.base_learning_rate, log_freq: this.log_freq,
       selectedModelFeaturize: this.selectedFeaturize, range_x: this.range_x, range_y: this.range_y}
+    console.log(data);
     if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedFeaturize != '' &&
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
       if (this.selectedClassifier == 'Naive Bayes'){

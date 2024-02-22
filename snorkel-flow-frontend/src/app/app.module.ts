@@ -54,6 +54,8 @@ import {MessageService} from "primeng/api";
 import { ListboxModule } from 'primeng/listbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SidebarModule } from 'primeng/sidebar';
+import { RunDataComponent } from './components/workflow/run/run-dashboard/run-data/run-data.component';
+import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
 
 
 
@@ -81,7 +83,9 @@ import { SidebarModule } from 'primeng/sidebar';
     FeaturizeComponent,
     ClassifierComponent,
     ModelSettingsComponent,
-    ContributerComponent
+    ContributerComponent,
+    RunDataComponent,
+    RunEvalComponent
   ],
   imports: [
     BrowserModule,

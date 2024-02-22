@@ -28,22 +28,19 @@ export class WorkflowCreateComponent {
     const title: string = workflowForm.value.title;
     const description: string = workflowForm.value.description;
     let isPublic: boolean = false;
-    // if (workflowForm.value.isPublic == true) {
-    //   isPublic = true;
-    // }
+
     const workflow: WorkflowModel = {is_public: isPublic, title: title, description: description};
 
-    this.workflowService.createWorkflow(workflow).subscribe(respData => {
-      this.workflow_created = true;
-      this.workflow_id = respData.workflow_id;
-      this.showSuccessMessage();
-    }, error => {
+    this.workflowService.createWorkflow(workflow).subscribe({ next: respData => {
+        this.workflow_created = true;
+        this.workflow_id = respData.workflow_id;
+        this.showSuccessMessage();
+      }, error: error => {
         this.errorMessage = [];
         this.errorMessage = [
-            { severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
-        },
-      () => {
-      })
+          { severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+      }
+    });
   }
 
   showSuccessMessage(){

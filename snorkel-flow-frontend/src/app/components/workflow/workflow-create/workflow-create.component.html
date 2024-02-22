@@ -17,31 +17,25 @@
           </span>
         </div>
         <br>
-        <!--        <div>-->
-        <!--          <span class="flex align-items-center gap-1 mt-2">-->
-        <!--            <p-checkbox id="isPublic" [binary]="true" ngModel [disabled]="workflow_created" name="isPublic" ></p-checkbox>-->
-        <!--            <label style="padding-left: 0.5rem" for="isPublic">public</label>-->
-        <!--          </span>-->
-        <!--        </div>-->
       </div>
       <br>
       <button pButton class="p-button-secondary mt-2 p-button-info"  [disabled]="workflow_created" type="submit">Submit</button>
-      <button pButton class="p-button-secondary mt-2 button-cancel" [routerLink]="['/dashboard']" type="button">Cancel</button>
+      <button pButton class="p-button-secondary mt-2 button-cancel" [disabled]="workflow_created" [routerLink]="['/dashboard']" type="button">Cancel</button>
     </form>
   </p-card>
-  <p-messages [(value)]="errorMessage"></p-messages>
+  <p-messages [(value)]="errorMessage" [enableService]="false"></p-messages>
 </div>
 <div *ngIf="workflow_created">
   <p-divider></p-divider>
   <div class="container mt-4">
     <app-file-upload [workflow_id]="workflow_id"></app-file-upload>
     <div class="grid mt-5">
-      <div class="col-2 col-offset-10">
+      <div class="col-2 col-offset-10 justify-content-end flex">
         <button pButton type="button"
                 class="p-button-secondary ml-5" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Finish"></button>
       </div>
     </div>
   </div>
 </div>
-<p-toast position="bottom-center" key="bc"></p-toast>
+<p-toast position="bottom-center"></p-toast>
 

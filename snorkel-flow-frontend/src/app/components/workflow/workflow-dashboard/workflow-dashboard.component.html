@@ -10,7 +10,7 @@
     <div>
       <ul>
         <li *ngFor="let run of runs">
-          <a [routerLink]="['/workflow', workflow_id, 'run-dashboard', run.id]">{{run.id}}/{{run.creation_date}}/{{run.creator}}</a>
+          <a [routerLink]="['/workflow', workflow_id, 'run-dashboard', run.id, 'data']">{{run.id}}/{{run.creation_date}}/{{run.creator}}</a>
         </li>
       </ul>
     </div>

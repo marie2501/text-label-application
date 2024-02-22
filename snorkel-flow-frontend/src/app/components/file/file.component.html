@@ -14,9 +14,9 @@
           </div>
         </p-card>
       </div>
-        <div class="col-3 flex align-items-center justify-content-center col-offset-1">
-          <button pButton type="button"
-                  class="p-button-secondary w-11rem" icon="pi pi-arrow-left" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
+        <div class="col-6 flex align-items-center justify-content-center" [ngClass]="{'col-offset-6': file_names.id == -1}">
+          <button pButton type="button" [ngClass]="file_names.id == -1 ? 'w-7rem' : 'w-11rem'"
+                  class="p-button-secondary p-button-sm" icon="pi pi-arrow-left" [routerLink]="['/workflow', this.workflow_id, 'dashboard']" label="Return"></button>
         </div>
       </div>
     </div>

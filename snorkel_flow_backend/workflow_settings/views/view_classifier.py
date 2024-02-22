@@ -37,7 +37,6 @@ class ClassiferView(viewsets.ViewSet):
         base_learning_rate = request.data['base_learning_rate']
         l2 = request.data['l2']
 
-
         if run.exists():
             run = run[0]
 

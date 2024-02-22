@@ -20,6 +20,8 @@ import {FeaturizeComponent} from "./components/workflow/run/run-dashboard/featur
 import {ClassifierComponent} from "./components/workflow/run/run-dashboard/classifier/classifier.component";
 import {ModelSettingsComponent} from "./components/workflow/run/run-dashboard/model-settings/model-settings.component";
 import {ContributerComponent} from "./components/workflow/contributer/contributer.component";
+import {RunDataComponent} from "./components/workflow/run/run-dashboard/run-data/run-data.component";
+import {RunEvalComponent} from "./components/workflow/run/run-dashboard/run-eval/run-eval.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -35,7 +37,11 @@ const routes: Routes = [
       {path: ':wid/create-labelfunction', component: LabelfunctionCreateComponent},
       {path: ':wid/:lid/update-labelfunction', component: LabelfunctionUpdateComponent},
       {path: ':id/labelfunction-run', component: LabelfunctionRunComponent},
-      {path: ':id/run-dashboard/:runID', component: RunDashboardComponent},
+      {path: ':id/run-dashboard/:runID', component: RunDashboardComponent, children: [
+          {path: 'data', component: RunDataComponent},
+          {path: 'eval', component: RunEvalComponent},
+          {path: 'model', component: ModelSettingsComponent},
+        ]},
     ]},
 ];
 
