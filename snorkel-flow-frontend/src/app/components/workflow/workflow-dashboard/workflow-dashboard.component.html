@@ -1,13 +1,16 @@
-<div class="mt-4 ml-4 mb-4 align-content-center">
-  <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
-  <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Run" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
-  <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-info"></p-button>
-</div>
+<!--<div class="mt-4 ml-4 mb-4 align-content-center">-->
+<!--  <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>-->
+<!--  <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Run" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>-->
+<!--  <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-info"></p-button>-->
+<!--</div>-->
 
-<app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>
-<div class="w-15rem runs_pos">
+<!--<app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>-->
+<div>
+
+
+<div class="border-right-till-end link-color">
   <p-panel header="Runs">
-    <div>
+    <div class="scroll">
       <ul>
         <li *ngFor="let run of runs">
           <a [routerLink]="['/workflow', workflow_id, 'run-dashboard', run.id, 'data']">{{run.id}}/{{run.creation_date}}/{{run.creator}}</a>
@@ -15,9 +18,22 @@
       </ul>
     </div>
   </p-panel>
-  <div class="mt-2">
+  <div>
     <app-contributer [allowedToChange]="isCreator"></app-contributer>
   </div>
+</div>
+<div class="">
+  <div class="position-div">
+
+  <div class="mt-4 ml-4 mb-4 align-content-center">
+    <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
+    <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Run" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
+    <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'file']" label="Manage Datasets" styleClass="p-button-raised p-button-info"></p-button>
+  </div>
+
+  <app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>
+</div>
+</div>
 </div>
 
 

@@ -1,14 +1,14 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {RunService} from "../../../services/workflow/run.service";
 import {RunModel} from "../../../models/run.model";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
-import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-workflow-dashboard',
   templateUrl: './workflow-dashboard.component.html',
-  styleUrls: ['./workflow-dashboard.component.css']
+  styleUrls: ['./workflow-dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class WorkflowDashboardComponent implements OnInit{
 

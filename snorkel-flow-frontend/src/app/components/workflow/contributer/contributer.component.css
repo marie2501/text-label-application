@@ -1,0 +1,15 @@
+.p-listbox .p-listbox-list .p-listbox-item-group {
+  padding: 0rem;
+  background: transparent;
+}
+
+.p-listbox  {
+  background: transparent;
+  border-color: transparent;
+}
+
+.list-padding ul {
+  padding-left: 1rem;
+}
+
+

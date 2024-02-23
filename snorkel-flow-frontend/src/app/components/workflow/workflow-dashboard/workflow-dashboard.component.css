@@ -2,9 +2,42 @@
   white-space: break-spaces;
 }
 
-.runs_pos {
-  position: relative;
-  float: right;
-  top: -30rem;
-  margin-right: 5rem;
+.border-right-till-end {
+  width: 18rem;
+  border-right: 3px solid #5b5b72;
+  height: 100vh;
+  background-color: #2e4a5126;
+}
+
+.scroll {
+  overflow-y: scroll;
+  height: 15rem;
+}
+
+.p-panel .p-panel-header {
+  background-color: #88c3d445;
+  border-color: #88c3d445;
+}
+
+.p-panel .p-panel-content {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.link-color a:link {
+  color: blue;
+}
+
+.link-color a:hover {
+  color: rgba(41, 160, 169, 0.8);
+}
+
+.link-color a:visited {
+  color: #40447fb8;
+}
+
+.position-div {
+  position: sticky;
+  margin-left: 19rem;
+  margin-top: -49rem;
 }

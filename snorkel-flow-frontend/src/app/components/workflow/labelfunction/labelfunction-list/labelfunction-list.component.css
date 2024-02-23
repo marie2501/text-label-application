@@ -10,3 +10,8 @@
 .list .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
   background-color: #607d8b14;
 }
+
+/*.p-button.p-button-danger {*/
+/*  background-color: rgba(232, 52, 52, 0.78);*/
+/*  color: black;*/
+/*}*/

@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {ActivatedRoute} from "@angular/router";
-import {retry} from "rxjs/operators";
 
 @Component({
   selector: 'app-contributer',
   templateUrl: './contributer.component.html',
-  styleUrls: ['./contributer.component.css']
+  styleUrls: ['./contributer.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ContributerComponent implements OnInit{
 
