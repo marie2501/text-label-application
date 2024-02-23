@@ -11,7 +11,16 @@
   background-color: #607d8b14;
 }
 
-/*.p-button.p-button-danger {*/
-/*  background-color: rgba(232, 52, 52, 0.78);*/
-/*  color: black;*/
-/*}*/
+.button-color .p-button.p-button-danger {
+  background-color: #be3737;
+  border: 1px solid #be3737;
+}
+
+.selectable-width {
+  width: 104%;
+}
+
+.button-color .p-button.p-button-help {
+  background-color: #622f86;
+  border: 1px solid #622f86;
+}

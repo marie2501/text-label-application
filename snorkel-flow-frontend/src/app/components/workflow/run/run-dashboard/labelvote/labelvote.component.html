@@ -1,29 +1,34 @@
 <p-card header="Combine Labelfunction Outputs"  [style]="{ width: '360px' }">
   <ng-template pTemplate="content">
     <p>Combine the output of the Labelfunctions into one label per data point</p>
-    <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+    <div class="list-position">
+      <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+    </div>
     <div *ngIf="selectedModel == 'Train Label Model'" class="mt-4">
       <label class="mr-2 font-semibold">Label Model Settings:</label>
       <br>
-      <label class="mr-2">n epochs:</label>
-      <br>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="n_epochs" > </p-inputNumber>
-      <br>
-      <label class="mr-2">Log freq:</label>
-      <br>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="log_freq" > </p-inputNumber>
-      <br>
-      <label class="mr-2">Seed:</label>
-      <br>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="seed" > </p-inputNumber>
-      <br>
-      <label class="mr-2">L2:</label>
-      <br>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="l2" > </p-inputNumber>
-      <br>
-      <label class="mr-2">Learning rate:</label>
-      <br>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="base_learning_rate" > </p-inputNumber>
-    </div>
+      <div class="ml-2">
+        <label class="mr-2">n epochs:</label>
+        <br>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="n_epochs" > </p-inputNumber>
+        <br>
+        <label class="mr-2">Log freq:</label>
+        <br>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="log_freq" > </p-inputNumber>
+        <br>
+        <label class="mr-2">Seed:</label>
+        <br>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="seed" > </p-inputNumber>
+        <br>
+        <label class="mr-2">L2:</label>
+        <br>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="l2" > </p-inputNumber>
+        <br>
+        <label class="mr-2">Learning rate:</label>
+        <br>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="base_learning_rate" > </p-inputNumber>
+
+      </div>
+      </div>
   </ng-template>
 </p-card>

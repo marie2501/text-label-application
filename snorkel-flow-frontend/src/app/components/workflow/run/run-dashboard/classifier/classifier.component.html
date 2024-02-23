@@ -1,6 +1,8 @@
 <p-card header="Train a Classifier"  [style]="{ width: '360px' }">
   <ng-template pTemplate="content">
     <p>Train a Classifier</p>
-    <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+    <div class="list-position">
+      <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
+    </div>
   </ng-template>
 </p-card>

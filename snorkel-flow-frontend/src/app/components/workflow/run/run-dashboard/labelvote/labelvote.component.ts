@@ -1,10 +1,11 @@
-import {Component, DoCheck, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, DoCheck, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {RunService} from "../../../../../services/workflow/run.service";
 
 @Component({
   selector: 'app-labelvote',
   templateUrl: './labelvote.component.html',
-  styleUrls: ['./labelvote.component.css']
+  styleUrls: ['./labelvote.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LabelvoteComponent implements OnInit, DoCheck {
   model: string[] = ['Majority Vote', 'Train Label Model'];

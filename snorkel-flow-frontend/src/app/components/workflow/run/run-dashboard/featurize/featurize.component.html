@@ -1,12 +1,16 @@
 <p-card header="Feature extraction"  [style]="{ width: '360px' }">
   <ng-template pTemplate="content">
     <p>Extract features from the text data.</p>
-    <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a feature reprasentation"></p-dropdown>
+    <div class="list-position">
+      <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a feature reprasentation"></p-dropdown>
+    </div>
     <div class="mt-4">
       <label class="mr-2">N-Gram Range:</label>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_x" [min]="1"> </p-inputNumber>
-      <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_y" [min]="1"> </p-inputNumber>
-    </div>
+      <div class="ml-2">
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_x" [min]="1"> </p-inputNumber>
+        <p-inputNumber class="max-h-2rem m-3" inputId="integeronly" [(ngModel)]="range_y" [min]="1"> </p-inputNumber>
+      </div>
+      </div>
   </ng-template>
 </p-card>
 

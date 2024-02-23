@@ -1,7 +1,7 @@
 <div *ngIf="labelfunctions.length > 0">
-  <div class="ml-4 list" [ngClass]="{'w-11': !selectable, 'w-12': selectable}">
+  <div class="ml-4 list" [ngClass]="{'selectable-width': !selectable, 'w-12': selectable}">
     <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm p-datatable-striped"
-             [(selection)]="selectedLabelfunction" dataKey="id" scrollHeight="30rem" (onRowSelect)="onRowSelect()"
+             [(selection)]="selectedLabelfunction" dataKey="id" scrollHeight="32rem" (onRowSelect)="onRowSelect()"
     (onHeaderCheckboxToggle)="onRowSelect()" (onRowUnselect)="onRowSelect()">
       <ng-template pTemplate="caption">
         <th *ngIf="selectable" style="width: 2rem">
@@ -17,8 +17,8 @@
           <td>{{labelfunctions.name}}</td>
           <td>{{labelfunctions.creator}}</td>
           <td class="break-spaces">{{labelfunctions.code}}</td>
-          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"><button styleClass="p-button-sm" pButton pRipple label="Update" [routerLink]="['/workflow', workflow_id, labelfunctions.id, 'update-labelfunction']" class="p-button-help"></button></td>
-          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"><button styleClass="p-button-sm" pButton pRipple label="Delete" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></button></td>
+          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator" class="button-color"><button styleClass="p-button-sm" pButton pRipple label="Update" [routerLink]="['/workflow', workflow_id, labelfunctions.id, 'update-labelfunction']" class="p-button-help"></button></td>
+          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"  class="button-color"><button styleClass="p-button-sm" pButton pRipple label="Delete" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></button></td>
         </tr>
       </ng-template>
     </p-table>
