@@ -2,10 +2,12 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {environmentProd} from "../../../environments/environment.prod";
+import {environmentDev} from "../../../environments/environment";
 
 
 
-const fileURL = 'http://localhost:8080/settings/file_upload';
+const fileURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
 
 
 

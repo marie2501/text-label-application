@@ -3,8 +3,10 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {LabelfunctionModel} from "../../models/labelfunction.model";
 import {catchError} from "rxjs/operators";
 import {throwError} from "rxjs";
+import {environmentProd} from "../../../environments/environment.prod";
+import {environmentDev} from "../../../environments/environment";
 
-const labelfuntionURL = 'http://localhost:8080/settings/workflow';
+const labelfuntionURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
 
 
 
@@ -48,10 +50,13 @@ export class LabelfunctionService {
   }
 
   private handleError(error: HttpErrorResponse){
-    if (error.status == 403){
+    console.log(error)
+    if (error.error.non_field_errors != null) {
+      return throwError(() => error.error.non_field_errors);
+    } else if (error.status == 403){
       return throwError(() => new Error('You do not have the authorization to change the label function.'));
     } else if (error.status == 404){
-      return throwError(() => new Error('The label function does not exists.'));
+      return throwError(() => new Error(error.error));
     } else if (error.status == 400){
       return throwError(() => new Error(error.error));
     }

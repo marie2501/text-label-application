@@ -5,8 +5,10 @@ import {AnalysisModel} from "../../models/analysis.model";
 import {Subject, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {LabelfunctionModel} from "../../models/labelfunction.model";
+import {environmentProd} from "../../../environments/environment.prod";
+import {environmentDev} from "../../../environments/environment";
 
-const labelfuntionURL = 'http://localhost:8080/settings/workflow';
+const labelfuntionURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
 
 
 

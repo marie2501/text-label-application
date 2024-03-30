@@ -11,6 +11,9 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
+    "@angular-devkit/build-angular": "^16.1.3",
+    "@angular/cli": "~16.1.3",
+    "@angular/compiler-cli": "^16.1.0",
     "@angular/common": "^16.1.0",
     "@angular/compiler": "^16.1.0",
     "@angular/core": "^16.1.0",
@@ -26,7 +29,8 @@
     "primeng": "^16.9.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.13.0",
+    "typescript": "~5.1.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.3",

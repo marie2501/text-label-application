@@ -3,8 +3,10 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, tap, throwError} from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {WorkflowModel} from "../../models/workflow.model";
+import {environmentProd} from "../../../environments/environment.prod";
+import {environmentDev} from "../../../environments/environment";
 
-const workflowURL = 'http://localhost:8080/settings/workflow';
+const workflowURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
 
 
 
@@ -54,7 +56,14 @@ export class WorkflowService {
   }
 
   private handleError(error: HttpErrorResponse){
-    if (error.status == 403){
+    console.log(error)
+    if(error.error.description != null) {
+      return throwError(() => new Error('Description can not be blank'));
+    } else if (error.error.title != null)  {
+      return throwError(() => new Error('Title can not be blank'));
+    } else if (error.error.non_field_errors != null) {
+      return throwError(() => error.error.non_field_errors);
+    } else if (error.status == 403){
       return throwError(() => new Error('You do not have authorization to access this resource'));
     } else if (error.status == 404){
       return throwError(() => new Error('The requested resource does not exists.'));
@@ -63,5 +72,4 @@ export class WorkflowService {
     }
     return throwError(() => new Error('An unknown error occurred'));
   }
-
 }

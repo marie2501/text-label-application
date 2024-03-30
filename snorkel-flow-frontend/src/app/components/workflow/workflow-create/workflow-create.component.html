@@ -5,7 +5,7 @@
       <div >
         <div class="p-fluid width">
               <span class="p-float-label">
-                <input type="text" id="title" [disabled]="workflow_created" pInputText name="title" ngModel required>
+                <input type="text" id="title" [disabled]="workflow_created" pInputText name="title" ngModel>
                 <label for="title">Title</label>
               </span>
         </div>
@@ -23,7 +23,7 @@
       <button pButton class="p-button-secondary mt-2 button-cancel" [disabled]="workflow_created" [routerLink]="['/dashboard']" type="button">Cancel</button>
     </form>
   </p-card>
-  <p-messages [(value)]="errorMessage" [enableService]="false"></p-messages>
+  <p-messages [(value)]="errorMessage"></p-messages>
 </div>
 <div *ngIf="workflow_created">
   <p-divider></p-divider>

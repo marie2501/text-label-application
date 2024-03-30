@@ -18,6 +18,22 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
 
 class LabelfunctionCreateSerializer(serializers.ModelSerializer):
     workflow = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Workflow.objects.all())
+    def validate(self, data):
+        type = data.get('type')
+        code = data.get('code')
+
+        not_allowed_modules = ['os', 'shutil', 'subprocess', 'pickle', 'openpyxl',
+                               'requests', 'paramiko', 'Crypto', 'BeautifulSoup', 'sys']
+
+        if type == 'import':
+            for modul in not_allowed_modules:
+                if modul in code:
+                    raise serializers.ValidationError(f"Code cannot contain {modul} for type 'import'.")
+        else:
+            if 'import' in code:
+                raise serializers.ValidationError("Code cannot contain an import.")
+
+        return data
 
     class Meta:
         model = Labelfunction

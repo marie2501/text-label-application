@@ -38,7 +38,7 @@ export class WorkflowCreateComponent {
       }, error: error => {
         this.errorMessage = [];
         this.errorMessage = [
-          { severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+          { severity: 'error', summary: 'Error', detail: error }];
       }
     });
   }

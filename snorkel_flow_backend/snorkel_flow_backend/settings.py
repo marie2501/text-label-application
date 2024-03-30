@@ -20,13 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vc@r5#s9)&9-pa5q_)*fc_o4%a!)0@i-$=)3#5w_nc(l4d9tnf'
+SECRET_KEY = 'asdNB298#+NMhn+#73du$wbcdw837$GABXAT&Qbsax&5GAX%pa%la7?3H;.dg63!ocdeHUI6WrS&bez'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# todo später beschränken
-ALLOWED_HOSTS = ['*']
+
+
+ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de', 'localhost']
 
 
 # Application definition
@@ -127,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -134,11 +136,12 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Settings
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:4200",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://masterfrontend:80",
+#     "http://178.254.37.162:80",
+# ]
 
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 
 # File Settings
 MEDIA_URL = '/media/'

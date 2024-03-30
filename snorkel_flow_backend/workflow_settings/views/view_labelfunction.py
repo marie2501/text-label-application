@@ -41,9 +41,9 @@ class LabelfunctionView(viewsets.ViewSet):
                 data = 'Compiled'
                 return Response(data, status=status.HTTP_200_OK)
             else:
-                exec(code, locals())
-                data = 'Compiled'
-                return Response(data, status=status.HTTP_200_OK)
+                # exec(code, locals())
+                # data = 'Compiled'
+                return Response('from snorkel.labeling import labeling_function needs to be imported', status=status.HTTP_404_NOT_FOUND)
         except:
             error = str(sys.exc_info())
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
@@ -84,25 +84,26 @@ class LabelfunctionView(viewsets.ViewSet):
                     error = str(sys.exc_info())
                     return Response(error, status=status.HTTP_400_BAD_REQUEST)
             else:
-                try:
-                    exec(code, locals())
-
-                    dataframe = pd.read_csv(file_path)
-                    dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
-                    local_var = locals()
-
-                    lfs = [local_var[name]]
-
-                    with queries_disabled():
-                        applier = PandasLFApplier(lfs=lfs)
-                        L_train = applier.apply(df=dataframe)
-
-                    coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
-                    return Response(coverage, status=status.HTTP_200_OK)
-                except:
-                    error = str(sys.exc_info())
-                    return Response(error, status=status.HTTP_400_BAD_REQUEST)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+                # try:
+                #     exec(code, locals())
+                #
+                #     dataframe = pd.read_csv(file_path)
+                #     dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                #     local_var = locals()
+                #
+                #     lfs = [local_var[name]]
+                #
+                #     with queries_disabled():
+                #         applier = PandasLFApplier(lfs=lfs)
+                #         L_train = applier.apply(df=dataframe)
+                #
+                #     coverage = LFAnalysis(L=L_train, lfs=lfs).lf_coverages()[0]
+                #     return Response(coverage, status=status.HTTP_200_OK)
+                # except:
+                #     error = str(sys.exc_info())
+                #     return Response(error, status=status.HTTP_400_BAD_REQUEST)
+                return Response('from snorkel.labeling import labeling_function needs to be imported', status=status.HTTP_404_NOT_FOUND)
+        return Response('Dataset must be uploaded', status=status.HTTP_404_NOT_FOUND)
 
     def get_all_labelfunction_by_workflow_id(self, request, *args, **kwargs):
         workflow_id = kwargs['pk']
@@ -116,7 +117,7 @@ class LabelfunctionView(viewsets.ViewSet):
         if labelfunction.exists():
             serialziers_label = LabelfunctionSerializer(labelfunction[0])
             return Response(serialziers_label.data, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response('Labelfunction does not exists',status=status.HTTP_404_NOT_FOUND)
 
 
     def add_labelfunction(self, request, *args, **kwargs):
@@ -139,7 +140,7 @@ class LabelfunctionView(viewsets.ViewSet):
                     l.delete()
                     return Response(status=status.HTTP_200_OK)
             return Response(status=status.HTTP_403_FORBIDDEN)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response('Labelfunction does not exists', status=status.HTTP_404_NOT_FOUND)
 
     def update_labelfunction(self, request, *args, **kwargs):
         labelfunction_id = kwargs['pk']
@@ -151,8 +152,11 @@ class LabelfunctionView(viewsets.ViewSet):
                 if serialziers_label.is_valid():
                     serialziers_label.save()
                     return Response(status=status.HTTP_200_OK)
-                return Response(serialziers_label.errors, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    if (l.type == 'import'):
+                        return Response('from snorkel.labeling import labeling_function needs to be imported', status=status.HTTP_400_BAD_REQUEST)
+                    return Response(serialziers_label.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_403_FORBIDDEN)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response('Labelfunction does not exists', status=status.HTTP_404_NOT_FOUND)
 
 

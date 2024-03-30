@@ -2,8 +2,11 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, Subject, tap, throwError} from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import {environmentProd} from "../../../environments/environment.prod";
+import {environmentDev} from "../../../environments/environment";
 
-const auhtURL = 'http://localhost:8080/authentication';
+
+const auhtURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/authentication`;
 
 interface AuthRespData {
   token: string;
