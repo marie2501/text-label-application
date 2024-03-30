@@ -24,12 +24,11 @@ p-card >div {
   border: 0.1px solid #929292;
 }
 
-/*p-card .p-button {*/
-/*  background-color: #f0fbff;*/
-/*  border: #f0fbff;*/
-/*}*/
-
-/*p-card .p-button:hover  {*/
-/*  background-color: #c6eaf5;*/
-/*  border: #c6eaf5;*/
+/*.hompage-img {*/
+/*  background-image: url('../../../../../assets/images/Kristallblue_Background.jpg');*/
+/*  background-size: cover;*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: center;*/
+/*  width: 100vw;*/
+/*  height: 100vh;*/
 /*}*/
