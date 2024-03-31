@@ -6,7 +6,7 @@ import {WorkflowModel} from "../../models/workflow.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-const workflowURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
+const workflowURL = `http://${environmentProd.ip_adresse}:${environmentProd.port}/settings/workflow`;
 
 
 
@@ -56,7 +56,6 @@ export class WorkflowService {
   }
 
   private handleError(error: HttpErrorResponse){
-    console.log(error)
     if(error.error.description != null) {
       return throwError(() => new Error('Description can not be blank'));
     } else if (error.error.title != null)  {

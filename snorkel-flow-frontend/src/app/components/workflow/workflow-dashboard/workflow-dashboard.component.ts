@@ -25,12 +25,10 @@ export class WorkflowDashboardComponent implements OnInit{
     this.runService.listlabelfunctionRun(this.workflow_id).subscribe(respData => {
       this.runs = respData;
     }, error => {
-      console.log(error);
     });
     this.workflowService.isWorkflowCreator(this.workflow_id).subscribe(respData => {
       this.isCreator = respData.isCreator;
     }, error => {
-      console.log(error);
     })
   }
 }

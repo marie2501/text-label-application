@@ -28,7 +28,6 @@ export class FileComponent implements OnInit{
       }
       this.fileLoaded = Promise.resolve(true);
     }, error => {
-      console.log(error);
       this.fileLoaded = Promise.resolve(true);
     });
   }

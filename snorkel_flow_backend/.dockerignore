@@ -1,3 +1,4 @@
 django_requirements_installed_packages.txt
 Dockerfile
-db.sqlite3
+database/db.sqlite3
+media/*

@@ -8,7 +8,7 @@ import {LabelfunctionModel} from "../../models/labelfunction.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-const labelfuntionURL = `http://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
+const labelfuntionURL = `http://${environmentProd.ip_adresse}:${environmentProd.port}/settings/workflow`;
 
 
 

@@ -34,7 +34,6 @@ export class LabelfunctionListComponent {
     this.labelfuntionService.getLabelfunctions(this.workflow_id).subscribe((respData) => {
       this.labelfunctions = respData;
     }, error => {
-      console.log(error);
     });
     this.username = this.getLoggedInUser();
   }

@@ -25,7 +25,6 @@ export class ContributerComponent implements OnInit{
     this.workflow_id = this.route.snapshot.params['id'];
     this.workflowService.getAllUsers(this.workflow_id).subscribe(respData => {
       this.users = respData;
-      console.log(respData)
     });
     this.username = this.getLoggedInUser();
     console.log(this.username);
@@ -34,9 +33,7 @@ export class ContributerComponent implements OnInit{
   addButton(username_not_con: string | undefined) {
     if (username_not_con != undefined){
       this.workflowService.addContributer(this.workflow_id, username_not_con).subscribe(respData => {
-        console.log(respData);
       }, error => {
-        console.log(error);
       })
     }
   }
@@ -46,7 +43,6 @@ export class ContributerComponent implements OnInit{
       this.workflowService.deleteContributer(this.workflow_id, username_con).subscribe(respData => {
         console.log(respData);
       }, error => {
-        console.log(error);
       })
     }
   }

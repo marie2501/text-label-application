@@ -47,13 +47,11 @@ export class ModelSettingsComponent implements OnInit{
       selectedModelLabel: this.selectedLabelModel, l2: this.l2, seed: this.seed, n_epochs: this.n_epochs,
       base_learning_rate: this.base_learning_rate, log_freq: this.log_freq,
       selectedModelFeaturize: this.selectedFeaturize, range_x: this.range_x, range_y: this.range_y}
-    console.log(data);
     if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedFeaturize != '' &&
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
       if (this.selectedClassifier == 'Naive Bayes'){
         this.runservices.naiveBayesClassifier(this.run_id, data).subscribe(respData => {
           this.classifierResult = respData;
-          console.log(respData);
           if(this.classifierResult.score_test != -1){
             this.classfierData = [];
             this.classfierData = [

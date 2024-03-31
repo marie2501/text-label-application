@@ -22,7 +22,6 @@ export class LoginComponent {
       const password = loginForm.value.password;
 
       this.authService.login(username, password).subscribe(respData => {
-        console.log(respData)
       }, error => {
         this.errorMessage = [{severity: 'error', summary: 'Error', detail: error}]
         },
