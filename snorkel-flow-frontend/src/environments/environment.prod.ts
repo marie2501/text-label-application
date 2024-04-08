@@ -5,4 +5,5 @@ export const environmentProd = {
   // port: process.env.PORT,
   ip_adresse: 'everythinkatonce.de',
   port: 80,
+  protocol: 'https',
 };

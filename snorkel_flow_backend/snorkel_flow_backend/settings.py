@@ -20,14 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'asdNB298#+NMhn+#73du$wbcdw837$GABXAT&Qbsax&5GAX%pa%la7?3H;.dg63!ocdeHUI6WrS&bez'
+SECRET_KEY = 'asdNB298#+hkasbjhc78a02jk#+as+sadhia78)jansax&5GAX%pa%la7?3H;.dg6(haknx83!ocdeHUI6WrS&bez'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 
 
-ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de', 'localhost']
+ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de']
 
 
 # Application definition
@@ -136,10 +136,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Settings
-# CORS_ALLOWED_ORIGINS = [
-#     "http://masterfrontend:80",
-#     "http://178.254.37.162:80",
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://masterfrontend",
+    "https://masterfrontend",
+    "http://everythinkatonce.de",
+    "https://everythinkatonce.de",
+]
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -148,5 +150,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # SSL Settings
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True

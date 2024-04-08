@@ -2,7 +2,6 @@
 FROM python:3.9-slim
 # working dict and give rights to swlite
 WORKDIR /app
-# RUN mkdir /app/sqlite && chmod -R 755 /app/sqlite
 # install all dep
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'snorkel-flow-frontend'`, () => {
+  it(`should have as title 'DataLabel'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('snorkel-flow-frontend');
+    expect(app.title).toEqual('DataLabel');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('snorkel-flow-frontend app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('DataLabel app is running!');
   });
 });

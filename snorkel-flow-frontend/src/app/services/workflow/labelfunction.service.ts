@@ -6,7 +6,7 @@ import {throwError} from "rxjs";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-const labelfuntionURL = `http://${environmentProd.ip_adresse}:${environmentProd.port}/settings/workflow`;
+const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
 
 
 @Injectable({providedIn: "root"})

@@ -156,7 +156,7 @@ class WorkflowView(viewsets.ViewSet):
 
     def get_installed_packages(self, request, *args, **kwargs):
         packages = []
-        filepath = "{root}/../{name}".format(root=MEDIA_ROOT, name='django_requirements_installed_packages.txt')
+        filepath = "{root}/../{name}".format(root=MEDIA_ROOT, name='requirements.txt')
         with open(filepath, 'r') as file:
             packages = file.readlines()
         return Response(packages, status=status.HTTP_200_OK)

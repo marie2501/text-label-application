@@ -6,7 +6,7 @@ import {WorkflowModel} from "../../models/workflow.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-const workflowURL = `http://${environmentProd.ip_adresse}:${environmentProd.port}/settings/workflow`;
+const workflowURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
 
 
 

@@ -3,4 +3,5 @@ export const environmentDev = {
   // port: process.env.PORT,
   ip_adresse: 'localhost',
   port: 8080,
+  protocol: 'http',
 };
