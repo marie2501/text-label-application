@@ -2,6 +2,7 @@ from django.urls import path
 
 from workflow_settings.views.view_classifier import ClassiferView
 from workflow_settings.views.view_file import FileView
+from workflow_settings.views.view_file_download import FileDownView
 from workflow_settings.views.view_labelfunction import LabelfunctionView
 from workflow_settings.views.view_run import RunView
 from workflow_settings.views.view_workflow import WorkflowView
@@ -9,6 +10,7 @@ from workflow_settings.views.view_workflow import WorkflowView
 urlpatterns = [
     # url for upload for the datasets
     path('file_upload/<int:pk>/', FileView.as_view(), name='file_upload'),
+    path('file_upload/download/<int:pk>/', FileDownView.as_view(), name='file_download'),
 
     # workflow related urls
     path('workflow/', WorkflowView.as_view({'get': 'list_all_by_user', 'post': 'create'}), name='workflow'),

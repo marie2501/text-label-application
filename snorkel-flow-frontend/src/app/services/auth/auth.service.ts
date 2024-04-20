@@ -6,7 +6,8 @@ import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
 
-const auhtURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/authentication`;
+// const auhtURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/authentication`;
+const auhtURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/authentication`;
 
 interface AuthRespData {
   token: string;
@@ -60,6 +61,7 @@ export class AuthService {
 
   //todo passe error code später an
   private handleError(error: HttpErrorResponse) {
+    console.log(error.error);
     return throwError(() => new Error('Login failed. Please try again.'));
 
   }

@@ -7,7 +7,8 @@ import {environmentDev} from "../../../environments/environment";
 
 
 
-const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
+// const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
+const fileURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
 
 
 
@@ -28,6 +29,12 @@ export class FileService {
 
   getFileNamesByWorkflowId(workflow_id: number){
     return this.http.get<{id: number, name: string}>(`${fileURL}/${workflow_id}/`).pipe(catchError(this.handleError));
+  }
+
+  getCSVFile( run_id: number) {
+    return this.http.get<any>(`${fileURL}/download/${run_id}/`, {
+      responseType: 'text' as any
+    });
   }
 
   private handleError(error: HttpErrorResponse){

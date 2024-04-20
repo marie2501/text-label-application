@@ -38,6 +38,9 @@ export class RunDashboardComponent implements OnInit{
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'eval']},
         { label: 'Model',
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'model'],
+          disabled: this.username != this.run!.creator},
+        { label: 'Download',
+          routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'download'],
           disabled: this.username != this.run!.creator}];
       this.runLoaded = Promise.resolve(true);
     }, error => {

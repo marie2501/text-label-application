@@ -22,6 +22,7 @@ import {ModelSettingsComponent} from "./components/workflow/run/run-dashboard/mo
 import {ContributerComponent} from "./components/workflow/contributer/contributer.component";
 import {RunDataComponent} from "./components/workflow/run/run-dashboard/run-data/run-data.component";
 import {RunEvalComponent} from "./components/workflow/run/run-dashboard/run-eval/run-eval.component";
+import {FileDownloadComponent} from "./components/file/file-download/file-download.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -41,6 +42,7 @@ const routes: Routes = [
           {path: 'data', component: RunDataComponent},
           {path: 'eval', component: RunEvalComponent},
           {path: 'model', component: ModelSettingsComponent},
+          {path: 'download', component: FileDownloadComponent},
         ]},
     ]},
 ];

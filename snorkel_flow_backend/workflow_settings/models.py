@@ -75,9 +75,11 @@ class Run(models.Model):
     labelmatrix = models.TextField()
     labelfunction_summary = models.TextField(null=True)
     labelfunction_summary_train = models.TextField(null=True)
+    preds_unlabeled = models.TextField(null=True)
     labelsummary = models.ForeignKey(LabelSummary, on_delete=models.CASCADE, null=True)
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE, null=True)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE, null=True)
+
 
     class Meta:
         ordering = ["-creation_date"]

@@ -56,6 +56,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SidebarModule } from 'primeng/sidebar';
 import { RunDataComponent } from './components/workflow/run/run-dashboard/run-data/run-data.component';
 import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
+import { FileDownloadComponent } from './components/file/file-download/file-download.component';
 
 
 
@@ -85,7 +86,8 @@ import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-ev
     ModelSettingsComponent,
     ContributerComponent,
     RunDataComponent,
-    RunEvalComponent
+    RunEvalComponent,
+    FileDownloadComponent
   ],
   imports: [
     BrowserModule,

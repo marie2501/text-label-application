@@ -50,6 +50,9 @@ class ClassiferView(viewsets.ViewSet):
 
             # 1. Labelmodel
             preds_unlabeled = self.train_label_model(run, selectedModelLabel, n_epochs, log_freq, seed, base_learning_rate, l2)
+            print(preds_unlabeled)
+            run.preds_unlabeled = json.dumps(preds_unlabeled.tolist())
+            run.save()
 
             # 2. Featurize
             dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]

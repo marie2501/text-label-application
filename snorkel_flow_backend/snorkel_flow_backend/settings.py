@@ -27,7 +27,7 @@ DEBUG = False
 
 
 
-ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de']
+ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de', 'localhost']
 
 
 # Application definition
@@ -141,6 +141,7 @@ CORS_ALLOWED_ORIGINS = [
     "https://masterfrontend",
     "http://everythinkatonce.de",
     "https://everythinkatonce.de",
+    "http://localhost"
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
@@ -150,5 +151,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # SSL Settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_SSL_REDIRECT = True
