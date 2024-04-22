@@ -1,7 +1,7 @@
 from django.urls import path
 
-from workflow_settings.views.view_file_upload import FileUploadView
-from workflow_settings.views.view_file_download import FileDownloadView
+from workflow_settings.views.view_file.view_file_upload import FileUploadView
+from workflow_settings.views.view_file.view_file_download import FileDownloadView
 
 urlpatterns = [
 

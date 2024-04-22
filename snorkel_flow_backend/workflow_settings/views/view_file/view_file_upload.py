@@ -4,10 +4,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from workflow_settings.permissions import WorkflowAccessPermission, IsWorkflowCreatorPermission
+from workflow_settings.permissions import IsWorkflowCreatorPermission
 from workflow_settings.serializers.serializers_file import FileUploadSerializer
-from workflow_settings.models import File, Workflow
-from workflow_settings.services.FileUploadService import FileUploadService
+from workflow_settings.services.FileService.FileUploadService import FileUploadService
 
 
 # Dataset: corpus_id, entity_id, text, splitting_id
