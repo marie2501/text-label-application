@@ -22,6 +22,7 @@ export class FileUploadComponent implements OnInit {
   success: boolean = false;
   isLoading: boolean = false;
 
+  @Input()
   type: string = 'Upload';
   errorMessage: Message[] = [];
 

@@ -27,8 +27,8 @@ export class FileService {
     return this.http.put(`${fileURL}/${workflow_id}/`, formData).pipe(catchError(this.handleError));
   }
 
-  getFileNamesByWorkflowId(workflow_id: number){
-    return this.http.get<{id: number, name: string}>(`${fileURL}/${workflow_id}/`).pipe(catchError(this.handleError));
+  getIsFileUploaded(workflow_id: number){
+    return this.http.get<boolean>(`${fileURL}/${workflow_id}/`).pipe(catchError(this.handleError));
   }
 
   getCSVFile( run_id: number) {
@@ -38,6 +38,7 @@ export class FileService {
   }
 
   private handleError(error: HttpErrorResponse){
+    console.log(error)
     if (error.status == 403){
       return throwError(() => new Error('You do not have the authorization to change the dataset.'));
     } else if (error.status == 404){

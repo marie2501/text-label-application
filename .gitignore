@@ -1,6 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/angular,django,macos,pycharm,webstorm
 # Edit at https://www.toptal.com/developers/gitignore?templates=angular,django,macos,pycharm,webstorm
 
+test-env/
+
 ### Angular ###
 ## Angular ##
 # compiled output

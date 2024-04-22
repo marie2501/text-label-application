@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from workflow_settings.permissions import WorkflowAccessPermission, IsWorkflowCreatorPermission
 from workflow_settings.serializers.serializers_file import FileUploadSerializer
 from workflow_settings.models import File, Workflow
 from workflow_settings.services.FileUploadService import FileUploadService
@@ -13,13 +14,13 @@ from workflow_settings.services.FileUploadService import FileUploadService
 
 # todo sehr wichtig schreibe eigene permission klasse, sodas nur die läute in derm worklfow zugriff haben
 
-class FileView(APIView):
+class FileUploadView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     parser_class = [FileUploadParser]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsWorkflowCreatorPermission]
 
     def post(self, request, *args, **kwargs):
-        workflow_id = kwargs['pk']
+        workflow_id = kwargs['workflow_id']
         file_serializer = FileUploadSerializer(data=request.data)
         request_user = request.user
 
@@ -30,7 +31,8 @@ class FileView(APIView):
 
 
     def put(self, request, *args, **kwargs):
-        workflow_id = kwargs['pk']
+        workflow_id = kwargs['workflow_id']
+
         file_serializer = FileUploadSerializer(data=request.data)
         request_user = request.user
 
@@ -39,10 +41,12 @@ class FileView(APIView):
 
         return Response(status=status_code, data=data)
 
-    #todo auslagern und download machen keine filenamen get machen
     def get(self, request, *args, **kwargs):
-        workflow_id = kwargs['pk']
+        workflow_id = kwargs['workflow_id']
 
-        FileDownloadService
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        fileuploadService = FileUploadService()
+        data = fileuploadService.is_file_uploaded(workflow_id=workflow_id)
+
+        return Response(data=data, status=status.HTTP_200_OK)
+
 
