@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from workflow_settings.permissions import IsWorkflowCreatorPermission
 from workflow_settings.serializers.serializers_file import FileUploadSerializer
-from workflow_settings.services.FileService.FileUploadService import FileUploadService
+from workflow_settings.services.file_service.FileUploadService import FileUploadService
 
 
 # Dataset: corpus_id, entity_id, text, splitting_id

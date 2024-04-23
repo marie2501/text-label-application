@@ -11,7 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 export class ContributerComponent implements OnInit{
 
   workflow_id: number = 0;
-  users: {items: { label: string, value: string }[], label: string}[] = [];
+  contributer: {username: string}[] = [];
 
   username: string = '';
 
@@ -23,8 +23,8 @@ export class ContributerComponent implements OnInit{
 
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
-    this.workflowService.getAllUsers(this.workflow_id).subscribe(respData => {
-      this.users = respData;
+    this.workflowService.getContributers(this.workflow_id).subscribe(respData => {
+      this.contributer = respData;
     });
     this.username = this.getLoggedInUser();
     console.log(this.username);

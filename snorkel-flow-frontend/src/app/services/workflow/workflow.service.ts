@@ -36,12 +36,16 @@ export class WorkflowService {
     return this.http.get<WorkflowModel>(`${workflowURL}/${workflow_id}/`).pipe(catchError(this.handleError));
   }
 
-  getAllUsers(workflow_id: number){
-    return this.http.get<{items: { label: string, value: string }[], label: string}[] >(`${workflowURL}/${workflow_id}/contributer/`).pipe(catchError(this.handleError));
-  }
-
   isWorkflowCreator(workflow_id: number){
     return this.http.get<{ isCreator: boolean }>(`${workflowURL}/${workflow_id}/isCreator/`).pipe(catchError(this.handleError));
+  }
+
+  getContributers(workflow_id: number){
+    return this.http.get<{ username: string }[]>(`${workflowURL}/${workflow_id}/contributer/`).pipe(catchError(this.handleError));
+  }
+
+  filterPossibleContributer(workflow_id: number, username_start: string){
+    return this.http.get<{items: { label: string, value: string }[], label: string}[] >(`${workflowURL}/${workflow_id}/contributer/`).pipe(catchError(this.handleError));
   }
 
   addContributer(workflow_id: number, username: string){
@@ -52,11 +56,13 @@ export class WorkflowService {
     return this.http.delete(`${workflowURL}/${workflow_id}/contributer/`, {'body': {'username': username}}).pipe(catchError(this.handleError));
   }
 
+  //todo auslagern in eigenen info/hilf service
   getInstalledPackages(){
     return this.http.get<string[]>(`${workflowURL}/package/`);
   }
 
   private handleError(error: HttpErrorResponse){
+    console.log(error)
     if(error.error.description != null) {
       return throwError(() => new Error('Description can not be blank'));
     } else if (error.error.title != null)  {

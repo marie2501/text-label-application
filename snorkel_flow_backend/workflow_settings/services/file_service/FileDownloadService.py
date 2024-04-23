@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from rest_framework import status
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
-from workflow_settings.models import File, Workflow, Run
+from workflow_settings.models import File, Run
 
 
 class FileDownloadService:

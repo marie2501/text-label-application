@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from workflow_settings.permissions import RunAccessPermission
-from workflow_settings.services.FileService.FileDownloadService import FileDownloadService
+from workflow_settings.services.file_service.FileDownloadService import FileDownloadService
 
 
 class FileDownloadView(APIView):

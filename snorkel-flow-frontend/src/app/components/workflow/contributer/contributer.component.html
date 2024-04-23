@@ -1,22 +1,7 @@
 <div>
   <p-panel header="Contributer & User">
-    <p-listbox [options]="users" [group]="true" class="list-padding">
-      <ng-template let-group pTemplate="group">
-        <div class="flex align-items-center">
-          <span>{{ group.label }}</span>
-        </div>
-      </ng-template>
-      <ng-template let-group pTemplate="item">
-        <div class="flex align-items-center">
-          <div >
-            {{ group.value }}
-          </div>
-          <div *ngIf="allowedToChange == true">
-            <p-button *ngIf="group.label == 'user'" icon="pi pi-plus" class="ml-6" (click)="addButton(group.value)" [rounded]="true" [text]="true" severity="success "></p-button>
-            <p-button *ngIf="group.label == 'contributer' && username != group.value" icon="pi pi-times-circle" class="ml-6" (click)="deleteButton(group.value)" [rounded]="true" [text]="true" severity="danger "></p-button>
-          </div>
-        </div>
-      </ng-template>
+    <p-listbox [options]="contributer" optionLabel="username" class="list-padding">
+
     </p-listbox>
   </p-panel>
 </div>

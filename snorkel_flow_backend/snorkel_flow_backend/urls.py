@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^search/', include('the_social_network.urls.searchUrls')),
     url(r'^contents/', include('the_social_network.urls.contentUrls')),
     url(r'^settings/file_upload/', include('workflow_settings.urls.urls_file')),
+    url(r'^settings/workflow/', include('workflow_settings.urls.urls_workflow')),
     url(r'^settings/', include('workflow_settings.urls.urls_labelfuntion')),
 
 ]

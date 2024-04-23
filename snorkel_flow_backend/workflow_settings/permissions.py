@@ -13,7 +13,7 @@ class WorkflowAccessPermission(BasePermission):
         workflow_filter = Workflow.objects.filter(pk=workflow_id)
         if workflow_filter.exists():
             workflow_object = workflow_filter[0]
-            if (request_user == workflow_object.creator) or (request_user in workflow_object.contributors.values_list('username', flat=True)):
+            if (request_user == workflow_object.creator) or (request_user.username in workflow_object.contributors.values_list('username', flat=True)):
                 return True
         return False
 
