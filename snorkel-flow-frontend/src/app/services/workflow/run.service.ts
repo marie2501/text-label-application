@@ -56,6 +56,7 @@ export class RunService {
   }
 
   private handleError(error: HttpErrorResponse){
+    console.log(error)
     if (error.status == 403){
       return throwError(() => new Error('You do not have authorization to access this resource'));
     } else if (error.status == 404){

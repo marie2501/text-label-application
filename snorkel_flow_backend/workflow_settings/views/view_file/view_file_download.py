@@ -5,14 +5,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from workflow_settings.permissions import RunAccessPermission
+from workflow_settings.permissions import IsRunCreatorPermission
 from workflow_settings.services.file_service.FileDownloadService import FileDownloadService
 
 
 class FileDownloadView(APIView):
     authentication_classes = [authentication.TokenAuthentication]
     parser_class = [FileUploadParser]
-    permission_classes = [IsAuthenticated, RunAccessPermission]
+    permission_classes = [IsAuthenticated, IsRunCreatorPermission]
 
     def get(self, request, *args, **kwargs):
         run_id = kwargs['run_id']

@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^settings/file_upload/', include('workflow_settings.urls.urls_file')),
     url(r'^settings/workflow/', include('workflow_settings.urls.urls_workflow')),
     url(r'^settings/', include('workflow_settings.urls.urls_labelfuntion')),
+    url(r'^settings/', include('workflow_settings.urls.urls_run')),
 
 ]

@@ -50,6 +50,7 @@ export class LabelfunctionService {
   }
 
   private handleError(error: HttpErrorResponse){
+    console.log(error)
     if (error.error.non_field_errors != null) {
       return throwError(() => error.error.non_field_errors);
     } else if (error.status == 403){

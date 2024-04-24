@@ -55,7 +55,6 @@ class LabelSummary(models.Model):
 class Feature(models.Model):
     choices = [('BW', 'Bag of Words'), ('TF', 'tfidf')]
     type = models.CharField(max_length=2, choices=choices)
-    # todo validate das x <= y sein muss
     range_x = models.IntegerField(validators=[MinValueValidator(1)], default=1)
     range_y = models.IntegerField(validators=[MinValueValidator(1)], default=1)
 
@@ -76,7 +75,7 @@ class Run(models.Model):
     labelfunction_summary = models.TextField(null=True)
     labelfunction_summary_train = models.TextField(null=True)
     preds_unlabeled = models.TextField(null=True)
-    labelsummary = models.ForeignKey(LabelSummary, on_delete=models.CASCADE, null=True)
+    labelmodel = models.ForeignKey(LabelSummary, on_delete=models.CASCADE, null=True)
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE, null=True)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE, null=True)
 

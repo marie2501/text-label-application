@@ -6,11 +6,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.permissions import WorkflowAccessPermission, IsWorkflowCreatorPermission
+from workflow_settings.serializers.serializers_labelfunction import LabelfunctionCreateSerializer
 from workflow_settings.serializers.serializers_workflow import WorkflowCreateSerializer, UserAddRelSerializers
+from workflow_settings.services.labelfunktion_service.labelfunction_service import LabelfunctionService
 from workflow_settings.services.workflow_setting_service.workflow_service import WorkflowServiceClass
 
-
-# todo achte auf die permissions
 class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -21,10 +21,19 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
         if isinstance(request.data, QueryDict):
             request.data._mutable = True
         request.data['creator'] = UserAddRelSerializers(request.user).data['id']
+
+
+
         workflow_serializer = WorkflowCreateSerializer(data=request.data)
 
         workflowservice = WorkflowServiceClass()
         status, data = workflowservice.create(workflow_serializer)
+
+        labelfunction_import_standard = {'name': 'imports', 'type': 'import', 'code': 'from snorkel.labeling import labeling_function', 'workflow': data['workflow_id']}
+        serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
+
+        labelfunction = LabelfunctionService()
+        labelfunction.add_labelfunction(request.user, serialziers_label)
 
         return Response(data=data, status=status)
 
