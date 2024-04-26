@@ -29,24 +29,28 @@ export class LabelfunctionService {
     return this.http.post<{workflow_id: number}>(`${labelfuntionURL}/${workflow_id}/labelfunction/`, labelfunction).pipe(catchError(this.handleError));
   }
 
-  getLabelfunctions(workflow_id: number){
+  getLabelfunctionsByWorkflowID(workflow_id: number){
     return this.http.get<LabelfunctionModel[]>(`${labelfuntionURL}/${workflow_id}/labelfunction/`).pipe(catchError(this.handleError));
-  }
-
-  getLabelfunctionsByID(labelfunction_id: number){
-    return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/labelfunction/${labelfunction_id}/`).pipe(catchError(this.handleError));
-  }
-
-  deleteLabelfunctions(labelfunction_id: number){
-    return this.http.delete(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`).pipe(catchError(this.handleError));
   }
 
   getImports(workflow_id: number){
     return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/${workflow_id}/labelfunction/import/`).pipe(catchError(this.handleError));
   }
 
+  updateImports(workflow_id: number, labelfunction: LabelfunctionModel){
+    return this.http.patch(`${labelfuntionURL}/${workflow_id}/labelfunction/import/`, labelfunction).pipe(catchError(this.handleError));
+  }
+
+  getLabelfunctionsByID(labelfunction_id: number){
+    return this.http.get<LabelfunctionModel>(`${labelfuntionURL}/labelfunction/${labelfunction_id}/modifiy/`).pipe(catchError(this.handleError));
+  }
+
+  deleteLabelfunctions(labelfunction_id: number){
+    return this.http.delete(`${labelfuntionURL}/labelfunction/${labelfunction_id}/modifiy/`).pipe(catchError(this.handleError));
+  }
+
   updateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel){
-    return this.http.patch(`${labelfuntionURL}/${labelfunction_id}/labelfunction/`, labelfunction).pipe(catchError(this.handleError));
+    return this.http.patch(`${labelfuntionURL}/labelfunction/${labelfunction_id}/modifiy/`, labelfunction).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse){

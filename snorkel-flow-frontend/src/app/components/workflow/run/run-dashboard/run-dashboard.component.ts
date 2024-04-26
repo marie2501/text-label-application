@@ -29,7 +29,7 @@ export class RunDashboardComponent implements OnInit{
     this.run_id = this.route.snapshot.params['runID'];
     this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
-    this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
+    this.runService.getRun(this.run_id).subscribe(respData => {
       this.run = respData;
       this.runSteps = [
         { label: 'Info',

@@ -31,7 +31,7 @@ export class LabelfunctionListComponent {
   }
 
   ngOnInit(): void {
-    this.labelfuntionService.getLabelfunctions(this.workflow_id).subscribe((respData) => {
+    this.labelfuntionService.getLabelfunctionsByWorkflowID(this.workflow_id).subscribe((respData) => {
       this.labelfunctions = respData;
     }, error => {
     });

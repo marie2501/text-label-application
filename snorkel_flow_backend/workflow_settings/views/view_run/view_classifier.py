@@ -17,7 +17,6 @@ class ClassiferView(viewsets.ViewSet):
 
     def call_classifier(self, request, *args, **kwargs):
         run_id = kwargs['run_id']
-        run = Run.objects.filter(pk=run_id)
         selectedModelClassifier = request.data['selectedModelClassifier']
         selectedModelLabel = request.data['selectedModelLabel']
         selectedModelFeaturize = request.data['selectedModelFeaturize']

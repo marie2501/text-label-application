@@ -1,11 +1,12 @@
 from rest_framework import serializers
 from snorkel.labeling.model import LabelModel
 
-from workflow_settings.models import Run, Feature, Classifier
+from workflow_settings.models import Run, Feature, Classifier, Labelfunction
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer
 
 
 class RunCreateSerializer(serializers.ModelSerializer):
+    labelfunctions = serializers.PrimaryKeyRelatedField(queryset=Labelfunction.objects.all(), many=True)
 
     class Meta:
         model = Run

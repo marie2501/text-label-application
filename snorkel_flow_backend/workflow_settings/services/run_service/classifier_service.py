@@ -37,7 +37,6 @@ class ClassiferService:
                                                      run_object, seed, selectedModelLabel)
 
 
-
             # 2. Featurize
             features_test, features_train, features_unlabeled = self.__call_feature_generation(range_x, range_y,
                                                                                              run_object,
@@ -45,10 +44,10 @@ class ClassiferService:
                                                                                              text_list_test,
                                                                                              text_list_train,
                                                                                              text_list_unlabeled)
-
             # 3. Classifier
+            print(selectedModelClassifier)
             score_test, score_train = 0, 0
-            if selectedModelClassifier == 'NB':
+            if selectedModelClassifier == 'Naive Bayes':
                 score_test, score_train = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)

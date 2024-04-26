@@ -57,11 +57,10 @@ class RunService:
                         summary = LFAnalysis(L=L_train_unlabeled, lfs=labelfunction_reference).lf_summary()
                         summary_train = LFAnalysis(L=L_train_train, lfs=labelfunction_reference).lf_summary(Y=text_list_train_gold_labels)
                         summary['index'] = summary.index
-                        summary_train = summary_train.rename(columns={"Emp. Acc.": "Empirical Accuracy"})
+                        summary_train = summary_train.rename(columns={"Emp. Acc.": "EmpAcc"})
                         summary_train['index'] = summary_train.index
 
                         data = {'summary': summary, 'summary_train': summary_train}
-
                         labelmatrix = json.dumps(L_train_unlabeled.tolist())
                         run_obeject.labelfunction_summary = summary.to_json(orient='split')
                         run_obeject.labelmatrix = labelmatrix
@@ -74,21 +73,21 @@ class RunService:
         return status.HTTP_404_NOT_FOUND, {"message": "The run does not exist"}
 
 # todo get analysis wegmachen und direkt in exekute run machen
-    def get_analysis(self, run_id):
-        run = Run.objects.filter(pk=run_id)
-        if run.exists():
-            if run[0].labelfunction_summary is not None:
-                run_obeject_summary = run[0].labelfunction_summary
-                run_obeject_summary_train = run[0].labelfunction_summary_train
-                summary = pd.read_json(StringIO(run_obeject_summary), orient='split')
-                summary_train = pd.read_json(StringIO(run_obeject_summary_train), orient='split')
-                summary['index'] = summary.index
-                summary_train = summary_train.rename(columns={"Emp. Acc.": "Empirical Accuracy"})
-                summary_train['index'] = summary_train.index
-                return status.HTTP_200_OK, {'summary': summary, 'summary_train': summary_train}
-            error = 'The run has not yet been executed by the creator.'
-            return status.HTTP_400_BAD_REQUEST, error
-        return status.HTTP_404_NOT_FOUND, {"message": "The run object does not exist"}
+#     def get_analysis(self, run_id):
+#         run = Run.objects.filter(pk=run_id)
+#         if run.exists():
+#             if run[0].labelfunction_summary is not None:
+#                 run_obeject_summary = run[0].labelfunction_summary
+#                 run_obeject_summary_train = run[0].labelfunction_summary_train
+#                 summary = pd.read_json(StringIO(run_obeject_summary), orient='split')
+#                 summary_train = pd.read_json(StringIO(run_obeject_summary_train), orient='split')
+#                 summary['index'] = summary.index
+#                 summary_train = summary_train.rename(columns={"Emp. Acc.": "Empirical Accuracy"})
+#                 summary_train['index'] = summary_train.index
+#                 return status.HTTP_200_OK, {'summary': summary, 'summary_train': summary_train}
+#             error = 'The run has not yet been executed by the creator.'
+#             return status.HTTP_400_BAD_REQUEST, error
+#         return status.HTTP_404_NOT_FOUND, {"message": "The run object does not exist"}
 
 
 
@@ -106,10 +105,12 @@ class RunService:
         if labelfunction_run.exists():
             run_serializer = RunSerializer(labelfunction_run, many=True)
             return status.HTTP_200_OK, run_serializer.data
-        return status.HTTP_404_NOT_FOUND, {"message": "There are no runs"}
+        return status.HTTP_200_OK, []
 
     def create_run(self, workflow_id, run_serializer, request_user):
         if run_serializer.is_valid():
+            print(run_serializer)
+            print('hhsdhashkdhkashdhaskhdkjhadshadhshdhakhdakjhdh/n')
             run_serializer.save(creator=request_user, workflow_id=workflow_id)
             return status.HTTP_201_CREATED, {"message": "Run was successfuly created"}
         return status.HTTP_400_BAD_REQUEST, run_serializer.errors

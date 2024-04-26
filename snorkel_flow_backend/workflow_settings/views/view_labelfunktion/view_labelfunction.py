@@ -30,6 +30,14 @@ class LabelfunctionView(viewsets.ViewSet):
 
         return Response(status=status, data=data)
 
+    def update_import(self, request, *args, **kwargs):
+        workflow_id = kwargs['workflow_id']
+        request_data = request.data
+
+        labelfunction = LabelfunctionService()
+        status, data = labelfunction.update_import(workflow_id, request_data)
+        return Response(status=status, data=data)
+
     def compile_labelfunction(self, request, *args, **kwargs):
         code = request.data['pythoncode']
         workflow_id = kwargs['workflow_id']

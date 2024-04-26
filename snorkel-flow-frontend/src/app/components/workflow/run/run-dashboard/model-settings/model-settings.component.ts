@@ -50,7 +50,7 @@ export class ModelSettingsComponent implements OnInit{
     if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedFeaturize != '' &&
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
       if (this.selectedClassifier == 'Naive Bayes'){
-        this.runservices.naiveBayesClassifier(this.run_id, data).subscribe(respData => {
+        this.runservices.trainClassifier(this.run_id, data).subscribe(respData => {
           this.classifierResult = respData;
           if(this.classifierResult.score_test != -1){
             this.classfierData = [];

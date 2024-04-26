@@ -45,15 +45,15 @@ export class WorkflowService {
   }
 
   filterPossibleContributer(workflow_id: number, username_start: string){
-    return this.http.get<{items: { label: string, value: string }[], label: string}[] >(`${workflowURL}/${workflow_id}/contributer/`).pipe(catchError(this.handleError));
+    return this.http.get<{ username: string }[]>(`${workflowURL}/${workflow_id}/contributer/modify/`).pipe(catchError(this.handleError));
   }
 
   addContributer(workflow_id: number, username: string){
-    return this.http.post(`${workflowURL}/${workflow_id}/contributer/`, {'username': username}).pipe(catchError(this.handleError));
+    return this.http.post(`${workflowURL}/${workflow_id}/contributer/modify/`, {'username': username}).pipe(catchError(this.handleError));
   }
 
   deleteContributer(workflow_id: number, username: string){
-    return this.http.delete(`${workflowURL}/${workflow_id}/contributer/`, {'body': {'username': username}}).pipe(catchError(this.handleError));
+    return this.http.delete(`${workflowURL}/${workflow_id}/contributer/modify/`, {'body': {'username': username}}).pipe(catchError(this.handleError));
   }
 
   //todo auslagern in eigenen info/hilf service

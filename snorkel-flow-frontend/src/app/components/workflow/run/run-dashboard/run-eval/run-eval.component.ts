@@ -43,7 +43,7 @@ export class RunEvalComponent implements OnInit{
     }).unsubscribe();
     this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
-    this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
+    this.runService.getRun(this.run_id).subscribe(respData => {
       this.run = respData;
       this.runLoaded = Promise.resolve(true);
     }, error => {
@@ -52,9 +52,13 @@ export class RunEvalComponent implements OnInit{
 
 
   executeRun() {
-    this.runService.executelabelfunctionRun(this.run_id).subscribe(respData => {
+    this.runService.executeRun(this.run_id).subscribe(respData => {
       this.showSuccessMessage();
       this.executed = true;
+      this.analysisModel_unlabeled = respData.summary;
+      this.analysisModel_train = respData.summary_train;
+      console.log(respData);
+      this.analysisLoaded = Promise.resolve(true);
     }, error => {
       this.showErrorMessage(error);
     });

@@ -21,38 +21,34 @@ export class RunService {
   }
 
 
-  createlabelfunctionRun(run: {labelfunctions: (number|undefined)[]}, workflow_id: number) {
-    return this.http.post(`${labelfuntionURL}/${workflow_id}/run/`, run).pipe(catchError(this.handleError));
+  createRun(run: {labelfunctions: (number|undefined)[]}, workflow_id: number) {
+    return this.http.post(`${labelfuntionURL}/${workflow_id}/create/run/`, run).pipe(catchError(this.handleError));
   }
 
-  updatelabelfunctionRun(run: {labelfunctions: (number|undefined)[]}, run_id: number) {
+  listRun(workflow_id: number) {
+    return this.http.get<RunModel[]>(`${labelfuntionURL}/${workflow_id}/create/run/`).pipe(catchError(this.handleError));
+  }
+
+  updateRun(run: {labelfunctions: (number|undefined)[]}, run_id: number) {
     return this.http.put(`${labelfuntionURL}/${run_id}/run/`, run).pipe(catchError(this.handleError));
   }
 
-  getlabelfunctionRun(run_id: number) {
+  getRun(run_id: number) {
     return this.http.get<RunModel>(`${labelfuntionURL}/${run_id}/run/`).pipe(catchError(this.handleError));
   }
 
-  listlabelfunctionRun(workflow_id: number) {
-    return this.http.get<RunModel[]>(`${labelfuntionURL}/${workflow_id}/run/list/`).pipe(catchError(this.handleError));
-  }
-
-  executelabelfunctionRun(run_id: number) {
-    return this.http.get(`${labelfuntionURL}/${run_id}/run/exec/`).pipe(catchError(this.handleError));
+  executeRun(run_id: number) {
+    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${labelfuntionURL}/${run_id}/run/exec/`).pipe(catchError(this.handleError));
   }
 
   getAnalysisRun(run_id: number) {
     return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${labelfuntionURL}/${run_id}/run/analysis/`).pipe(catchError(this.handleError));
   }
 
-  // getLabelModel(run_id: number){
-  //   return this.http.get<{ type: string }>(`${labelfuntionURL}/${run_id}/run/labelmodel/`);
-  // }
-
-  naiveBayesClassifier(run_id: number,
-                       data: {selectedModelClassifier: string, selectedModelLabel: string,
+  trainClassifier(run_id: number,
+                  data: {selectedModelClassifier: string, selectedModelLabel: string,
                          selectedModelFeaturize: string, range_x: number, range_y: number}){
-    return this.http.post<{score_train: number, score_test: number}>(`${labelfuntionURL}/run/${run_id}/naivebayes/`, data).pipe(catchError(this.handleError));
+    return this.http.post<{score_train: number, score_test: number}>(`${labelfuntionURL}/run/${run_id}/trainclassifier/`, data).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse){

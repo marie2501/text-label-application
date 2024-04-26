@@ -35,7 +35,7 @@ export class RunDataComponent implements OnInit{
     }).unsubscribe();
     this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
-    this.runService.getlabelfunctionRun(this.run_id).subscribe(respData => {
+    this.runService.getRun(this.run_id).subscribe(respData => {
       this.run = respData;
       this.labelfunctions = this.run.labelfunctions!;
       this.runLoaded = Promise.resolve(true);

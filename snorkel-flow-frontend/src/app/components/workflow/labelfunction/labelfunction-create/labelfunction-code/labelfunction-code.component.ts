@@ -189,7 +189,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
       });
     } else {
       const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
-      this.labelfunctionService.updateLabelfunctions(this.importLabelfunction.id, labelfunctionModel).subscribe(respData => {
+      this.labelfunctionService.updateImports(this.workflow_id, labelfunctionModel).subscribe(respData => {
         this.showSuccessMessage('Imports have been saved');
       }, error => {
         this.showErrorMessage(error);

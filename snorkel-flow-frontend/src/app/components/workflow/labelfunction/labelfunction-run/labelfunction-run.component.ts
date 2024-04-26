@@ -39,7 +39,7 @@ export class LabelfunctionRunComponent implements OnInit{
 
     let run: {labelfunctions: (number|undefined)[]} = {labelfunctions: id_labelfunctions};
     if (this.run_id != -1){
-      this.runservice.updatelabelfunctionRun(run, this.run_id).subscribe(respData => {
+      this.runservice.updateRun(run, this.run_id).subscribe(respData => {
         this.created = true;
         this.showSuccessMessage();
       }, error => {
@@ -47,7 +47,8 @@ export class LabelfunctionRunComponent implements OnInit{
       });
       this.router.navigate(['/workflow', this.workflow_id , 'run-dashboard', this.run_id, 'data'])
     } else {
-      this.runservice.createlabelfunctionRun(run, this.workflow_id).subscribe(respData => {
+      console.log(run)
+      this.runservice.createRun(run, this.workflow_id).subscribe(respData => {
         this.created = true;
         this.showSuccessMessage();
       }, error => {

@@ -56,10 +56,15 @@ class RunCreateView(viewsets.ViewSet):
 
     def create_run(self, request, *args, **kwargs):
         workflow_id = kwargs['workflow_id']
+        print(request.data)
+
         run_serializer = RunCreateSerializer(data=request.data)
 
         runservice = RunService()
         status, data = runservice.create_run(workflow_id, run_serializer, request.user)
+
+        print(status)
+        print(data)
 
         return Response(status=status, data=data)
 

@@ -30,7 +30,7 @@ export class WorkflowDashboardComponent implements OnInit{
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['id'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
-    this.runService.listlabelfunctionRun(this.workflow_id).subscribe(respData => {
+    this.runService.listRun(this.workflow_id).subscribe(respData => {
       this.runs = respData;
     }, error => {
     });

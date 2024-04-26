@@ -110,14 +110,14 @@ class LabelfunctionService:
             return status.HTTP_400_BAD_REQUEST, serialziers_label.errors
         return status.HTTP_404_NOT_FOUND, {"message": "The labelfunction does not exist"}
 
-    def update_import(self, labelfunction_id, request_data):
-        import_filter = Labelfunction.objects.filter(pk=labelfunction_id)
-        if import_filter.exists():
-            import_object = import_filter[0]
+    def update_import(self, workflow_id, request_data):
+        labelfunction_filter = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+        if labelfunction_filter.exists():
+            import_object = labelfunction_filter[0]
             serialziers_import = LabelfunctionCreateSerializer(import_object, data=request_data, partial=True)
             if serialziers_import.is_valid():
                 serialziers_import.save()
-                return status.HTTP_200_OK
+                return status.HTTP_200_OK, {"message": "The imports were successfully updated"}
             return status.HTTP_400_BAD_REQUEST, serialziers_import.errors
         serialziers_import = LabelfunctionCreateSerializer(data=request_data)
         if serialziers_import.is_valid():
