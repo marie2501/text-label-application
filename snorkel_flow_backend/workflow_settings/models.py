@@ -59,7 +59,7 @@ class Feature(models.Model):
     range_y = models.IntegerField(validators=[MinValueValidator(1)], default=1)
 
 class Classifier(models.Model):
-    choices = [('NB', 'Naive Bayes')]
+    choices = [('NB', 'Naive Bayes'), ('RF', 'Random Forest'), ('DT', 'Decision Tree'), ('KN', 'KNeighbors'), ('LR', 'Logistic Regression')]
     type = models.CharField(max_length=2, choices=choices)
     test_score = models.DecimalField(max_digits=10, decimal_places=9)
     train_score = models.DecimalField(max_digits=10, decimal_places=9)

@@ -8,7 +8,7 @@ import {RunService} from "../../../../../services/workflow/run.service";
 })
 export class ClassifierComponent implements OnInit, DoCheck {
 
-  model: string[] = ['Naive Bayes'];
+  model: string[] = ['Naive Bayes', 'Decision Tree', 'Random Forest', 'KNeighbors', 'Logistic Regression'];
   selectedModel: string = '';
 
   @Output()

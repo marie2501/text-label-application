@@ -47,23 +47,22 @@ export class ModelSettingsComponent implements OnInit{
       selectedModelLabel: this.selectedLabelModel, l2: this.l2, seed: this.seed, n_epochs: this.n_epochs,
       base_learning_rate: this.base_learning_rate, log_freq: this.log_freq,
       selectedModelFeaturize: this.selectedFeaturize, range_x: this.range_x, range_y: this.range_y}
+
     if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedFeaturize != '' &&
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
-      if (this.selectedClassifier == 'Naive Bayes'){
-        this.runservices.trainClassifier(this.run_id, data).subscribe(respData => {
-          this.classifierResult = respData;
-          if(this.classifierResult.score_test != -1){
-            this.classfierData = [];
-            this.classfierData = [
-              {severity: 'info', summary: 'Results', detail: `Trainings-Score: ${this.classifierResult.score_train}  und  Test-Score: ${this.classifierResult.score_test}` }];
+      this.runservices.trainClassifier(this.run_id, data).subscribe(respData => {
+        this.classifierResult = respData;
+        if(this.classifierResult.score_test != -1){
+          this.classfierData = [];
+          this.classfierData = [
+            {severity: 'info', summary: 'Results', detail: `Trainings-Score: ${this.classifierResult.score_train}  und  Test-Score: ${this.classifierResult.score_test}` }];
           }
           this.showSuccessMessage();
         }, error => {
           this.showErrorMessage(error);
-        })
-      }
-    } else {
-      console.log('error');
+        });
+      } else {
+      this.showErrorMessage('An error has occurred. Make a selection, range x and y must be greater than or equal to 1, all other values must be greater than or equal to 0');
     }
   }
 
@@ -83,7 +82,7 @@ export class ModelSettingsComponent implements OnInit{
     console.log(this.selectedClassifier)
   }
 
-  onChangeFuturize($event: { selectedModel: string; range_x: number; range_y: number }) {
+  onChangeFeaturize($event: { selectedModel: string; range_x: number; range_y: number }) {
     this.range_x = $event.range_x;
     this.range_y = $event.range_y;
     this.selectedFeaturize = $event.selectedModel;
