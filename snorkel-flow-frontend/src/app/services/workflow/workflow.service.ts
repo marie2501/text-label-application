@@ -50,7 +50,7 @@ export class WorkflowService {
   }
 
   filterPossibleContributer(workflow_id: number, username_start: string){
-    return this.http.get<{ username: string }[]>(`${workflowURL}/${workflow_id}/contributer/modify/`).pipe(catchError(this.handleError));
+    return this.http.get<{ username: string }[]>(`${workflowURL}/${workflow_id}/contributer/modify/`, {'params': {'username_start': username_start}}).pipe(catchError(this.handleError));
   }
 
   addContributer(workflow_id: number, username: string){

@@ -29,7 +29,10 @@ import { FeaturizeComponent } from './components/workflow/run/run-dashboard/feat
 import { ClassifierComponent } from './components/workflow/run/run-dashboard/classifier/classifier.component';
 import { ModelSettingsComponent } from './components/workflow/run/run-dashboard/model-settings/model-settings.component';
 import { ContributerComponent } from './components/workflow/contributer/contributer.component';
-
+import { RunDataComponent } from './components/workflow/run/run-dashboard/run-data/run-data.component';
+import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
+import { FileDownloadComponent } from './components/file/file-download/file-download.component';
+import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
 
 
 import { MenuModule } from 'primeng/menu';
@@ -54,10 +57,7 @@ import {MessageService} from "primeng/api";
 import { ListboxModule } from 'primeng/listbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SidebarModule } from 'primeng/sidebar';
-import { RunDataComponent } from './components/workflow/run/run-dashboard/run-data/run-data.component';
-import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
-import { FileDownloadComponent } from './components/file/file-download/file-download.component';
-import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
+import { DialogModule } from 'primeng/dialog';
 
 
 
@@ -119,7 +119,8 @@ import { ForbiddenComponent } from './components/errors/forbidden/forbidden.comp
     ToastModule,
     ListboxModule,
     InputTextareaModule,
-    SidebarModule
+    SidebarModule,
+    DialogModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

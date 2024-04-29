@@ -1,9 +1,39 @@
 <div>
-  <p-panel header="Contributer & User">
+  <p-panel header="Contributer">
     <p-listbox [options]="contributer" optionLabel="username" class="list-padding">
-
+      <ng-template let-contributer pTemplate="item">
+        <div class="flex align-items-center gap-8">
+          <div>{{ contributer.username }}</div>
+          <p-button *ngIf="contributer.username != username" icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" (click)="deleteButton(contributer.username)"></p-button>
+        </div>
+      </ng-template>
     </p-listbox>
   </p-panel>
+  <div *ngIf="allowedToChange">
+    <button pButton (click)="showDialog()" label="Add contributer" class="p-button-help w-full"></button>
+
+    <p-dialog header="Add Contributer" [(visible)]="visible" [modal]="true" [style]="{ width: '20vw', height: '60vh' }" [draggable]="false" [resizable]="false">
+      <div class="flex justify-content-center">
+        <p-listbox
+          [options]="possibleContributer"
+          optionLabel="username"
+          class="list-padding"
+          [style]="{ width: '15rem', height: '10rem' }"
+          [virtualScroll]="true"
+          [filter]="true"
+          [lazy]="true"
+          (onFilter)="onChange($event)">
+        <ng-template let-contributer pTemplate="item">
+          <div class="flex align-items-center gap-8">
+            <div>{{ contributer.username }}</div>
+            <p-button icon="pi pi-user-plus" [rounded]="true" [text]="true" severity="success" (click)="addButton(contributer.username)"></p-button>
+          </div>
+        </ng-template>
+      </p-listbox>
+      </div>
+    </p-dialog>
+
+  </div>
 </div>
 
 

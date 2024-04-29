@@ -38,7 +38,7 @@ class ContributerModifyView(viewsets.ViewSet):
     def filter_contributers(self, request, *args, **kwargs):
         workflow_id = kwargs['workflow_id']
         request_user = request.user
-        username_start = request.data['username_start']
+        username_start = request.GET['username_start']
         contributerService = ContributerServiceClass()
         status, data = contributerService.filter_contributer(workflow_id=workflow_id, request_user=request_user, username_start=username_start)
 

@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {ActivatedRoute} from "@angular/router";
+import {ListboxChangeEvent, ListboxFilterEvent} from "primeng/listbox";
 
 @Component({
   selector: 'app-contributer',
@@ -12,11 +13,14 @@ export class ContributerComponent implements OnInit{
 
   workflow_id: number = 0;
   contributer: {username: string}[] = [];
+  possibleContributer: {username: string}[] = [];
 
   username: string = '';
 
   @Input()
   allowedToChange: boolean = true;
+
+  visible: boolean = false;
 
   constructor(private workflowService: WorkflowService, private route: ActivatedRoute) {
   }
@@ -33,6 +37,9 @@ export class ContributerComponent implements OnInit{
   addButton(username_not_con: string | undefined) {
     if (username_not_con != undefined){
       this.workflowService.addContributer(this.workflow_id, username_not_con).subscribe(respData => {
+        console.log(respData)
+        this.possibleContributer = this.possibleContributer.filter(user => user.username !== username_not_con)
+        this.contributer.push({'username': username_not_con})
       }, error => {
       })
     }
@@ -42,6 +49,7 @@ export class ContributerComponent implements OnInit{
     if (username_con != undefined){
       this.workflowService.deleteContributer(this.workflow_id, username_con).subscribe(respData => {
         console.log(respData);
+        this.contributer = this.contributer.filter(user => user.username !== username_con)
       }, error => {
       })
     }
@@ -55,4 +63,17 @@ export class ContributerComponent implements OnInit{
     return '';
   }
 
+  showDialog() {
+    this.visible = true;
+  }
+
+  onChange($event: ListboxFilterEvent) {
+    let username = $event.filter;
+    if (username != undefined && username != ''){
+      this.workflowService.filterPossibleContributer(this.workflow_id, username).subscribe(respData => {
+        this.possibleContributer = respData;
+      }, error => {
+      })
+    }
+  }
 }
