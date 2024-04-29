@@ -25,7 +25,7 @@ export class RunDashboardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.workflow_id = this.route.snapshot.params['id'];
+    this.workflow_id = this.route.snapshot.params['wid'];
     this.run_id = this.route.snapshot.params['runID'];
     this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);

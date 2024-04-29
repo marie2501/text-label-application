@@ -11,8 +11,9 @@ urlpatterns = [
     path('package/', WorkflowAuthenticatetOnlyView.as_view({'get': 'get_installed_packages'}), name='package'),
     path('<int:workflow_id>/', WorkflowView.as_view({'get': 'get_by_id'}), name='workflow_user'),
     path('<int:workflow_id>/', WorkflowModifyView.as_view({'delete': 'delete_by_id', 'patch': 'update_by_id'}), name='workflow_modify'),
-
     path('<int:workflow_id>/isCreator/', WorkflowView.as_view({'get': 'user_is_workflow_creator'}), name='workflow_creator'),
+
+    path('<int:workflow_id>/access/', WorkflowAuthenticatetOnlyView.as_view({'get': 'get_access'}), name='access_work'),
 
     path('<int:workflow_id>/contributer/modify/', ContributerModifyView.as_view(
         {'get': 'filter_contributers', 'post': 'add_contributer_by_id', 'delete': 'remove_contributer_by_id'}),

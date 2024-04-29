@@ -18,7 +18,12 @@ from workflow_settings.serializers.serializers_run import RunCreateSerializer, R
 
 class RunService:
 
-    # todo runcreator permission
+    def get_access(self, run_id, request_user):
+        run_filter = Run.objects.filter(pk=run_id, creator=request_user)
+        if run_filter.exists():
+            return status.HTTP_200_OK, True
+        return status.HTTP_200_OK, False
+
     def exec_run(self, run_id):
         run_filter = Run.objects.filter(pk=run_id)
         if run_filter.exists():

@@ -7,15 +7,17 @@ from workflow_settings.serializers.serializers_workflow import WorkflowSerialize
 
 class WorkflowServiceClass:
 
+    def get_access(self, workflow_id, request_user):
+        workflow_filter = Workflow.objects.filter(pk=workflow_id)
+        if workflow_filter.exists():
+            workflow_object = workflow_filter[0]
+            if (request_user == workflow_object.creator) or (request_user.username in workflow_object.contributors.values_list('username', flat=True)):
+                return status.HTTP_200_OK, True
+        return status.HTTP_200_OK, False
+
     def create(self, workflow_serializer):
         if workflow_serializer.is_valid():
             workflow = workflow_serializer.save()
-            # labelfunction_import_standard = {'name': 'imports', 'type': 'import',
-            #                                  'code': 'from snorkel.labeling import labeling_function',
-            #                                  'workflow': workflow.id}
-            # serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
-            # if serialziers_label.is_valid():
-            #     serialziers_label.save(creator=request_user)
             return status.HTTP_201_CREATED, {'workflow_id': workflow.id}
         return status.HTTP_400_BAD_REQUEST, workflow_serializer.errors
 

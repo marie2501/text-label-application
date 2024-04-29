@@ -28,7 +28,7 @@ export class WorkflowDashboardComponent implements OnInit{
   // am besten ein ordern wo ich alle infoboxen sammel
 
   ngOnInit(): void {
-    this.workflow_id = this.route.snapshot.params['id'];
+    this.workflow_id = this.route.snapshot.params['wid'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.listRun(this.workflow_id).subscribe(respData => {
       this.runs = respData;

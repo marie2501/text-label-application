@@ -57,6 +57,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { RunDataComponent } from './components/workflow/run/run-dashboard/run-data/run-data.component';
 import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
 import { FileDownloadComponent } from './components/file/file-download/file-download.component';
+import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
 
 
 
@@ -87,7 +88,8 @@ import { FileDownloadComponent } from './components/file/file-download/file-down
     ContributerComponent,
     RunDataComponent,
     RunEvalComponent,
-    FileDownloadComponent
+    FileDownloadComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule,

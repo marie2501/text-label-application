@@ -16,6 +16,13 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     parser_class = [JSONParser]
 
+    def get_access(self, request, *args, **kwargs):
+        workflow_id = kwargs['workflow_id']
+        workflowservice = WorkflowServiceClass()
+        status, data = workflowservice.get_access(workflow_id, request.user)
+
+        return Response(data=data, status=status)
+
 
     def create(self, request, *args, **kwargs):
         if isinstance(request.data, QueryDict):
@@ -27,15 +34,14 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
         workflow_serializer = WorkflowCreateSerializer(data=request.data)
 
         workflowservice = WorkflowServiceClass()
-        status, data = workflowservice.create(workflow_serializer)
+        status_s, data = workflowservice.create(workflow_serializer)
+        if status_s == status.HTTP_200_OK:
+            labelfunction_import_standard = {'name': 'imports', 'type': 'import', 'code': 'from snorkel.labeling import labeling_function', 'workflow': data['workflow_id']}
+            serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
+            labelfunction = LabelfunctionService()
+            labelfunction.add_labelfunction(request.user, serialziers_label)
 
-        labelfunction_import_standard = {'name': 'imports', 'type': 'import', 'code': 'from snorkel.labeling import labeling_function', 'workflow': data['workflow_id']}
-        serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
-
-        labelfunction = LabelfunctionService()
-        labelfunction.add_labelfunction(request.user, serialziers_label)
-
-        return Response(data=data, status=status)
+        return Response(data=data, status=status_s)
 
     def list_all_by_user(self, request, *args, **kwargs):
         request_user = request.user

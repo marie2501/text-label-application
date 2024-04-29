@@ -2,14 +2,14 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {RunModel} from "../../models/run.model";
 import {AnalysisModel} from "../../models/analysis.model";
-import {Subject, throwError} from "rxjs";
+import {map, Observable, of, Subject, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {LabelfunctionModel} from "../../models/labelfunction.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-// const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
-const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
+// const runURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
+const runURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
 
 
 
@@ -20,35 +20,38 @@ export class RunService {
   constructor(private http: HttpClient) {
   }
 
+  accessRun(run_id: number): Observable<boolean>{
+    return this.http.get<boolean>(`${runURL}/${run_id}/runaccess/`).pipe(catchError(this.handleError));
+  }
 
   createRun(run: {labelfunctions: (number|undefined)[]}, workflow_id: number) {
-    return this.http.post(`${labelfuntionURL}/${workflow_id}/create/run/`, run).pipe(catchError(this.handleError));
+    return this.http.post(`${runURL}/${workflow_id}/create/run/`, run).pipe(catchError(this.handleError));
   }
 
   listRun(workflow_id: number) {
-    return this.http.get<RunModel[]>(`${labelfuntionURL}/${workflow_id}/create/run/`).pipe(catchError(this.handleError));
+    return this.http.get<RunModel[]>(`${runURL}/${workflow_id}/create/run/`).pipe(catchError(this.handleError));
   }
 
   updateRun(run: {labelfunctions: (number|undefined)[]}, run_id: number) {
-    return this.http.put(`${labelfuntionURL}/${run_id}/run/`, run).pipe(catchError(this.handleError));
+    return this.http.put(`${runURL}/${run_id}/run/`, run).pipe(catchError(this.handleError));
   }
 
   getRun(run_id: number) {
-    return this.http.get<RunModel>(`${labelfuntionURL}/${run_id}/run/`).pipe(catchError(this.handleError));
+    return this.http.get<RunModel>(`${runURL}/${run_id}/run/`).pipe(catchError(this.handleError));
   }
 
   executeRun(run_id: number) {
-    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${labelfuntionURL}/${run_id}/run/exec/`).pipe(catchError(this.handleError));
+    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${runURL}/${run_id}/run/exec/`).pipe(catchError(this.handleError));
   }
 
   getAnalysisRun(run_id: number) {
-    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${labelfuntionURL}/${run_id}/run/analysis/`).pipe(catchError(this.handleError));
+    return this.http.get<{'summary': AnalysisModel, 'summary_train': AnalysisModel}>(`${runURL}/${run_id}/run/analysis/`).pipe(catchError(this.handleError));
   }
 
   trainClassifier(run_id: number,
                   data: {selectedModelClassifier: string, selectedModelLabel: string,
                          selectedModelFeaturize: string, range_x: number, range_y: number}){
-    return this.http.post<{score_train: number, score_test: number}>(`${labelfuntionURL}/run/${run_id}/trainclassifier/`, data).pipe(catchError(this.handleError));
+    return this.http.post<{score_train: number, score_test: number}>(`${runURL}/run/${run_id}/trainclassifier/`, data).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse){

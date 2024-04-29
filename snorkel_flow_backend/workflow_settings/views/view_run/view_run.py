@@ -1,5 +1,5 @@
 
-from rest_framework import authentication, viewsets
+from rest_framework import authentication, viewsets, status
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,6 +8,19 @@ from workflow_settings.permissions import WorkflowAccessPermission, IsRunCreator
 from workflow_settings.serializers.serializers_run import RunCreateSerializer
 from workflow_settings.services.run_service.run_service import RunService
 
+
+class RunAuthenticateView(viewsets.ViewSet):
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    parser_class = [JSONParser]
+
+    def get_access(self, request, *args, **kwargs):
+        run_id = kwargs['run_id']
+
+        runservice = RunService()
+        status, data = runservice.get_access(run_id, request.user)
+
+        return Response(data=data, status=status)
 
 class RunView(viewsets.ViewSet):
     authentication_classes = [authentication.TokenAuthentication]

@@ -31,7 +31,7 @@ export class RunDataComponent implements OnInit{
   ngOnInit(): void {
     this.route.parent?.params.subscribe((params) => {
       this.run_id = params['runID'];
-      this.workflow_id = params['id'];
+      this.workflow_id = params['wid'];
     }).unsubscribe();
     this.username = this.getLoggedInUser();
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);

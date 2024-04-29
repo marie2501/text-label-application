@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {Observable, Subject, tap, throwError} from 'rxjs';
+import {map, Observable, of, Subject, tap, throwError} from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import {WorkflowModel} from "../../models/workflow.model";
 import {environmentProd} from "../../../environments/environment.prod";
@@ -22,6 +22,11 @@ export class WorkflowService {
 
   updateCurrentWorkflow(isOnWorkflow: boolean, id: number){
     return this.currentWorkflow.next({isOnWorkflow: isOnWorkflow, id: id});
+  }
+
+
+  accessWorkflow(workflow_id: number): Observable<boolean>{
+    return this.http.get<boolean>(`${workflowURL}/${workflow_id}/access/`).pipe(catchError(this.handleError));
   }
 
   createWorkflow(workflow: WorkflowModel) {

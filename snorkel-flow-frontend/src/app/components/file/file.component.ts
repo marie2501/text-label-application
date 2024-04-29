@@ -17,6 +17,6 @@ export class FileComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.workflow_id = this.route.snapshot.params['id'];
+    this.workflow_id = this.route.snapshot.params['wid'];
   }
 }

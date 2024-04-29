@@ -4,7 +4,7 @@ import {HomepageComponent} from "./components/public/homepage/homepage.component
 import {LoginComponent} from "./components/public/auth/login/login.component";
 import {SignUpComponent} from "./components/public/auth/sign-up/sign-up.component";
 import {UserDashboardComponent} from "./components/dashboard/user-dashboard/user-dashboard.component";
-import {loginGuard, loginGuardHomepage} from "./services/auth/auth-guard.service";
+import {loginGuard, loginGuardHomepage, runAccessGuard, workflowAccessGuard} from "./services/auth/auth-guard.service";
 import {WorkflowCreateComponent} from "./components/workflow/workflow-create/workflow-create.component";
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
@@ -23,6 +23,7 @@ import {ContributerComponent} from "./components/workflow/contributer/contribute
 import {RunDataComponent} from "./components/workflow/run/run-dashboard/run-data/run-data.component";
 import {RunEvalComponent} from "./components/workflow/run/run-dashboard/run-eval/run-eval.component";
 import {FileDownloadComponent} from "./components/file/file-download/file-download.component";
+import {ForbiddenComponent} from "./components/errors/forbidden/forbidden.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -33,18 +34,20 @@ const routes: Routes = [
     canActivate: [loginGuard], canActivateChild: [loginGuard],
     children: [
       {path: 'create', component: WorkflowCreateComponent},
-      {path: ':id/file', component: FileComponent},
-      {path: ':id/dashboard', component: WorkflowDashboardComponent},
-      {path: ':wid/create-labelfunction', component: LabelfunctionCreateComponent},
-      {path: ':wid/:lid/update-labelfunction', component: LabelfunctionUpdateComponent},
-      {path: ':id/labelfunction-run', component: LabelfunctionRunComponent},
-      {path: ':id/run-dashboard/:runID', component: RunDashboardComponent, children: [
+      {path: ':wid/file', component: FileComponent, canActivate: [workflowAccessGuard]},
+      {path: ':wid/dashboard', component: WorkflowDashboardComponent, canActivate: [workflowAccessGuard]},
+      {path: ':wid/create-labelfunction', component: LabelfunctionCreateComponent, canActivate: [workflowAccessGuard]},
+      {path: ':wid/:lid/update-labelfunction', component: LabelfunctionUpdateComponent, canActivate: [workflowAccessGuard]},
+      {path: ':wid/labelfunction-run', component: LabelfunctionRunComponent, canActivate: [workflowAccessGuard]},
+      {path: ':wid/run-dashboard/:runID', component: RunDashboardComponent,
+        canActivate: [runAccessGuard], canActivateChild: [runAccessGuard], children: [
           {path: 'data', component: RunDataComponent},
           {path: 'eval', component: RunEvalComponent},
           {path: 'model', component: ModelSettingsComponent},
           {path: 'download', component: FileDownloadComponent},
         ]},
     ]},
+  {path: 'forbidden', component: ForbiddenComponent}
 ];
 
 @NgModule({
