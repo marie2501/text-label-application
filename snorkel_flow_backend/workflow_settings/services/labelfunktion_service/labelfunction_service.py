@@ -19,6 +19,13 @@ class LabelfunctionService:
             return status.HTTP_200_OK, serialziers_label.data
         return status.HTTP_404_NOT_FOUND, {"message": "Imports don't exists"}
 
+    def get_labels(self, workflow_id):
+        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id, type='labels')
+        if labelfunction.exists():
+            serialziers_label = LabelfunctionSerializer(labelfunction[0])
+            return status.HTTP_200_OK, serialziers_label.data
+        return status.HTTP_404_NOT_FOUND, {"message": "Labels don't exists"}
+
     def compile_labelfunction(self, workflow_id, code):
 
         imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
@@ -69,7 +76,7 @@ class LabelfunctionService:
         return status.HTTP_404_NOT_FOUND, {"message": "No data set has been uploaded"}
 
     def get_all_labelfunction_by_workflow_id(self, workflow_id):
-        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id).exclude(type='import').order_by('creator')
+        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id).exclude(type='import').exclude(type='labels').order_by('creator')
         serialziers_label = LabelfunctionSerializer(labelfunction, many=True)
         return status.HTTP_200_OK, serialziers_label.data
 

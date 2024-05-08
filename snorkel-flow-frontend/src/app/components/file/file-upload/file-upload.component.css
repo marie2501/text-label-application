@@ -5,3 +5,7 @@ p-card >div {
 p-messages button {
   margin-left: auto;
 }
+
+.image_background {
+  width: 40rem;
+}

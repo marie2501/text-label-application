@@ -16,11 +16,8 @@ export class WorkflowDashboardComponent implements OnInit{
   workflow_id: number = 0;
   runs: RunModel[] = [];
   isCreator: boolean = false;
-  isUploaded: boolean = true;
 
-  buttonDataset: string = 'Edit the dataset';
-
-  constructor(private route: ActivatedRoute, private runService: RunService, private workflowService: WorkflowService, private fileService: FileService) {
+  constructor(private route: ActivatedRoute, private runService: RunService, private workflowService: WorkflowService) {
   }
 
 
@@ -37,19 +34,7 @@ export class WorkflowDashboardComponent implements OnInit{
     this.workflowService.isWorkflowCreator(this.workflow_id).subscribe(respData => {
       this.isCreator = respData.isCreator;
     }, error => {
-    }, () => {
-      if (this.isCreator){
-        this.fileService.getIsFileUploaded(this.workflow_id).subscribe(respData => {
-          this.isUploaded = respData;
-          if (!this.isUploaded){
-            this.buttonDataset = 'Upload a dataset';
-          }
-        });
-      }
     });
   }
 
-  updateDataset() {
-
-  }
 }

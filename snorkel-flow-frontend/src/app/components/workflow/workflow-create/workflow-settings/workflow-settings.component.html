@@ -1,0 +1,29 @@
+<div class="container mt-4 mb-6">
+  <h1 class="mb-6"> Create a workflow</h1>
+  <p-card>
+    <form [formGroup]="workflowSettingsForm" (ngSubmit)="onCreate()">
+      <div >
+        <div class="p-fluid width">
+              <span class="p-float-label">
+                <input type="text" id="title" [disabled]="workflow_created" pInputText name="title" pTooltip="Choose a unique title for your workflow." tooltipPosition="right" formControlName="title">
+                <label for="title">Title</label>
+              </span>
+        </div>
+        <br>
+        <div class="p-fluid">
+          <span class="p-float-label">
+            <textarea formControlName="description" id="description" [disabled]="workflow_created" name="description" rows="5" cols="30" pInputTextarea pTooltip="Here you can record information that is provided to all contributors when creating label functions. For example, the annotation task, important definitions, requirements and conditions, special features of the data set and warnings could be documented here." tooltipPosition="top"></textarea>
+            <label for="description">Enter a description of the problem.</label>
+          </span>
+        </div>
+        <br>
+      </div>
+      <h6>Define the annotation classes of the data set</h6>
+      <div pTooltip="Note that abstain must always be -1." tooltipPosition="top" #editor></div>
+      <br>
+      <button pButton class="p-button-secondary mt-2 p-button-info"  [disabled]="workflow_created || (!workflowSettingsForm.valid)" type="submit">Submit</button>
+      <button pButton class="p-button-secondary mt-2 button-cancel" [disabled]="workflow_created" [routerLink]="['/dashboard']" type="button">Cancel</button>
+    </form>
+  </p-card>
+  <p-messages [(value)]="errorMessage"></p-messages>
+</div>

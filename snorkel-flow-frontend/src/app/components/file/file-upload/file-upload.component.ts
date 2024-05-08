@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FileService} from "../../../services/workflow/file.service";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../services/workflow/workflow.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-file-upload',
@@ -12,27 +13,26 @@ export class FileUploadComponent implements OnInit {
 
   @Input()
   workflow_id: number = 0;
-
-  @Input()
-  update: boolean = false;
-
-  @Input()
-  file_id: number = -1;
-
   success: boolean = false;
   isLoading: boolean = false;
+  isUploaded: boolean = true;
 
-  @Input()
-  type: string = 'Upload';
+  type: string = 'Change the dataset';
   errorMessage: Message[] = [];
 
-  constructor(private fileService: FileService, private messageService: MessageService, private workflowService: WorkflowService) {
+  constructor(private fileService: FileService, private messageService: MessageService,
+              private workflowService: WorkflowService, private router: Router) {
   }
 
   ngOnInit(): void {
-    if (this.file_id != -1){
-      this.type = 'Change Dataset'
-    }
+
+    this.fileService.getIsFileUploaded(this.workflow_id).subscribe(respData => {
+      this.isUploaded = respData;
+      if (!this.isUploaded){
+        this.type = 'Upload a dataset';
+      }
+    });
+
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
   }
 
@@ -43,22 +43,24 @@ export class FileUploadComponent implements OnInit {
       formData.append('file', file);
       formData.append('workflow_id', '' + this.workflow_id);
       this.isLoading = true;
-      if (this.file_id == -1){
+      if (!this.isUploaded){
         this.fileService.fileUpload(formData, this.workflow_id).subscribe(respData => {
           this.success = true;
           this.isLoading = false;
           this.showSuccessMessage();
+          this.router.navigate(['workflow', this.workflow_id,'dashboard'])
+
         }, error => {
           this.isLoading = false;
           this.showErrorMessage(error);
         }, () => {
         });
       } else {
-        formData.append('id', this.file_id.toString());
         this.fileService.fileUpdate(formData, this.workflow_id).subscribe(respData => {
           this.success = true;
           this.isLoading = false;
           this.showSuccessMessage();
+          this.router.navigate(['workflow', this.workflow_id,'dashboard'])
         }, error => {
           this.isLoading = false;
           this.showErrorMessage(error);

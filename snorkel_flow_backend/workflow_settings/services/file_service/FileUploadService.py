@@ -21,7 +21,8 @@ class FileUploadService:
             if file_serializer.is_valid():
                 file_serializer.update(instance=file_object, validated_data=file_serializer.validated_data)
                 return status.HTTP_201_CREATED, {"message": "File was successfully updated"}
-            return status.HTTP_403_FORBIDDEN, {"message": "You do not have the authorization to change the data set"}
+            return status.HTTP_403_FORBIDDEN, file_serializer.errors
+        return status.HTTP_404_NOT_FOUND, {"message": "The file you want to update does not exist"}
 
     def is_file_uploaded(self, workflow_id):
         file_filter = File.objects.filter(workflow_id=workflow_id)

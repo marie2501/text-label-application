@@ -9,7 +9,6 @@ import {WorkflowCreateComponent} from "./components/workflow/workflow-create/wor
 import {WorkflowHomeComponent} from "./components/workflow/workflow-home/workflow-home.component";
 import {WorkflowDashboardComponent} from "./components/workflow/workflow-dashboard/workflow-dashboard.component";
 import {LabelfunctionCreateComponent} from "./components/workflow/labelfunction/labelfunction-create/labelfunction-create.component";
-import {FileComponent} from "./components/file/file.component";
 import {LabelfunctionRunComponent} from "./components/workflow/labelfunction/labelfunction-run/labelfunction-run.component";
 import {RunDashboardComponent} from "./components/workflow/run/run-dashboard/run-dashboard.component";
 import {
@@ -24,6 +23,10 @@ import {RunDataComponent} from "./components/workflow/run/run-dashboard/run-data
 import {RunEvalComponent} from "./components/workflow/run/run-dashboard/run-eval/run-eval.component";
 import {FileDownloadComponent} from "./components/file/file-download/file-download.component";
 import {ForbiddenComponent} from "./components/errors/forbidden/forbidden.component";
+import {
+  WorkflowSettingsComponent
+} from "./components/workflow/workflow-create/workflow-settings/workflow-settings.component";
+import {WorkflowFileComponent} from "./components/workflow/workflow-create/workflow-file/workflow-file.component";
 
 const routes: Routes = [
   {path: '', component: HomepageComponent, canActivate: [loginGuardHomepage]},
@@ -33,8 +36,10 @@ const routes: Routes = [
   {path: 'workflow', component: WorkflowHomeComponent,
     canActivate: [loginGuard], canActivateChild: [loginGuard],
     children: [
-      {path: 'create', component: WorkflowCreateComponent},
-      {path: ':wid/file', component: FileComponent, canActivate: [workflowAccessGuard]},
+      {path: 'create', component: WorkflowCreateComponent, children: [
+          {path: '', component: WorkflowSettingsComponent},
+          {path: ':wid/file', component: WorkflowFileComponent, canActivate: [workflowAccessGuard]},
+        ]},
       {path: ':wid/dashboard', component: WorkflowDashboardComponent, canActivate: [workflowAccessGuard]},
       {path: ':wid/create-labelfunction', component: LabelfunctionCreateComponent, canActivate: [workflowAccessGuard]},
       {path: ':wid/:lid/update-labelfunction', component: LabelfunctionUpdateComponent, canActivate: [workflowAccessGuard]},

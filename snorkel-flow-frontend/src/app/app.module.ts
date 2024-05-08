@@ -20,7 +20,6 @@ import { LabelfunctionCreateComponent } from './components/workflow/labelfunctio
 import { LabelfunctionRunComponent } from './components/workflow/labelfunction/labelfunction-run/labelfunction-run.component';
 import { LabelfunctionCodeComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-code/labelfunction-code.component';
 import { FileUploadComponent } from './components/file/file-upload/file-upload.component';
-import { FileComponent } from './components/file/file.component';
 import { LabelfunctionListComponent } from './components/workflow/labelfunction/labelfunction-list/labelfunction-list.component';
 import { RunDashboardComponent } from './components/workflow/run/run-dashboard/run-dashboard.component';
 import { LabelfunctionUpdateComponent } from './components/workflow/labelfunction/labelfunction-update/labelfunction-update.component';
@@ -58,7 +57,10 @@ import { ListboxModule } from 'primeng/listbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { SidebarModule } from 'primeng/sidebar';
 import { DialogModule } from 'primeng/dialog';
-
+import { TooltipModule } from 'primeng/tooltip';
+import { EditorModule } from 'primeng/editor';
+import { WorkflowSettingsComponent } from './components/workflow/workflow-create/workflow-settings/workflow-settings.component';
+import { WorkflowFileComponent } from './components/workflow/workflow-create/workflow-file/workflow-file.component';
 
 
 
@@ -77,7 +79,6 @@ import { DialogModule } from 'primeng/dialog';
     LabelfunctionRunComponent,
     LabelfunctionCodeComponent,
     FileUploadComponent,
-    FileComponent,
     LabelfunctionListComponent,
     RunDashboardComponent,
     LabelfunctionUpdateComponent,
@@ -89,7 +90,9 @@ import { DialogModule } from 'primeng/dialog';
     RunDataComponent,
     RunEvalComponent,
     FileDownloadComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    WorkflowSettingsComponent,
+    WorkflowFileComponent
   ],
   imports: [
     BrowserModule,
@@ -120,7 +123,9 @@ import { DialogModule } from 'primeng/dialog';
     ListboxModule,
     InputTextareaModule,
     SidebarModule,
-    DialogModule
+    DialogModule,
+    TooltipModule,
+    EditorModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

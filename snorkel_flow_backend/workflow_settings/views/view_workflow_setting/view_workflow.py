@@ -25,21 +25,28 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
 
 
     def create(self, request, *args, **kwargs):
-        if isinstance(request.data, QueryDict):
-            request.data._mutable = True
-        request.data['creator'] = UserAddRelSerializers(request.user).data['id']
+        workflow = request.data['workflow']
+        workflow['creator'] = UserAddRelSerializers(request.user).data['id']
+        code_label = request.data['code_label']
 
-
-
-        workflow_serializer = WorkflowCreateSerializer(data=request.data)
+        workflow_serializer = WorkflowCreateSerializer(data=workflow)
 
         workflowservice = WorkflowServiceClass()
         status_s, data = workflowservice.create(workflow_serializer)
-        if status_s == status.HTTP_200_OK:
+        if status_s == status.HTTP_201_CREATED:
             labelfunction_import_standard = {'name': 'imports', 'type': 'import', 'code': 'from snorkel.labeling import labeling_function', 'workflow': data['workflow_id']}
-            serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
+            serialziers_import = LabelfunctionCreateSerializer(data=labelfunction_import_standard)
+            labelfunction = LabelfunctionService()
+            labelfunction.add_labelfunction(request.user, serialziers_import)
+
+            labelfunction_labels = {'name': 'labels', 'type': 'labels',
+                                             'code': code_label,
+                                             'workflow': data['workflow_id']}
+            serialziers_label = LabelfunctionCreateSerializer(data=labelfunction_labels)
             labelfunction = LabelfunctionService()
             labelfunction.add_labelfunction(request.user, serialziers_label)
+
+
 
         return Response(data=data, status=status_s)
 

@@ -29,8 +29,8 @@ export class WorkflowService {
     return this.http.get<boolean>(`${workflowURL}/${workflow_id}/access/`).pipe(catchError(this.handleError));
   }
 
-  createWorkflow(workflow: WorkflowModel) {
-    return this.http.post<{workflow_id: number}>(`${workflowURL}/`, workflow).pipe(catchError(this.handleError));
+  createWorkflow(workflow: WorkflowModel, code_label: string) {
+    return this.http.post<{workflow_id: number}>(`${workflowURL}/`, {workflow: workflow, code_label: code_label}).pipe(catchError(this.handleError));
   }
 
   getWorkflows(){
