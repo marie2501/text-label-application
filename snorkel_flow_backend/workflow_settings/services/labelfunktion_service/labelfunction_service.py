@@ -1,5 +1,6 @@
 import sys
 
+import numpy as np
 from snorkel.labeling import PandasLFApplier, LFAnalysis
 import pandas as pd
 
@@ -12,12 +13,12 @@ from workflow_settings.models import Labelfunction, File, Run
 from workflow_settings.serializers.serializers_labelfunction import LabelfunctionSerializer, LabelfunctionCreateSerializer
 
 class LabelfunctionService:
-    def get_imports(self, workflow_id):
-        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+    def get_import_labels(self, workflow_id, type):
+        labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id, type=type)
         if labelfunction.exists():
             serialziers_label = LabelfunctionSerializer(labelfunction[0])
             return status.HTTP_200_OK, serialziers_label.data
-        return status.HTTP_404_NOT_FOUND, {"message": "Imports don't exists"}
+        return status.HTTP_404_NOT_FOUND, {"message": f"{type} don't exists"}
 
     def get_labels(self, workflow_id):
         labelfunction = Labelfunction.objects.filter(workflow_id=workflow_id, type='labels')
@@ -59,16 +60,23 @@ class LabelfunctionService:
                     exec(import_code, locals())
                     exec(code, locals())
                     dataframe = pd.read_csv(file_path)
-                    dataframe = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                    dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+                    dataframe_train = dataframe.loc[(dataframe['splitting_id'] == 'train')]
+                    text_list_train_gold_labels = np.array(dataframe_train['CLASS'].tolist())
                     local_var = locals()
 
                     lfs = [local_var[name]]
                     with queries_disabled():
                         applier = PandasLFApplier(lfs=lfs)
-                        L_train = applier.apply(df=dataframe)
-# todo hier wurde coverage durch summary getauscht im frontend anpassen
-                    labelsummary = LFAnalysis(L=L_train, lfs=lfs).lf_summary()
-                    return status.HTTP_200_OK, labelsummary
+                        L_unlabeled = applier.apply(df=dataframe_unlabeled)
+                        L_train = applier.apply(df=dataframe_train)
+                    labelsummary_unlabeled = LFAnalysis(L=L_unlabeled, lfs=lfs).lf_summary()
+                    labelsummary_train = LFAnalysis(L=L_train, lfs=lfs).lf_summary(Y=text_list_train_gold_labels)
+                    labelsummary_unlabeled['index'] = labelsummary_unlabeled.index
+                    labelsummary_train = labelsummary_train.rename(columns={"Emp. Acc.": "EmpAcc"})
+                    labelsummary_train['index'] = labelsummary_train.index
+
+                    return status.HTTP_200_OK, {'summary': labelsummary_unlabeled, 'summary_train': labelsummary_train}
                 except:
                     data = str(sys.exc_info())
                     return status.HTTP_400_BAD_REQUEST, data
@@ -89,12 +97,10 @@ class LabelfunctionService:
 
     def add_labelfunction(self, request_user, serialziers_label):
         if serialziers_label.is_valid():
-            serialziers_label.save(creator=request_user)
-            return status.HTTP_201_CREATED, {"message": "Labelfunction was successfully created"}
+            labelfunction = serialziers_label.save(creator=request_user)
+            return status.HTTP_201_CREATED, {'lid': labelfunction.id}
         return status.HTTP_400_BAD_REQUEST, serialziers_label.errors
 
-
-# todo über permission klass nur labelfunktion creator, deletet und update
 
     def delete_labelfunction(self, labelfunction_id):
         labelfunction = Labelfunction.objects.filter(pk=labelfunction_id)
@@ -112,24 +118,36 @@ class LabelfunctionService:
             labelfunktion_object = labelfunction[0]
             serialziers_label = LabelfunctionCreateSerializer(labelfunktion_object, data=request_data, partial=True)
             if serialziers_label.is_valid():
-                serialziers_label.save()
-                return status.HTTP_200_OK, {"message": "The labelfunction was successfully updated"}
+                labelfunction_updated = serialziers_label.save()
+                return status.HTTP_200_OK, {'lid': labelfunction_updated.id}
             return status.HTTP_400_BAD_REQUEST, serialziers_label.errors
         return status.HTTP_404_NOT_FOUND, {"message": "The labelfunction does not exist"}
 
-    def update_import(self, workflow_id, request_data):
-        labelfunction_filter = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+    def update_import_labels(self, workflow_id, request_data, type):
+        labelfunction_filter = Labelfunction.objects.filter(workflow_id=workflow_id, type=type)
         if labelfunction_filter.exists():
             import_object = labelfunction_filter[0]
-            serialziers_import = LabelfunctionCreateSerializer(import_object, data=request_data, partial=True)
+            try:
+                import_code = request_data['code']
+                exec(import_code, locals())
+                serialziers_import = LabelfunctionCreateSerializer(import_object, data=request_data, partial=True)
+                if serialziers_import.is_valid():
+                    serialziers_import.save()
+                    return status.HTTP_200_OK, {"message": f"The {type} were successfully updated"}
+                return status.HTTP_400_BAD_REQUEST, serialziers_import.errors
+            except:
+                data = str(sys.exc_info())
+                return status.HTTP_400_BAD_REQUEST, data
+        try:
+            import_code = request_data['code']
+            exec(import_code, locals())
+            serialziers_import = LabelfunctionCreateSerializer(data=request_data)
             if serialziers_import.is_valid():
                 serialziers_import.save()
-                return status.HTTP_200_OK, {"message": "The imports were successfully updated"}
+                return status.HTTP_200_OK, {"message": f"The {type} were successfully created"}
             return status.HTTP_400_BAD_REQUEST, serialziers_import.errors
-        serialziers_import = LabelfunctionCreateSerializer(data=request_data)
-        if serialziers_import.is_valid():
-            serialziers_import.save()
-            return status.HTTP_200_OK, {"message": "The imports were successfully updated"}
-        return status.HTTP_400_BAD_REQUEST, serialziers_import.errors
+        except:
+            data = str(sys.exc_info())
+            return status.HTTP_400_BAD_REQUEST, data
 
 

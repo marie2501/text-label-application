@@ -32,13 +32,14 @@ def upload_to_labelfunction(instance, filename):
 
 # Speichert die Labelfunktionen in der Datenbank
 class Labelfunction(models.Model):
-    # todo falls labelfunction in einem workflow ist -> nicht vollständig löschen
-    #  sondern nur workflow und creator reference/oder verhindern
     workflow = models.ForeignKey(Workflow, on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='labelfunction_creator')
     type = models.CharField(max_length=50)
     code = models.TextField()
     name = models.CharField(max_length=150)
+    description = models.TextField(null=True)
+    summary_unlabeled = models.TextField(null=True)
+    summary_train = models.TextField(null=True)
 
     class Meta:
         unique_together = [["workflow", "name"]]

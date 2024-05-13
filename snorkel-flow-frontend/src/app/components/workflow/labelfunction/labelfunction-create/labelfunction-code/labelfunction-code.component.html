@@ -2,25 +2,34 @@
 
 <div class="container">
 
-  <p-sidebar [(visible)]="sidebarVisible" position="right">
+  <p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-25rem">
     <h3>Additional information</h3>
     <div class="mt-4">
-      <h5>Problemdescription & Annotationschema</h5>
-      <p class="break-spaces mt-2">{{description}}</p>
+      <h5>Workflow description</h5>
+      <p class="break-spaces mt-2">{{workflowDescription}}</p>
     </div>
+
+    <div>
+      <h5>Annotation scheme</h5>
+      <p>{{annotationschema}}</p>
+    </div>
+
     <div class="mt-4">
-      <h5>Installed Packages</h5>
+      <h5>Installed packages & their versions</h5>
       <ul *ngFor="let modul of packages">
         <li>{{modul}}</li>
       </ul>
     </div>
   </p-sidebar>
 
-  <div class="flex flex-column gap-2">
-    <label for="name">Name of the function</label>
-    <input pInputText id="name" aria-describedby="username-help" [(ngModel)]="functionName" />
-    <small class="text-red-600" id="name-help">Make sure that the name of the function equals the name in the code</small>
+  <div class="text-area-width mt-4">
+    <h2>Description</h2>
+
+    <textarea rows="3" placeholder="Here you can describe what your function does. (Optional)" cols="30" pInputTextarea [(ngModel)]="labelfunctionDescription" ></textarea>
+
   </div>
+
+
 
   <h2 class="mt-4 mb-4">Python-Editor</h2>
   <div class="grid">
@@ -29,20 +38,78 @@
     </div>
     <div class="col-6" >
       <button pButton label="Save Import" class="p-button-info mt-4 mr-4" (click)="saveImport()"></button>
-      <button pButton class="p-button-info" (click)="sidebarVisible = true" icon="pi pi-arrow-left"></button>
+      <button pButton class="p-button-info border-round-xl" (click)="sidebarVisible = true" icon="pi pi-info-circle"></button>
     </div>
   </div>
 
   <br>
   <p-messages [(value)]="errorMessage"></p-messages>
+  <br>
   <div *ngIf="isTested">
-    <p><b>Coverage</b>: {{test_coverage}}</p>
+    <p-table [value]="analysisModel_unlabeled.index" rowGroupMode="rowspan" [scrollable]="true" styleClass="p-datatable-sm p-datatable-striped"
+             dataKey="index" scrollHeight="15rem">
+      <ng-template pTemplate="caption">
+        <th> Analysis </th>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            {{ 'Labelfunction' }}
+          </th>
+          <th>
+            {{ 'Dataset' }}
+          </th>
+          <th>
+            {{ 'Coverage' }}
+          </th>
+          <th>
+            {{ 'Conflicts' }}
+          </th>
+          <th>
+            {{ 'Overlaps' }}
+          </th>
+          <th>
+            {{ 'Polarity' }}
+          </th>
+          <th>
+            {{ 'Incorrect' }}
+          </th>
+          <th>
+            {{ 'Correct' }}
+          </th>
+          <th>
+            {{ 'EmpAcc' }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-i="rowIndex">
+        <tr>
+          <td>{{analysisModel_unlabeled.index[i]}}</td>
+          <td><p-tag severity="primary" value="Unlabeled"></p-tag></td>
+          <td>{{analysisModel_unlabeled.Coverage[i] | number:'1.2-4'}}</td>
+          <td>{{analysisModel_unlabeled.Conflicts[i] | number:'1.2-4'}}</td>
+          <td>{{analysisModel_unlabeled.Overlaps[i] | number:'1.2-4'}}</td>
+          <td colspan="4">{{analysisModel_unlabeled.Polarity[i]}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><p-tag severity="danger" value="Train"></p-tag></td>
+          <td>{{analysisModel_train.Coverage[i] | number:'1.2-4'}}</td>
+          <td>{{analysisModel_train.Conflicts[i] | number:'1.2-4'}}</td>
+          <td>{{analysisModel_train.Overlaps[i] | number:'1.2-4'}}</td>
+          <td>{{analysisModel_train.Polarity[i]}}</td>
+          <td>{{analysisModel_train.Incorrect![i]}}</td>
+          <td>{{analysisModel_train.Correct![i]}}</td>
+          <td>{{analysisModel_train.EmpAcc![i] | number:'1.2-4'}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <br>
   </div>
+
   <div #editor></div>
 
-  <button pButton label="Compile" class="p-button-info mt-4 mr-4" (click)="compilePythonCode()"></button>
-  <button pButton label="Test" class="p-button-info mt-4 mr-4" [disabled]="!isCompiled"  (click)="testPythonCode()"></button>
-  <button pButton label="Save" class="p-button-info mt-4" [disabled]="!isTested" (click)="savePythonCode()"></button>
+  <button pButton label="Test and {{isUpdate()}}" pTooltip="Your label function is tested for correct syntax and applied to the data set before saving." tooltipPosition="bottom" [disabled]="!isSaved" class="p-button-info mt-4 mr-4" (click)="testAndSaveLabelfunction()"></button>
 </div>
 <p-toast position="bottom-center" key="bc"></p-toast>
 

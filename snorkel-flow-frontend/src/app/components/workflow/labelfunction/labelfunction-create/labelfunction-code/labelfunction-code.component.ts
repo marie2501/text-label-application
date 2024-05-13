@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, OnInit, AfterViewInit, Input} from '@angular/core';
+import {Component, ViewChild, ElementRef, OnInit, AfterViewInit, Input, ViewEncapsulation} from '@angular/core';
 import * as ace from 'ace-builds';
 import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/theme-dawn';
@@ -7,7 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../../services/workflow/workflow.service";
-import {WorkflowModel} from "../../../../../models/workflow.model";
+import {AnalysisModel} from "../../../../../models/analysis.model";
 
 const THEME = 'ace/theme/dawn';
 const LANGUAGE = 'ace/mode/python';
@@ -15,42 +15,42 @@ const LANGUAGE = 'ace/mode/python';
 @Component({
   selector: 'app-labelfunction-code',
   templateUrl: './labelfunction-code.component.html',
-  styleUrls: ['./labelfunction-code.component.css']
+  styleUrls: ['./labelfunction-code.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
-  // Editor für den Python Code
   // @ts-ignore
   @ViewChild('editor') codeEditorRef: ElementRef;
   // @ts-ignore
   private codeEditor: ace.Ace.Editor;
 
-  // Editor für import statements
   // @ts-ignore
   @ViewChild('imports') importEditorRef: ElementRef;
+  // @ts-ignore
+  private importEditor: ace.Ace.Editor;
 
   // differenziere ob wir eine Funktion updaten oder erstellen
   // bei erstellen bleibt lid = -1
+
   @Input()
   lid : number = -1;
-
-  // @ts-ignore
-  private importEditor: ace.Ace.Editor;
 
   // @ts-ignore
   workflow_id: number = 0;
   functionName: string = '';
 
-  isCompiled: boolean = false;
   isTested: boolean = false;
-  // todo name of labelfunction in form field
+  isSaved: boolean = true;
   importLabelfunction!: LabelfunctionModel;
 
-  test_coverage: number = 0;
+  analysisModel_unlabeled!: AnalysisModel;
+  analysisModel_train!: AnalysisModel;
   errorMessage: Message[] = [];
   sidebarVisible: boolean = false;
-  description: string = '';
-  //loaded!: Promise<boolean>;
+  workflowDescription: string = '';
+  labelfunctionDescription: string = '';
+  annotationschema: string = '';
   packages: string[] = []
 
   constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute,
@@ -63,10 +63,13 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.workflow_id = this.route.snapshot.params['wid'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.workflowService.getWorkflowById(this.workflow_id).subscribe(respData => {
-      this.description = respData.description ?? '';
+      this.workflowDescription = respData.description ?? 'No description was specified by the workflow owner';
     });
     this.workflowService.getInstalledPackages().subscribe(respData => {
       this.packages = respData;
+    });
+    this.labelfunctionService.getImportLabels(this.workflow_id, 'labels').subscribe(respData => {
+      this.annotationschema = respData.code ?? 'No annotation schema was specified by the workflow owner';
     })
   }
 
@@ -89,6 +92,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
         if ((respData.code != null) && (respData.name != null)) {
           this.codeEditor.session.setValue(respData.code);
           this.functionName = respData.name;
+          this.labelfunctionDescription = respData.description ?? '';
         }
       });
     } else {
@@ -96,8 +100,6 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     }
 
     this.codeEditor.on('change', () => {
-      this.isTested = false;
-      this.isCompiled = false;
       this.getfunctionName();
     });
     // import Editor
@@ -108,7 +110,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
       maxLines: Infinity,
     };
 
-    this.labelfunctionService.getImports(this.workflow_id).subscribe(respData => {
+    this.labelfunctionService.getImportLabels(this.workflow_id, 'import').subscribe(respData => {
       this.importLabelfunction = respData;
       this.importEditor.session.setValue(this.getImport());
     })
@@ -118,85 +120,86 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     this.importEditor.getSession().setMode(LANGUAGE);
     this.importEditor.setShowFoldWidgets(true);
     this.importEditor.on('change', () => {
-      this.isTested = false;
-      this.isCompiled = false;
+      this.isSaved = false;
     });
   }
 
   getImport(): string {
   if (this.importLabelfunction?.code == undefined){
     return "# Please write here all import statements";
-  } else {
+    } else {
      let str: string = this.importLabelfunction.code
     return str;
-  }
-}
-
-  savePythonCode() {
-    const code = this.codeEditor.getValue();
-
-    if (this.lid != -1){
-      const labelfunctionModel: LabelfunctionModel = {code: code, name: this.functionName}
-      this.labelfunctionService.updateLabelfunctions(this.lid, labelfunctionModel).subscribe(respData => {
-        this.showSuccessMessage('Labelfunction has been saved');
-      }, error => {
-        console.log(error)
-        this.showErrorMessage(error);
-      });
-
-    } else {
-      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
-      this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
-        this.showSuccessMessage('Labelfunction has been saved');
-      }, error => {
-        this.showErrorMessage(error);
-      });
     }
   }
 
-  compilePythonCode() {
-    const code: string = this.codeEditor.getValue();
-    console.log(code);
-    this.labelfunctionService.compileLabelfunction(code, this.workflow_id).subscribe(respData => {
-      this.isCompiled = true;
-      this.showSuccessMessage('Python code runs trough');
-    }, error => {
-      this.showErrorMessage(error);
-    });
+
+  isUpdate(){
+      if (this.lid == -1){
+        return 'Save';
+      }
+      return 'Update';
   }
 
-  testPythonCode() {
+  getDescription(){
+    if (this.labelfunctionDescription.length > 0){
+      return this.labelfunctionDescription;
+    }
+    return 'No description was given.';
+  }
+
+  testAndSaveLabelfunction() {
     const code: string = this.codeEditor.getValue();
-    console.log(code);
-    this.labelfunctionService.testLabelfunction(code, this.functionName, this.workflow_id).subscribe(respData => {
-      this.test_coverage = respData;
-      this.isTested = true;
-      this.showSuccessMessage('Python code runs on the dataset');
-    }, error => {
-      this.showErrorMessage(error);
-    });
+
+    if (this.lid != -1) {
+      const labelfunctionModel: LabelfunctionModel = {code: code, name: this.functionName, description: this.getDescription()}
+
+      this.labelfunctionService.testAndUpdateLabelfunctions(this.lid, labelfunctionModel, this.workflow_id).subscribe({
+        next: value => {
+          this.analysisModel_unlabeled = value.summary;
+          this.analysisModel_train = value.summary_train;
+          console.log(this.analysisModel_unlabeled)
+          this.lid = value.lid;
+          this.isTested = true;
+          this.showSuccessMessage('The label function has been successfully tested and updated');
+        },
+        error: error => {
+          console.log(error)
+          this.showErrorMessage(error);
+      }});
+    } else {
+      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
+
+      this.labelfunctionService.testAndSaveLabelfunction(labelfunctionModel, this.workflow_id).subscribe({
+        next: value => {
+          console.log(value);
+          this.analysisModel_unlabeled = value.summary;
+          this.analysisModel_train = value.summary_train;
+          this.lid = value.lid;
+          this.isTested = true;
+          this.showSuccessMessage('The label function has been successfully tested and saved');
+        },
+        error: error => {
+          console.log(error)
+          this.showErrorMessage(error);
+      }});
+    }
   }
 
   saveImport() {
     const code: string = this.importEditor.getValue();
     let name: string = 'imports';
-    if (this.importLabelfunction?.id == undefined){
-      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
-      this.labelfunctionService.createLabelfunction(labelfunctionModel ,this.workflow_id).subscribe(respData => {
+    const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
+    this.labelfunctionService.updateImports(this.workflow_id, labelfunctionModel).subscribe({
+      next: value => {
+        this.isSaved = true;
         this.showSuccessMessage('Imports have been saved');
-      }, error => {
+      },
+      error: error => {
         this.showErrorMessage(error);
-      });
-    } else {
-      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'import', name: name}
-      this.labelfunctionService.updateImports(this.workflow_id, labelfunctionModel).subscribe(respData => {
-        this.showSuccessMessage('Imports have been saved');
-      }, error => {
-        this.showErrorMessage(error);
-      });
-    }
+      }
+    });
   }
-
 
   showSuccessMessage(successMessage: string){
     this.messageService.add({ key: 'bc', severity: 'success',

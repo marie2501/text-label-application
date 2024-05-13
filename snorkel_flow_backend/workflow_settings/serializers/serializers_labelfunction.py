@@ -1,3 +1,7 @@
+import json
+from io import StringIO
+
+import pandas as pd
 from django.contrib.auth.models import User
 from django.core.exceptions import NON_FIELD_ERRORS
 from rest_framework import serializers
@@ -12,9 +16,17 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
         slug_field='username'
     )
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        print(representation)
+        if representation['type'] != 'import' and representation['type'] != 'labels':
+            representation['summary_unlabeled'] = pd.read_json(StringIO(representation['summary_unlabeled']), orient='split')
+            representation['summary_train'] = pd.read_json(StringIO(representation['summary_train']), orient='split')
+        return representation
+
     class Meta:
         model = Labelfunction
-        fields = ['id','creator','name', 'type', 'code']
+        fields = ['id','creator','name', 'type', 'code', 'description', 'summary_unlabeled', 'summary_train']
 
 class LabelfunctionCreateSerializer(serializers.ModelSerializer):
     workflow = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Workflow.objects.all())
@@ -37,7 +49,7 @@ class LabelfunctionCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Labelfunction
-        fields = ['name', 'type', 'code', 'workflow']
+        fields = ['name', 'type', 'code', 'workflow', 'description', 'summary_unlabeled', 'summary_train']
 
         validators = [
             UniqueTogetherValidator(

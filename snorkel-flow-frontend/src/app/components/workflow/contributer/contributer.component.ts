@@ -37,7 +37,6 @@ export class ContributerComponent implements OnInit{
   addButton(username_not_con: string | undefined) {
     if (username_not_con != undefined){
       this.workflowService.addContributer(this.workflow_id, username_not_con).subscribe(respData => {
-        console.log(respData)
         this.possibleContributer = this.possibleContributer.filter(user => user.username !== username_not_con)
         this.contributer.push({'username': username_not_con})
       }, error => {

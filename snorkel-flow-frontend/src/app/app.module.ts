@@ -32,6 +32,8 @@ import { RunDataComponent } from './components/workflow/run/run-dashboard/run-da
 import { RunEvalComponent } from './components/workflow/run/run-dashboard/run-eval/run-eval.component';
 import { FileDownloadComponent } from './components/file/file-download/file-download.component';
 import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
+import { WorkflowSettingsComponent } from './components/workflow/workflow-create/workflow-settings/workflow-settings.component';
+import { WorkflowFileComponent } from './components/workflow/workflow-create/workflow-file/workflow-file.component';
 
 
 import { MenuModule } from 'primeng/menu';
@@ -59,8 +61,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
-import { WorkflowSettingsComponent } from './components/workflow/workflow-create/workflow-settings/workflow-settings.component';
-import { WorkflowFileComponent } from './components/workflow/workflow-create/workflow-file/workflow-file.component';
+import { RippleModule } from 'primeng/ripple';
 
 
 
@@ -125,7 +126,8 @@ import { WorkflowFileComponent } from './components/workflow/workflow-create/wor
     SidebarModule,
     DialogModule,
     TooltipModule,
-    EditorModule
+    EditorModule,
+    RippleModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

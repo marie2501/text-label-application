@@ -24,3 +24,16 @@
   background-color: #622f86;
   border: 1px solid #622f86;
 }
+
+.position-background {
+  top: 0.5rem;
+  border: #9cb0da solid;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  background-color: #d0d7ffa6 !important;
+}

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
 import {LabelfunctionModel} from "../../../../models/labelfunction.model";
 import {LabelfunctionService} from "../../../../services/workflow/labelfunction.service";
 import {Message, MessageService} from "primeng/api";
+import {AnalysisModel} from "../../../../models/analysis.model";
 
 @Component({
   selector: 'app-labelfunction-list',
@@ -26,6 +27,9 @@ export class LabelfunctionListComponent {
   errorMessage: Message[] = [];
 
   username: string = '';
+  analysisModel_unlabeled!: AnalysisModel;
+  analysisModel_train!: AnalysisModel;
+  elementSelected: boolean = false;
 
   constructor(private labelfuntionService: LabelfunctionService, private messageService: MessageService) {
   }
@@ -50,7 +54,6 @@ export class LabelfunctionListComponent {
   }
 
 
-
   showSuccessMessage(){
     this.messageService.add({ key: 'bc', severity: 'success',
       summary: 'Success', detail: 'Labelfunction has been deleted' });
@@ -64,4 +67,10 @@ export class LabelfunctionListComponent {
     return '';
   }
 
+  onSelectAnalysis(labelfunction: LabelfunctionModel) {
+    console.log(labelfunction)
+    this.analysisModel_train = labelfunction.summary_train!;
+    this.analysisModel_unlabeled = labelfunction.summary_unlabeled!;
+    this.elementSelected = true;
+  }
 }
