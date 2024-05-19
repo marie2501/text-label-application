@@ -60,6 +60,11 @@ class ContributerServiceClass:
             dic = {}
             dic['username'] = contributer
             all_users.append(dic)
+
+        if len(all_users) == 0:
+            dic = {}
+            dic['username'] = 'No results were found!'
+            all_users.append(dic)
         return all_users
 
     def __get_contributers(self, workflow_creator, workflow_contributer):

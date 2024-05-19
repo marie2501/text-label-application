@@ -34,6 +34,10 @@ import { FileDownloadComponent } from './components/file/file-download/file-down
 import { ForbiddenComponent } from './components/errors/forbidden/forbidden.component';
 import { WorkflowSettingsComponent } from './components/workflow/workflow-create/workflow-settings/workflow-settings.component';
 import { WorkflowFileComponent } from './components/workflow/workflow-create/workflow-file/workflow-file.component';
+import { WorkflowTutorialComponent } from './components/support/tutorial/workflow-tutorial/workflow-tutorial.component';
+import { LabelfunctionTutorialComponent } from './components/support/tutorial/labelfunction-tutorial/labelfunction-tutorial.component';
+import { RunTutorialComponent } from './components/support/tutorial/run-tutorial/run-tutorial.component';
+import { GenerateTemplateComponent } from './components/workflow/labelfunction/labelfunction-create/generate-template/generate-template.component';
 
 
 import { MenuModule } from 'primeng/menu';
@@ -62,6 +66,7 @@ import { DialogModule } from 'primeng/dialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
 import { RippleModule } from 'primeng/ripple';
+import { SpeedDialModule } from 'primeng/speeddial';
 
 
 
@@ -93,7 +98,11 @@ import { RippleModule } from 'primeng/ripple';
     FileDownloadComponent,
     ForbiddenComponent,
     WorkflowSettingsComponent,
-    WorkflowFileComponent
+    WorkflowFileComponent,
+    WorkflowTutorialComponent,
+    LabelfunctionTutorialComponent,
+    RunTutorialComponent,
+    GenerateTemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +136,8 @@ import { RippleModule } from 'primeng/ripple';
     DialogModule,
     TooltipModule,
     EditorModule,
-    RippleModule
+    RippleModule,
+    SpeedDialModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]

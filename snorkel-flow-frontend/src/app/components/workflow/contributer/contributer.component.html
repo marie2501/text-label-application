@@ -1,36 +1,40 @@
 <div>
   <p-panel header="Contributer">
-    <p-listbox [options]="contributer" optionLabel="username" class="list-padding">
-      <ng-template let-contributer pTemplate="item">
-        <div class="flex align-items-center gap-8">
-          <div>{{ contributer.username }}</div>
-          <p-button *ngIf="contributer.username != username" icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" (click)="deleteButton(contributer.username)"></p-button>
-        </div>
-      </ng-template>
-    </p-listbox>
+    <ng-template pTemplate="content">
+      <div class="h-17rem overflow-auto">
+        <ul>
+          <li *ngFor="let contributers of contributer" class="contributer-list">
+            {{ contributers.username }}
+            <p-button *ngIf="contributers.username != username" icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" (click)="deleteButton(contributers.username)"></p-button>
+          </li>
+        </ul>
+      </div>
+    </ng-template>
   </p-panel>
+
   <div *ngIf="allowedToChange">
-    <button pButton (click)="showDialog()" label="Add contributer" class="p-button-help w-full"></button>
+    <button *ngIf="allowedToChange"  pButton (click)="showDialog()" label="Add contributer" class="p-button-help w-full"></button>
 
     <p-dialog header="Add Contributer" [(visible)]="visible" [modal]="true" [style]="{ width: '20vw', height: '60vh' }" [draggable]="false" [resizable]="false">
-      <div class="flex justify-content-center">
-        <p-listbox
-          [options]="possibleContributer"
-          optionLabel="username"
-          class="list-padding"
-          [style]="{ width: '15rem', height: '10rem' }"
-          [virtualScroll]="true"
-          [filter]="true"
-          [lazy]="true"
-          (onFilter)="onChange($event)">
-        <ng-template let-contributer pTemplate="item">
-          <div class="flex align-items-center gap-8">
-            <div>{{ contributer.username }}</div>
-            <p-button icon="pi pi-user-plus" [rounded]="true" [text]="true" severity="success" (click)="addButton(contributer.username)"></p-button>
+
+      <p-panel>
+        <ng-template pTemplate="header">
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input type="text" pInputText (input)="onChange($event)"/>
+          </span>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="h-17rem overflow-auto">
+            <ul>
+              <li *ngFor="let contributers of possibleContributer" class="contributer-list">
+                <div>{{ contributers.username }}</div>
+                <p-button icon="pi pi-user-plus"  *ngIf="contributers.username != 'No results were found!'" [rounded]="true" [text]="true" severity="success" (click)="addButton(contributers.username)"></p-button>
+              </li>
+            </ul>
           </div>
         </ng-template>
-      </p-listbox>
-      </div>
+      </p-panel>
     </p-dialog>
 
   </div>

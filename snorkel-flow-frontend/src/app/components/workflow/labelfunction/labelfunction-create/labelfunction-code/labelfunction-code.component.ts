@@ -96,7 +96,10 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
         }
       });
     } else {
-      this.codeEditor.session.setValue("# Write your labelfunction!\n# Please write one label function at a time.");
+      this.codeEditor.session.setValue("# Write your labelfunction!\n" +
+        "# Please write one label function at a time.\n" +
+        "# Note that x is the whole data point.\n" +
+        "# x.text is the actual text to be annotated in string format.\n");
     }
 
     this.codeEditor.on('change', () => {
@@ -223,4 +226,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     }
   }
 
+  implementTemplate($event: string) {
+    this.codeEditor.session.setValue($event);
+  }
 }

@@ -22,11 +22,15 @@
     </div>
   </p-sidebar>
 
-  <div class="text-area-width mt-4">
+  <div class="mt-4">
     <h2>Description</h2>
-
-    <textarea rows="3" placeholder="Here you can describe what your function does. (Optional)" cols="30" pInputTextarea [(ngModel)]="labelfunctionDescription" ></textarea>
-
+    <div class="grid">
+      <div class="col-6">
+        <textarea class="text-area-width" rows="3" placeholder="Here you can describe what your function does. (Optional)" cols="30" pInputTextarea [(ngModel)]="labelfunctionDescription" ></textarea>
+      </div>
+      <div class="col-3 align-content-center">
+        <button pButton class="p-button-info border-round-xl" (click)="sidebarVisible = true" icon="pi pi-info-circle"></button>
+      </div>
   </div>
 
 
@@ -36,9 +40,11 @@
     <div class="col-6">
       <div class="w-38" #imports></div>
     </div>
-    <div class="col-6" >
+    <div class="col-2" >
       <button pButton label="Save Import" class="p-button-info mt-4 mr-4" (click)="saveImport()"></button>
-      <button pButton class="p-button-info border-round-xl" (click)="sidebarVisible = true" icon="pi pi-info-circle"></button>
+    </div>
+    <div class="col-2" >
+      <app-generate-template (templateEvent)="implementTemplate($event)"></app-generate-template>
     </div>
   </div>
 
@@ -109,8 +115,14 @@
 
   <div #editor></div>
 
-  <button pButton label="Test and {{isUpdate()}}" pTooltip="Your label function is tested for correct syntax and applied to the data set before saving." tooltipPosition="bottom" [disabled]="!isSaved" class="p-button-info mt-4 mr-4" (click)="testAndSaveLabelfunction()"></button>
+    <div>
+      <button pButton label="Test and {{isUpdate()}}" pTooltip="Your label function is tested for correct syntax and applied to the data set before saving." tooltipPosition="bottom" [disabled]="!isSaved" class="p-button-info mt-4 mr-4 mb-4" (click)="testAndSaveLabelfunction()"></button>
+    </div>
 </div>
 <p-toast position="bottom-center" key="bc"></p-toast>
-
+  <div class="mb-6">
+    <a class="mb-4" href="https://www.flaticon.com/free-icons/user-guide" title="user-guide icons">User-guide icons created by Freepik - Flaticon</a>
+    <br>
+    <a href="https://www.flaticon.com/free-icons/template" title="template icons">Template icons created by Smashicons - Flaticon</a>
+  </div>
 

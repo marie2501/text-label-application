@@ -18,7 +18,6 @@ class LabelfunctionSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        print(representation)
         if representation['type'] != 'import' and representation['type'] != 'labels':
             representation['summary_unlabeled'] = pd.read_json(StringIO(representation['summary_unlabeled']), orient='split')
             representation['summary_train'] = pd.read_json(StringIO(representation['summary_train']), orient='split')

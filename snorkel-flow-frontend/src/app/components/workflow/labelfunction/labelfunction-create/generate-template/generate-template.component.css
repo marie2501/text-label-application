@@ -1,0 +1,35 @@
+.button-position {
+  position: relative;
+  top: 0.75rem;
+  left: -4rem;
+
+}
+
+.p-speeddial .p-button {
+  background-color: transparent;
+  border: transparent;
+}
+
+.p-speeddial .p-button:hover {
+  background-color: rgba(156, 39, 176, 0.04);
+  border: transparent;
+  border-radius: 10px;
+}
+
+.p-speeddial .p-button:focus {
+  background-color: transparent;
+  border-color: #9C27B0 !important;
+}
+
+.p-speeddial a {
+  background-color: rgb(73 51 115);;
+  border-color: #9C27B0 !important;
+  color: white;
+}
+
+.p-speeddial .p-tooltip .p-tooltip-text {
+  width: 5rem;
+  text-align: center;
+  background-color: #ffb100;
+  color: #000000;
+}

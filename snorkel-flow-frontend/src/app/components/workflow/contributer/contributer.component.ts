@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {WorkflowService} from "../../../services/workflow/workflow.service";
 import {ActivatedRoute} from "@angular/router";
-import {ListboxChangeEvent, ListboxFilterEvent} from "primeng/listbox";
 
 @Component({
   selector: 'app-contributer',
@@ -34,11 +33,15 @@ export class ContributerComponent implements OnInit{
     console.log(this.username);
   }
 
+
+
   addButton(username_not_con: string | undefined) {
     if (username_not_con != undefined){
       this.workflowService.addContributer(this.workflow_id, username_not_con).subscribe(respData => {
         this.possibleContributer = this.possibleContributer.filter(user => user.username !== username_not_con)
         this.contributer.push({'username': username_not_con})
+        const elementListe = document.getElementById('listbox');
+
       }, error => {
       })
     }
@@ -66,13 +69,14 @@ export class ContributerComponent implements OnInit{
     this.visible = true;
   }
 
-  onChange($event: ListboxFilterEvent) {
-    let username = $event.filter;
+  onChange(usernamefilter: Event) {
+    let temp = <InputEvent>usernamefilter
+    const username = temp.data
     if (username != undefined && username != ''){
       this.workflowService.filterPossibleContributer(this.workflow_id, username).subscribe(respData => {
         this.possibleContributer = respData;
       }, error => {
-      })
+      });
     }
   }
 }

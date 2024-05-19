@@ -12,12 +12,15 @@ editor {
 .break-spaces {
   white-space: break-spaces;
 }
+.tool-tip {
+
+}
 
 .p-tooltip .p-tooltip-text {
-  width: 25rem;
+  width: 15rem;
   text-align: center;
-  background-color: #ffb100;
-  color: #000000;
+  background-color: #464646;
+  color: #ffffff;
 }
 
 

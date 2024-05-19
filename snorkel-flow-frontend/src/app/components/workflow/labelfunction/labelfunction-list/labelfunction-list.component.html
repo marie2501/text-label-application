@@ -94,8 +94,8 @@
           <td>{{labelfunctions.creator}}</td>
           <td>{{labelfunctions.description}}</td>
           <td class="break-spaces">{{labelfunctions.code}}</td>
-          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator" class="button-color"><button styleClass="p-button-sm" pButton pRipple label="Update" [routerLink]="['/workflow', workflow_id, labelfunctions.id, 'update-labelfunction']" class="p-button-help"></button></td>
-          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"  class="button-color"><button styleClass="p-button-sm" pButton pRipple label="Delete" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></button></td>
+          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator" class="button-color"><p-button  [rounded]="true" [text]="true" severity="info" icon="pi pi-file-edit" [routerLink]="['/workflow', workflow_id, labelfunctions.id, 'update-labelfunction']" class="p-button-help"></p-button></td>
+          <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"  class="button-color"><p-button  [rounded]="true" [text]="true" severity="danger" icon="pi pi-trash" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></p-button></td>
         </tr>
       </ng-template>
     </p-table>
