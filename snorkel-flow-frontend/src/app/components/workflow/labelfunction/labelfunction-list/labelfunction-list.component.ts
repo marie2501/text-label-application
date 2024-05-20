@@ -18,6 +18,8 @@ export class LabelfunctionListComponent {
   modifiable: boolean = false
   @Input()
   selectable: boolean = false;
+  @Input()
+  pointer: boolean = false;
 
   @Output() selectEvent = new EventEmitter<LabelfunctionModel[]>();
 

@@ -1,11 +1,11 @@
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'data']" icon="pi pi-angle-left" [outlined]="true" size="large" [text]="true" severity="help" class="file-left"></p-button>
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'model']" icon="pi pi-angle-right" [outlined]="true" size="large"   [text]="true"  severity="help" class="file-right"></p-button>
+
 <div *ngIf="runLoaded|async">
-  <div class="grid mt-6">
-    <div class="col-2 col-offset-4">
-      <p-button [disabled]="username != run.creator" class="ml-4" (onClick)="executeRun()" label="Execute Run" styleClass="p-button-raised p-button-info"></p-button>
+  <div class="grid mt-6 justify-content-center">
+    <div>
+      <p-button [disabled]="username != run.creator" class="ml-4" (onClick)="executeRun()" label="Execute Run" styleClass="p-button-raised p-button-secondary"></p-button>
     </div>
-<!--    <div class="col-2 text-center" [ngClass]="{'col-offset-5': run.creator != username}">-->
-<!--      <p-button [disabled]="!executed" class="ml-4" (onClick)="getAnalysis()" label="Get Analysis" styleClass="p-button-raised p-button-info"></p-button>-->
-<!--    </div>-->
   </div>
 </div>
 

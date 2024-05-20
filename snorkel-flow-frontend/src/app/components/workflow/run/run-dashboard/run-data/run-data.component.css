@@ -6,3 +6,14 @@
 .list .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
   background-color: #607d8b14;
 }
+
+.file-right{
+  position: relative;
+  top: 17rem;
+  float: right;
+  right: -8rem;
+}
+
+.left-5rem{
+  left: 5rem;
+}

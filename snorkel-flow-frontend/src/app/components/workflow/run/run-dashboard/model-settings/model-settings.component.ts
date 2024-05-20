@@ -23,6 +23,7 @@ export class ModelSettingsComponent implements OnInit{
   seed : number = 123;
   base_learning_rate : number = 0.01;
   l2: number = 0.0;
+  workflow_id: number = 0;
 
 
   errorMessage: Message[] = [];
@@ -37,6 +38,7 @@ export class ModelSettingsComponent implements OnInit{
   ngOnInit(): void {
     this.route.parent?.params.subscribe((params) => {
       this.run_id = params['runID'];
+      this.workflow_id = params['wid'];
     }).unsubscribe();
   }
 

@@ -1,7 +1,10 @@
-<div *ngIf="runLoaded|async">
-  <div class="grid mt-6 flex justify-content-center">
-    <div *ngIf="username == run.creator"  >
-      <p-button class="ml-4" (onClick)="updateLabelfunktion()" label="Update Funktion" styleClass="p-button-raised p-button-info"></p-button>
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'eval']" icon="pi pi-angle-right" [outlined]="true" size="large"   [text]="true"  severity="help" class="file-right"></p-button>
+
+
+<div *ngIf="runLoaded|async" >
+  <div class="grid mt-6 flex justify-content-center relative left-5rem">
+    <div *ngIf="username == run.creator" >
+      <p-button (onClick)="updateLabelfunktion()" label="Update Funktion" styleClass="p-button-raised p-button-secondary"></p-button>
     </div>
   </div>
 </div>
@@ -9,21 +12,9 @@
 <div class="grid m-4">
   <div class="col-6 col-offset-3">
     <div *ngIf="labelfunctions.length > 0">
-      <div class="list">
-        <p-table [value]="labelfunctions" [scrollable]="true" styleClass="p-datatable-sm p-datatable-striped"
-                 dataKey="id" scrollHeight="20rem">
-          <ng-template pTemplate="caption">
-            <th> Labelfunctions </th>
-          </ng-template>
-          <ng-template pTemplate="body" let-labelfunctions>
-            <tr>
-              <td>{{labelfunctions.name}}</td>
-              <td>{{labelfunctions.creator}}</td>
-              <td class="break-spaces">{{labelfunctions.code}}</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
+
+        <app-labelfunction-list [pointer]="true" [workflow_id]="workflow_id" [selectable]="false" [modifiable]="false"></app-labelfunction-list>
+
     </div>
   </div>
 </div>

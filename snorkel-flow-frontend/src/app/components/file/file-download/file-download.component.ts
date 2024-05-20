@@ -12,12 +12,16 @@ export class FileDownloadComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  run_id = 0;
+  run_id: number = 0;
+  workflow_id: number = 0;
 
   constructor(private fileService: FileService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.run_id = this.route.snapshot.parent?.params['runID']
+    this.route.parent?.params.subscribe((params) => {
+      this.run_id = params['runID'];
+      this.workflow_id = params['wid'];
+    }).unsubscribe();
   }
 
   onDownload() {

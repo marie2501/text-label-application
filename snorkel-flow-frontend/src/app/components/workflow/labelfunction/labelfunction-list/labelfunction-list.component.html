@@ -86,7 +86,7 @@
       </ng-template>
 
       <ng-template pTemplate="body" let-labelfunctions>
-        <tr (click)="onSelectAnalysis(labelfunctions)" [ngClass]="{'pointer': selectable}">
+        <tr (click)="onSelectAnalysis(labelfunctions)" [ngClass]="{'pointer': pointer}">
           <td *ngIf="selectable">
             <p-tableCheckbox [value]="labelfunctions"></p-tableCheckbox>
           </td>

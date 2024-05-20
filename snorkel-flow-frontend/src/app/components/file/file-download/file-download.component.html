@@ -1,4 +1,9 @@
-<div class="text-center mt-8">
-  <button pButton (click)="onDownload()" type="button"
-          class="p-button-help"  label="Download" [loading]="isLoading" icon="pi pi-arrow-circle-down"></button>
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'model']" icon="pi pi-angle-left" [outlined]="true" size="large" [text]="true" severity="help" class="file-left"></p-button>
+
+
+<div class="grid mt-6 justify-content-center">
+  <div>
+    <button pButton (click)="onDownload()" type="button"
+            class="p-button-secondary"  label="Download" [loading]="isLoading" icon="pi pi-arrow-circle-down"></button>
+  </div>
 </div>

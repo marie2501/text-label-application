@@ -32,14 +32,14 @@ export class RunDashboardComponent implements OnInit{
     this.runService.getRun(this.run_id).subscribe(respData => {
       this.run = respData;
       this.runSteps = [
-        { label: 'Info',
+        { label: 'Information',
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'data']},
-        { label: 'Eval',
+        { label: 'Evaluation',
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'eval']},
-        { label: 'Model',
+        { label: 'Model Training',
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'model'],
           disabled: this.username != this.run!.creator},
-        { label: 'Download',
+        { label: 'Download Dataset',
           routerLink: ['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'download'],
           disabled: this.username != this.run!.creator}];
       this.runLoaded = Promise.resolve(true);

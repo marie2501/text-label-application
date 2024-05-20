@@ -1,0 +1,11 @@
+.file-right{
+  position: relative;
+  top: 17rem;
+  float: right;
+  right: -8rem;
+}
+
+.file-left {
+  position: relative;
+  top: 17rem;
+}

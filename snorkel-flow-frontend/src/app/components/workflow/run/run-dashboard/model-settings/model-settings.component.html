@@ -1,3 +1,7 @@
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'eval']" icon="pi pi-angle-left" [outlined]="true" size="large" [text]="true" severity="help" class="file-left"></p-button>
+<p-button [routerLink]="['/workflow', this.workflow_id, 'run-dashboard', this.run_id, 'download']" icon="pi pi-angle-right" [outlined]="true" size="large"   [text]="true"  severity="help" class="file-right"></p-button>
+
+
 <div class="container mt-6">
   <p-messages [(value)]="classfierData"></p-messages>
   <div class="flex align-items-center justify-content-center">
