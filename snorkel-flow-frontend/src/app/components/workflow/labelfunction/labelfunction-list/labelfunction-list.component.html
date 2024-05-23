@@ -92,7 +92,7 @@
           </td>
           <td>{{labelfunctions.name}}</td>
           <td>{{labelfunctions.creator}}</td>
-          <td>{{labelfunctions.description}}</td>
+          <td class="w-15rem">{{labelfunctions.description}}</td>
           <td class="break-spaces">{{labelfunctions.code}}</td>
           <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator" class="button-color"><p-button  [rounded]="true" [text]="true" severity="info" icon="pi pi-file-edit" [routerLink]="['/workflow', workflow_id, labelfunctions.id, 'update-labelfunction']" class="p-button-help"></p-button></td>
           <td *ngIf="modifiable && (labelfunctions.type != 'import') && username == labelfunctions.creator"  class="button-color"><p-button  [rounded]="true" [text]="true" severity="danger" icon="pi pi-trash" (click)="deleteButton(labelfunctions.id)" class="p-button-danger"></p-button></td>

@@ -67,6 +67,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
 import { RippleModule } from 'primeng/ripple';
 import { SpeedDialModule } from 'primeng/speeddial';
+import { TabViewModule } from 'primeng/tabview';
 
 
 
@@ -137,7 +138,8 @@ import { SpeedDialModule } from 'primeng/speeddial';
     TooltipModule,
     EditorModule,
     RippleModule,
-    SpeedDialModule
+    SpeedDialModule,
+    TabViewModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }, MessageService],
   bootstrap: [AppComponent]
