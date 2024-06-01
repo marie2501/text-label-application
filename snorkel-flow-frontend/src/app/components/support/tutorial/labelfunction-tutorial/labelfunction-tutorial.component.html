@@ -7,11 +7,94 @@
     </button>
   </div>
 
-  <p-dialog header="Tutorial: Create Labelfunctions" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <p class="m-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+  <p-dialog header="Tutorial: Create Labelfunctions" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw', height: '80vh' }" [draggable]="false" [resizable]="false">
+    <p-tabView>
+      <p-tabPanel header="What is a labelfunction ?">
+        <div class="flex">
+          <div>
+            <img class="labelfunction-w fadein labelfunction" src="assets/images/tutorial/Labelfunktion-0.png" >
+          </div>
+          <div>
+          <p>
+            Label functions are used to annotate data. There are different ways to programmatically
+            record expert knowledge. Some possibilities are heuristics, sentiment analysis
+            or pattern matching. Label functions receive a data point and assign a label
+            to it based on the programmed logic. Each function must have a return value,
+            which is either a label or an abstention. A function can also abstain from a data point,
+            this is indicated by the return value -1. Different label functions can also conflict with
+            each other.
+
+            A typical procedure for creating a label function looks like this.
+
+          </p>
+          <ol>
+            <li>Write a label function and save it.</li>
+            <li>Look at the values of the analysis.</li>
+            <li>View individual data points and their assigned label</li>
+            <li>Test whether changes have a better performance</li>
+          </ol>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="How do you evaluate the label function??">
+        <div class="flex">
+          <div>
+          <p>
+            The label function is applied to two different parts of the data set,
+            the non-annotated part and the part used to analyse the label functions.
+
+            After successful application, you will receive a table with some analysis values:
+          </p>
+          <ul>
+            <li>Polarity: Number of unique labels that were returned (Abstain is not counted)</li>
+            <li>Coverage: Fraction to which a label (not abstain) is assigned</li>
+            <li>Overlaps: Fraction in which this and at least one other function is labelled</li>
+            <li>Conflicts: Fraction where this and at least one other function do not match</li>
+          </ul>
+
+          <p>
+            These values are only used for the data set for the analysis,
+            as the correct labels are available here:
+          </p>
+
+          <ul>
+            <li>Correct: The number of data points in which is correctly labelled</li>
+            <li>Incorrect: The number of data points incorrectly labelled</li>
+            <li>Empirical accuracy: Fraction correctly labelled.</li>
+          </ul>
+          </div>
+          <div>
+            <img class="analysis-w fadein labelfunction" src="assets/images/tutorial/analysis.png" >
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="How to create a labelfunction ?">
+        <div>
+          <img class="editor z-1" src="assets/images/tutorial/labelfunction-editor-0.png" >
+          <img class="editor z-2 relative editor-1 fadein" src="assets/images/tutorial/labelfunction-editor-1.png" >
+          <img class="editor z-2 relative editor-2 fadein " src="assets/images/tutorial/labelfunction-editor-2.png" >
+          <img class="editor z-2 relative editor-3 fadein " src="assets/images/tutorial/labelfunction-editor-3.png" >
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="Further resources and documentation !">
+        <div>
+          <ul class="link-color">
+            <li>
+              <a href="https://www.snorkel.org/use-cases/01-spam-tutorial" target="_blank">Tutorial: Writing Labelfunctions on a Spam-Dataset</a>
+            </li>
+            <li>
+              <a href="https://snorkel.readthedocs.io/en/v0.9.7/index.html" target="_blank">Documentation: Snorkel'S API</a>
+            </li>
+            <li>
+              <a href="https://textblob.readthedocs.io/en/dev/" target="_blank">Documentation: TextBlob</a>
+            </li>
+            <li>
+              <a href="https://www.nltk.org/index.html" target="_blank">Documentation: Natural Language Toolkit</a>
+            </li>
+          </ul>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
   </p-dialog>
 
 </div>

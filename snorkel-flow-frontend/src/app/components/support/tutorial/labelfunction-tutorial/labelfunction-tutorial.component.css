@@ -1,0 +1,72 @@
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #ff9100;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+  background-color: #fff2df;
+  color: rgb(86, 86, 86);
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  color: black;
+}
+
+.link-color a {
+  color: #444444;
+}
+
+.link-color a:hover {
+  color: #ff9100;
+}
+
+.labelfunction-w {
+  width: 40rem;
+}
+
+
+.analysis-w {
+  width: 48rem;
+}
+
+.labelfunction {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 0.3s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+
+.editor {
+  width: 50rem;
+
+}
+
+.editor-1 {
+  top: -34.1rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+.editor-2 {
+  top: -68.2rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 4s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+
+}
+
+.editor-3 {
+  top: -102.3rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 7s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+
+}
