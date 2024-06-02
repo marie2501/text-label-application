@@ -76,9 +76,7 @@ class Run(models.Model):
     feature = models.ForeignKey(Feature, on_delete=models.CASCADE, null=True)
     classifier = models.ForeignKey(Classifier, on_delete=models.CASCADE, null=True)
 
-
     class Meta:
         ordering = ["-creation_date"]
-
 
 

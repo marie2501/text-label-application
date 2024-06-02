@@ -31,8 +31,8 @@ export class FileService {
     return this.http.get<boolean>(`${fileURL}/${workflow_id}/`).pipe(catchError(this.handleError));
   }
 
-  getCSVFile( run_id: number) {
-    return this.http.get<any>(`${fileURL}/download/${run_id}/`, {
+  getCSVFile( run_id: number, type: string) {
+    return this.http.get<any>(`${fileURL}/download/${run_id}/${type}/`, {
       responseType: 'text' as any
     });
   }

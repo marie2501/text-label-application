@@ -6,6 +6,6 @@ from workflow_settings.views.view_file.view_file_download import FileDownloadVie
 urlpatterns = [
 
     path('<int:workflow_id>/', FileUploadView.as_view(), name='file_upload'),
-    path('download/<int:run_id>/', FileDownloadView.as_view(), name='file_download'),
+    path('download/<int:run_id>/file/', FileDownloadView.as_view(), name='file_download'),
 
 ]

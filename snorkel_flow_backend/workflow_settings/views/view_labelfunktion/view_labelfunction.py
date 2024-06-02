@@ -65,6 +65,18 @@ class LabelfunctionView(viewsets.ViewSet):
             return Response(status=status_t, data=data_t)
         return Response(status=status_c, data=data_c)
 
+    # def get_selection_of_datapoints(self, request, *args, **kwargs):
+    #     workflow_id = kwargs['workflow_id']
+    #     request_data = request.data
+    #     request_data['workflow'] = workflow_id
+    #     labelfunction_code = request.data['code']
+    #     name = request.data['name']
+    #     count = request.data['count']
+    #     type = request.data['type']
+    #
+    #     labelfunction = LabelfunctionService()
+    #     status_t, data_t = labelfunction.select_label(workflow_id, labelfunction_code, name)
+
 class LabelfunctionModifyView(viewsets.ViewSet):
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [IsAuthenticated, IsLabelfuntionCreatorPermission]

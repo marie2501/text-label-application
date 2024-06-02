@@ -24,3 +24,17 @@ class FileDownloadView(APIView):
             return response
         return Response(status=status, data=data)
 
+# class ModelDownloadView(APIView):
+#     authentication_classes = [authentication.TokenAuthentication]
+#     parser_class = [FileUploadParser]
+#     permission_classes = [IsAuthenticated, IsRunCreatorPermission]
+#
+#     def get(self, request, *args, **kwargs):
+#         run_id = kwargs['run_id']
+#
+#         fileDownloadService = FileDownloadService()
+#         response, status, data = fileDownloadService.download_model(run_id)
+#
+#         if response != None:
+#             return response
+#         return Response(status=status, data=data)

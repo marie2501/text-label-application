@@ -11,4 +11,7 @@ urlpatterns = [
     path('workflow/labelfunction/<int:labelfunction_id>/modifiy/', LabelfunctionModifyView.as_view({'get': 'get_labelfunction_by_id', 'delete': 'delete_labelfunction',
                                                                        'patch': 'update_labelfunction'}), name='labelfunction_id'),
 
+
+    # path('workflow/labelfunction/<int:labelfunction_id>/analysis/', LabelfunctionView.as_view({'get': 'get_selection_of_datapoints'}), name='labelfunction_analysis'),
+
 ]

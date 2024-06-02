@@ -173,4 +173,46 @@ class LabelfunctionService:
             data = str(sys.exc_info())
             return status.HTTP_400_BAD_REQUEST, data
 
+    # def select_label(self, workflow_id, labelfunction_code, name):
+    #     file = File.objects.filter(workflow_id=workflow_id)
+    #
+    #     if file.exists():
+    #         file_name = file[0].__str__()
+    #         file_path = "{root}/{name}".format(root=MEDIA_ROOT, name=file_name)
+    #
+    #         imports = Labelfunction.objects.filter(workflow_id=workflow_id, type='import')
+    #         if imports.exists():
+    #             labels = Labelfunction.objects.filter(workflow_id=workflow_id, type='labels')
+    #             if labels.exists():
+    #                 labels_code = labels[0].code
+    #                 return self.__test_on_dataset(code, file_path, imports, name, workflow_id, labels_code)
+    #             return self.__test_on_dataset(code, file_path, imports, name, workflow_id)
+    #         return status.HTTP_404_NOT_FOUND, {
+    #             "message": "No import statements where found. from snorkel.labeling import labeling_function needs to be imported"}
+    #     return status.HTTP_404_NOT_FOUND, {"message": "No data set has been uploaded"}
+
+
+    # def __selection_label(self, code, file_path, imports, name, workflow_id, labels_code=''):
+    #     try:
+    #         import_code = imports[0].code
+    #         exec(import_code, locals())
+    #         exec(labels_code, locals())
+    #         exec(code, locals())
+    #         dataframe = pd.read_csv(file_path)
+    #         dataframe_unlabeled = dataframe.loc[(dataframe['splitting_id'] == 'unlabeled')]
+    #         dataframe_train = dataframe.loc[(dataframe['splitting_id'] == 'train')]
+    #         text_list_train_gold_labels = np.array(dataframe_train['CLASS'].tolist())
+    #         local_var = locals()
+    #         lfs = [local_var[name]]
+    #         with queries_disabled():
+    #             applier = PandasLFApplier(lfs=lfs)
+    #             L_unlabeled = applier.apply(df=dataframe_unlabeled)
+    #             L_train = applier.apply(df=dataframe_train)
+    #
+    #         selection = dataframe_train.iloc[L_train[:, 1] == 1].sample(10, random_state=1)
+    #         return status.HTTP_200_OK, {'selection': selection}
+    #     except:
+    #         data = str(sys.exc_info())
+    #         return status.HTTP_400_BAD_REQUEST, data
+
 

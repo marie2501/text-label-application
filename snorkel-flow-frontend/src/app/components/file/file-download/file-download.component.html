@@ -3,7 +3,9 @@
 
 <div class="grid mt-6 justify-content-center">
   <div>
-    <button pButton (click)="onDownload()" type="button"
-            class="p-button-secondary"  label="Download" [loading]="isLoading" icon="pi pi-arrow-circle-down"></button>
+    <button pButton (click)="onDownload('file')" type="button"
+            class="p-button-secondary" label="Download Dataset" [loading]="isLoading" icon="pi pi-arrow-circle-down"></button>
+<!--    <button pButton (click)="onDownload('model')" type="button"-->
+<!--            class="p-button-secondary ml-2" label="Download Model" [loading]="isLoading" icon="pi pi-arrow-circle-down"></button>-->
   </div>
 </div>

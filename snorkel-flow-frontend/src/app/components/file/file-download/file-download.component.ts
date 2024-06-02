@@ -24,12 +24,12 @@ export class FileDownloadComponent implements OnInit {
     }).unsubscribe();
   }
 
-  onDownload() {
-    this.fileService.getCSVFile(this.run_id).subscribe(respData => {
+  onDownload(type: string) {
+    this.fileService.getCSVFile(this.run_id, type).subscribe(respData => {
       const data: Blob = new Blob([respData], {
-        type: "text/csv; charset=utf-8"
+        type: (type == 'model' ? "application/octet-stream" : "text/csv; charset=utf-8")
       });
-      let filename = 'run' + this.run_id + '.csv';
+      let filename = 'labeled_data_run_id_' + this.run_id + '_' + type + (type == 'model' ? ".pickle" : ".csv");
       saveAs(data, filename);
     }, error => {
     });

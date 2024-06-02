@@ -7,6 +7,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from rest_framework import status
+# import joblib
 
 from snorkel_flow_backend.settings import MEDIA_ROOT
 from workflow_settings.models import File, Run, Classifier
@@ -49,25 +50,25 @@ class ClassiferService:
                                                                                              text_list_train,
                                                                                              text_list_unlabeled)
             # 3. Classifier
-            score_test, score_train = 0, 0
+            score_test, score_train, model = 0, 0, None
             if selectedModelClassifier == 'Naive Bayes':
-                score_test, score_train = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
+                score_test, score_train, model = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Decision Tree':
-                score_test, score_train = self.__classifier_decision_tree(features_test, features_train, features_unlabeled,
+                score_test, score_train, model = self.__classifier_decision_tree(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Random Forest':
-                score_test, score_train = self.__classifier_random_forest(features_test, features_train, features_unlabeled,
+                score_test, score_train, model = self.__classifier_random_forest(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'KNeighbors':
-                score_test, score_train = self.__classifier_kneighbors(features_test, features_train, features_unlabeled,
+                score_test, score_train, model = self.__classifier_kneighbors(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Logistic Regression':
-                score_test, score_train = self.__classifier_logistic_regression(    features_test, features_train, features_unlabeled,
+                score_test, score_train, model = self.__classifier_logistic_regression(    features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
 
@@ -95,7 +96,7 @@ class ClassiferService:
         classifier = Classifier.objects.get_or_create(type='NB', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train
+        return score_test, score_train, clf
 
 
     def __classifier_random_forest(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
@@ -107,7 +108,7 @@ class ClassiferService:
         classifier = Classifier.objects.get_or_create(type='RF', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train
+        return score_test, score_train, clf
 
     def __classifier_decision_tree(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
@@ -118,7 +119,7 @@ class ClassiferService:
         classifier = Classifier.objects.get_or_create(type='DT', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train
+        return score_test, score_train, clf
 
     def __classifier_kneighbors(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
@@ -129,7 +130,7 @@ class ClassiferService:
         classifier = Classifier.objects.get_or_create(type='KN', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train
+        return score_test, score_train, clf
 
     def __classifier_logistic_regression(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
@@ -140,7 +141,7 @@ class ClassiferService:
         classifier = Classifier.objects.get_or_create(type='LR', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train
+        return score_test, score_train, clf
 
     def __call_feature_generation(self, range_x, range_y, run_object, selectedModelFeaturize, text_list_test,
                                 text_list_train, text_list_unlabeled):
