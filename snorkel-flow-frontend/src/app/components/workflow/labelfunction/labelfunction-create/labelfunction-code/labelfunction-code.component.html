@@ -53,8 +53,10 @@
   <br>
   <div *ngIf="isTested">
 
-    <app-labelfunction-analysis [analysisModel_unlabeled]="analysisModel_unlabeled" [analysisModel_train]="analysisModel_train"></app-labelfunction-analysis>
+    <app-labelfunction-analysis-datapoints [df_combined]="df_combined"></app-labelfunction-analysis-datapoints>
 
+    <app-labelfunction-analysis [analysisModel_unlabeled]="analysisModel_unlabeled" [analysisModel_train]="analysisModel_train"></app-labelfunction-analysis>
+    <br>
   </div>
 
   <div #editor></div>

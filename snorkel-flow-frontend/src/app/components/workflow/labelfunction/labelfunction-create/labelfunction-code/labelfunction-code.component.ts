@@ -8,6 +8,7 @@ import {LabelfunctionModel} from "../../../../../models/labelfunction.model";
 import {Message, MessageService} from "primeng/api";
 import {WorkflowService} from "../../../../../services/workflow/workflow.service";
 import {AnalysisModel} from "../../../../../models/analysis.model";
+import {DataframeModel} from "../../../../../models/dataframe.model";
 
 const THEME = 'ace/theme/dawn';
 const LANGUAGE = 'ace/mode/python';
@@ -51,7 +52,9 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   workflowDescription: string = '';
   labelfunctionDescription: string = '';
   annotationschema: string = '';
-  packages: string[] = []
+  packages: string[] = [];
+
+  df_combined: DataframeModel[] = [];
 
   constructor(private labelfunctionService: LabelfunctionService, private route: ActivatedRoute,
               private messageService: MessageService, private workflowService: WorkflowService) { }
@@ -161,7 +164,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
         next: value => {
           this.analysisModel_unlabeled = value.summary;
           this.analysisModel_train = value.summary_train;
-          console.log(this.analysisModel_unlabeled)
+          this.df_combined = value.df_combined;
           this.lid = value.lid;
           this.isTested = true;
           this.showSuccessMessage('The label function has been successfully tested and updated');
@@ -178,6 +181,7 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
           console.log(value);
           this.analysisModel_unlabeled = value.summary;
           this.analysisModel_train = value.summary_train;
+          this.df_combined = value.df_combined;
           this.lid = value.lid;
           this.isTested = true;
           this.showSuccessMessage('The label function has been successfully tested and saved');

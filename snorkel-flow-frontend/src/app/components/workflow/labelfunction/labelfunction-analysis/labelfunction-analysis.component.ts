@@ -12,6 +12,6 @@ export class LabelfunctionAnalysisComponent {
   analysisModel_unlabeled : AnalysisModel = {index: ['Nothing to analyse'], Coverage: [0], Conflicts: [0], Polarity: [0], Overlaps: [0]};
 
   @Input()
-  analysisModel_train : AnalysisModel = {index: ['Nothing to analyse'], Coverage: [0], Conflicts: [0], Polarity: [0], Overlaps: [0]};;
+  analysisModel_train : AnalysisModel = {index: ['Nothing to analyse'], Coverage: [0], Conflicts: [0], Polarity: [0], Overlaps: [0]};
 
 }

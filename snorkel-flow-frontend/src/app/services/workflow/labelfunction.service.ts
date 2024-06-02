@@ -6,6 +6,7 @@ import {throwError} from "rxjs";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 import {AnalysisModel} from "../../models/analysis.model";
+import {DataframeModel} from "../../models/dataframe.model";
 
 // const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
 const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
@@ -19,11 +20,11 @@ export class LabelfunctionService {
   }
 
   testAndSaveLabelfunction(labelfunction: LabelfunctionModel, workflow_id: number){
-    return this.http.post<{'summary': AnalysisModel, 'summary_train': AnalysisModel, 'lid': number}>(`${labelfuntionURL}/${workflow_id}/labelfunction/`, labelfunction).pipe(catchError(this.handleError));
+    return this.http.post<{summary: AnalysisModel, summary_train: AnalysisModel, df_combined: DataframeModel[], lid: number}>(`${labelfuntionURL}/${workflow_id}/labelfunction/`, labelfunction).pipe(catchError(this.handleError));
   }
 
   testAndUpdateLabelfunctions(labelfunction_id: number, labelfunction: LabelfunctionModel, workflow_id: number){
-    return this.http.patch<{'summary': AnalysisModel, 'summary_train': AnalysisModel, 'lid': number}>(`${labelfuntionURL}/labelfunction/${labelfunction_id}/modifiy/`, {labelfunction, workflow_id}).pipe(catchError(this.handleError));
+    return this.http.patch<{summary: AnalysisModel, summary_train: AnalysisModel, df_combined: DataframeModel[], lid: number}>(`${labelfuntionURL}/labelfunction/${labelfunction_id}/modifiy/`, {labelfunction, workflow_id}).pipe(catchError(this.handleError));
   }
 
 
