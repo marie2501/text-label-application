@@ -24,6 +24,8 @@ export class ModelSettingsComponent implements OnInit{
   base_learning_rate : number = 0.01;
   l2: number = 0.0;
   workflow_id: number = 0;
+  df_combined: {columns: string[], index: string[], data: string[][]} = {columns: [], index : [], data: []};
+  isClassified: boolean = false;
 
 
   errorMessage: Message[] = [];
@@ -54,12 +56,14 @@ export class ModelSettingsComponent implements OnInit{
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
       this.runservices.trainClassifier(this.run_id, data).subscribe(respData => {
         this.classifierResult = respData;
+        this.df_combined = respData.df_combined
         if(this.classifierResult.score_test != -1){
           this.classfierData = [];
           this.classfierData = [
             {severity: 'info', summary: 'Results', detail: `Trainings-Score: ${this.classifierResult.score_train}  und  Test-Score: ${this.classifierResult.score_test}` }];
           }
-          this.showSuccessMessage();
+        this.showSuccessMessage();
+        this.isClassified = true;
         }, error => {
           this.showErrorMessage(error);
         });

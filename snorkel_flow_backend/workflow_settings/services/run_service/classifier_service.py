@@ -52,27 +52,27 @@ class ClassiferService:
             # 3. Classifier
             score_test, score_train, model = 0, 0, None
             if selectedModelClassifier == 'Naive Bayes':
-                score_test, score_train, model = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
+                score_test, score_train, model, predictions_train = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Decision Tree':
-                score_test, score_train, model = self.__classifier_decision_tree(features_test, features_train, features_unlabeled,
+                score_test, score_train, model, predictions_train = self.__classifier_decision_tree(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Random Forest':
-                score_test, score_train, model = self.__classifier_random_forest(features_test, features_train, features_unlabeled,
+                score_test, score_train, model, predictions_train = self.__classifier_random_forest(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'KNeighbors':
-                score_test, score_train, model = self.__classifier_kneighbors(features_test, features_train, features_unlabeled,
+                score_test, score_train, model, predictions_train = self.__classifier_kneighbors(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
             elif selectedModelClassifier == 'Logistic Regression':
-                score_test, score_train, model = self.__classifier_logistic_regression(    features_test, features_train, features_unlabeled,
+                score_test, score_train, model, predictions_train = self.__classifier_logistic_regression(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
                                                                   text_list_train_class)
 
-            return status.HTTP_200_OK, {'score_train': score_train, 'score_test': score_test}
+            return status.HTTP_200_OK, {'score_train': score_train, 'score_test': score_test}, predictions_train
 
         return status.HTTP_404_NOT_FOUND, {"message": "The run object does not exist"}
 
@@ -92,11 +92,12 @@ class ClassiferService:
         clf = MultinomialNB()
         clf.fit(features_unlabeled, preds_unlabeled)
         score_train = clf.score(features_train, text_list_train_class)
+        predictions_train = clf.predict(features_train)
         score_test = clf.score(features_test, text_list_test_class)
         classifier = Classifier.objects.get_or_create(type='NB', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train, clf
+        return score_test, score_train, clf, predictions_train
 
 
     def __classifier_random_forest(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
@@ -104,44 +105,48 @@ class ClassiferService:
         clf = RandomForestClassifier()
         clf.fit(features_unlabeled, preds_unlabeled)
         score_train = clf.score(features_train, text_list_train_class)
+        predictions_train = clf.predict(features_train)
         score_test = clf.score(features_test, text_list_test_class)
         classifier = Classifier.objects.get_or_create(type='RF', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train, clf
+        return score_test, score_train, clf, predictions_train
 
     def __classifier_decision_tree(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
         clf = DecisionTreeClassifier()
         clf.fit(features_unlabeled, preds_unlabeled)
         score_train = clf.score(features_train, text_list_train_class)
+        predictions_train = clf.predict(features_train)
         score_test = clf.score(features_test, text_list_test_class)
         classifier = Classifier.objects.get_or_create(type='DT', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train, clf
+        return score_test, score_train, clf, predictions_train
 
     def __classifier_kneighbors(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
         clf = KNeighborsClassifier(n_neighbors=5)
         clf.fit(features_unlabeled, preds_unlabeled)
         score_train = clf.score(features_train, text_list_train_class)
+        predictions_train = clf.predict(features_train)
         score_test = clf.score(features_test, text_list_test_class)
         classifier = Classifier.objects.get_or_create(type='KN', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train, clf
+        return score_test, score_train, clf, predictions_train
 
     def __classifier_logistic_regression(self, features_test, features_train, features_unlabeled, preds_unlabeled, run_object,
                                text_list_test_class, text_list_train_class):
         clf = LogisticRegression()
         clf.fit(features_unlabeled, preds_unlabeled)
         score_train = clf.score(features_train, text_list_train_class)
+        predictions_train = clf.predict(features_train)
         score_test = clf.score(features_test, text_list_test_class)
         classifier = Classifier.objects.get_or_create(type='LR', test_score=score_test, train_score=score_train)
         run_object.classifier = classifier[0]
         run_object.save()
-        return score_test, score_train, clf
+        return score_test, score_train, clf, predictions_train
 
     def __call_feature_generation(self, range_x, range_y, run_object, selectedModelFeaturize, text_list_test,
                                 text_list_train, text_list_unlabeled):

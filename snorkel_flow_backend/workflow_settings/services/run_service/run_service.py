@@ -83,29 +83,10 @@ class RunService:
             run_obeject.labelmatrix = labelmatrix
             run_obeject.labelfunction_summary_train = summary_train.to_json(orient='split')
             run_obeject.save()
-            return status.HTTP_200_OK, data
+            return status.HTTP_200_OK, data, L_train_train, dataframe_train, labelfunction_names
         except:
             data = str(sys.exc_info())
             return status.HTTP_400_BAD_REQUEST, data
-
-    # todo get analysis wegmachen und direkt in exekute run machen
-#     def get_analysis(self, run_id):
-#         run = Run.objects.filter(pk=run_id)
-#         if run.exists():
-#             if run[0].labelfunction_summary is not None:
-#                 run_obeject_summary = run[0].labelfunction_summary
-#                 run_obeject_summary_train = run[0].labelfunction_summary_train
-#                 summary = pd.read_json(StringIO(run_obeject_summary), orient='split')
-#                 summary_train = pd.read_json(StringIO(run_obeject_summary_train), orient='split')
-#                 summary['index'] = summary.index
-#                 summary_train = summary_train.rename(columns={"Emp. Acc.": "Empirical Accuracy"})
-#                 summary_train['index'] = summary_train.index
-#                 return status.HTTP_200_OK, {'summary': summary, 'summary_train': summary_train}
-#             error = 'The run has not yet been executed by the creator.'
-#             return status.HTTP_400_BAD_REQUEST, error
-#         return status.HTTP_404_NOT_FOUND, {"message": "The run object does not exist"}
-
-
 
     def get_run(self, run_id):
         run = Run.objects.filter(pk=run_id)

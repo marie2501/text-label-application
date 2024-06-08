@@ -70,6 +70,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { TabViewModule } from 'primeng/tabview';
 import { LabelfunctionAnalysisDatapointsComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-analysis-datapoints/labelfunction-analysis-datapoints.component';
 import { LabelfunctionAnalysisComponent } from './components/workflow/labelfunction/labelfunction-analysis/labelfunction-analysis.component';
+import { RunAnalysisDatapointsComponent } from './components/workflow/run/run-dashboard/run-analysis-datapoints/run-analysis-datapoints.component';
 
 
 
@@ -107,7 +108,8 @@ import { LabelfunctionAnalysisComponent } from './components/workflow/labelfunct
     RunTutorialComponent,
     GenerateTemplateComponent,
     LabelfunctionAnalysisDatapointsComponent,
-    LabelfunctionAnalysisComponent
+    LabelfunctionAnalysisComponent,
+    RunAnalysisDatapointsComponent
   ],
   imports: [
     BrowserModule,

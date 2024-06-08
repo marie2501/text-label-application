@@ -51,7 +51,7 @@ export class RunService {
   trainClassifier(run_id: number,
                   data: {selectedModelClassifier: string, selectedModelLabel: string,
                          selectedModelFeaturize: string, range_x: number, range_y: number}){
-    return this.http.post<{score_train: number, score_test: number}>(`${runURL}/run/${run_id}/trainclassifier/`, data).pipe(catchError(this.handleError));
+    return this.http.post<{score_train: number, score_test: number, df_combined: {columns: string[], index: string[], data: string[][]}}>(`${runURL}/run/${run_id}/trainclassifier/`, data).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse){

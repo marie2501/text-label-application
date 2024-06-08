@@ -8,12 +8,12 @@
     <p-table [value]="df_combined">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="entity_id">entity_id<p-sortIcon field="entity_id"></p-sortIcon></th>
-          <th pSortableColumn="corpus_id">corpus_id<p-sortIcon field="corpus_id"></p-sortIcon></th>
-          <th pSortableColumn="text">text<p-sortIcon field="text"></p-sortIcon></th>
-          <th pSortableColumn="splitting_id">splitting_id<p-sortIcon field="splitting_id"></p-sortIcon></th>
-          <th pSortableColumn="computed_Labels">computed_Labels<p-sortIcon field="computed_Labels"></p-sortIcon></th>
-          <th pSortableColumn="CLASS">CLASS<p-sortIcon field="CLASS"></p-sortIcon></th>
+          <th>entity_id</th>
+          <th>corpus_id</th>
+          <th>text</th>
+          <th>splitting_id</th>
+          <th>computed_Labels</th>
+          <th>CLASS</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-i="rowIndex">
