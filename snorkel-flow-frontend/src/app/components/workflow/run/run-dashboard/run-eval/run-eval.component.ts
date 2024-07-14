@@ -64,16 +64,6 @@ export class RunEvalComponent implements OnInit{
     });
   }
 
-  getAnalysis() {
-    this.runService.getAnalysisRun(this.run_id).subscribe(respData => {
-      this.analysisModel_unlabeled = respData.summary;
-      this.analysisModel_train = respData.summary_train
-      this.analysisLoaded = Promise.resolve(true);
-    }, error => {
-      this.showErrorMessage(error);
-    });
-  }
-
   private showErrorMessage(error: any) {
     this.errorMessage = [];
     this.errorMessage = [

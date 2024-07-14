@@ -62,6 +62,18 @@ export class AuthService {
   //todo passe error code später an
   private handleError(error: HttpErrorResponse) {
     console.log(error.error);
+    if (error.error.user != null){
+      const userError : string = error.error.user[0]
+      return throwError(() => new Error(userError));
+    }
+    if (error.error.email != null){
+      const emailError : string = 'email:' + error.error.email[0]
+      return throwError(() => new Error(emailError));
+    }
+    if (error.error.username != null){
+      const usernameError : string = 'username: ' + error.error.username[0]
+      return throwError(() => new Error(usernameError));
+    }
     return throwError(() => new Error('Login failed. Please try again.'));
 
   }

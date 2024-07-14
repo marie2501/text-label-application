@@ -61,25 +61,19 @@ export class WorkflowService {
     return this.http.delete(`${workflowURL}/${workflow_id}/contributer/modify/`, {'body': {'username': username}}).pipe(catchError(this.handleError));
   }
 
-  //todo auslagern in eigenen info/hilf service
   getInstalledPackages(){
     return this.http.get<string[]>(`${workflowURL}/package/`);
   }
 
   private handleError(error: HttpErrorResponse){
-    console.log(error)
     if(error.error.description != null) {
       return throwError(() => new Error('Description can not be blank'));
     } else if (error.error.title != null)  {
       return throwError(() => new Error('Title can not be blank'));
     } else if (error.error.non_field_errors != null) {
       return throwError(() => error.error.non_field_errors);
-    } else if (error.status == 403){
-      return throwError(() => new Error('You do not have authorization to access this resource'));
-    } else if (error.status == 404){
-      return throwError(() => new Error('The requested resource does not exists.'));
-    } else if (error.status == 400){
-      return throwError(() => new Error(error.error));
+    } else if (error.error.message != null) {
+      return throwError(() => new Error(error.error.message));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }

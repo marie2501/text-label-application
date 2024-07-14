@@ -31,15 +31,7 @@ class RunView(viewsets.ViewSet):
         run_id = kwargs['run_id']
 
         runservice = RunService()
-        status, data, L_train_train, dataframe_train = runservice.exec_run(run_id)
-
-        return Response(status=status, data=data)
-
-    def get_analysis(self, request, *args, **kwargs):
-        run_id = kwargs['run_id']
-
-        runservice = RunService()
-        status, data = runservice.get_analysis(run_id)
+        status, data, L_train_train, dataframe_train, labelfunction_names = runservice.exec_run(run_id)
 
         return Response(status=status, data=data)
 

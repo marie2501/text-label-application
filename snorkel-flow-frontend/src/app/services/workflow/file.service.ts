@@ -38,16 +38,10 @@ export class FileService {
   }
 
   private handleError(error: HttpErrorResponse){
-    console.log(error)
-    if (error.status == 403){
-      return throwError(() => new Error('You do not have the authorization to change the dataset.'));
-    } else if (error.status == 404){
-      return throwError(() => new Error('The dataset or workflow does not exists.'));
-    } else if (error.status == 400){
-      if (error.error.non_field_errors){
-        return throwError(() => new Error(error.error.non_field_errors));
-      }
-      return throwError(() => new Error(error.error));
+    if (error.error.message != null){
+      return throwError(() => new Error(error.error.message));
+    } else if (error.error.non_field_errors != null){
+      return throwError(() => new Error(error.error.non_field_errors));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }
