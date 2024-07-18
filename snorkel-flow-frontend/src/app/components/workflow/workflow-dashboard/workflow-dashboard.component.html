@@ -7,7 +7,6 @@
         <p-button [routerLink]="['/workflow', workflow_id , 'create-labelfunction']" label="New Labelfunction" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
         <p-button class="ml-4" [routerLink]="['/workflow', workflow_id , 'labelfunction-run']" label="New Run" icon="pi pi-plus" styleClass="p-button-raised p-button-info"></p-button>
         <p-button class="ml-4" [routerLink]="['/workflow', 'create', workflow_id , 'file']" label="Manage Dataset" styleClass="p-button-raised p-button-info"></p-button>
-        <!--        <app-file-upload *ngIf="isCreator" class="ml-4" [workflow_id]="workflow_id"></app-file-upload>-->
       </div>
 
       <app-labelfunction-list [workflow_id]="workflow_id" [modifiable]="true"></app-labelfunction-list>

@@ -46,7 +46,7 @@ export class LabelfunctionService {
   }
 
   deleteLabelfunctions(labelfunction_id: number){
-    return this.http.delete(`${labelfuntionURL}/${labelfunction_id}/modifiy/`).pipe(catchError(this.handleError));
+    return this.http.delete<{message: string}>(`${labelfuntionURL}/${labelfunction_id}/modifiy/`).pipe(catchError(this.handleError));
   }
 
 

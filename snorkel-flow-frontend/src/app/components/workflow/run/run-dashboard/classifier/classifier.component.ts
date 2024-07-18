@@ -6,21 +6,17 @@ import {RunService} from "../../../../../services/workflow/run.service";
   templateUrl: './classifier.component.html',
   styleUrls: ['./classifier.component.css']
 })
-export class ClassifierComponent implements OnInit, DoCheck {
+export class ClassifierComponent implements DoCheck {
 
   model: string[] = ['Naive Bayes', 'Decision Tree', 'Random Forest', 'KNeighbors', 'Logistic Regression'];
   selectedModel: string = '';
 
   @Output()
-  changeEvent = new EventEmitter<string>();
+  changeEvent = new EventEmitter<{ classifier: string, filterAbstain: boolean }>();
+  filterAbstain: boolean = false;
 
-  constructor(private runService: RunService) {
-  }
-
-  ngOnInit(): void {
-  }
 
   ngDoCheck(): void {
-    this.changeEvent.emit(this.selectedModel);
+    this.changeEvent.emit({classifier: this.selectedModel, filterAbstain: this.filterAbstain});
   }
 }

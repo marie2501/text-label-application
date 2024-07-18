@@ -45,10 +45,16 @@ export class LabelfunctionListComponent {
   }
 
   deleteButton(id: number) {
-    this.labelfuntionService.deleteLabelfunctions(id).subscribe(respData => {
-      this.showSuccessMessage();
-    })
-    window.location.reload();
+    this.labelfuntionService.deleteLabelfunctions(id).subscribe(
+      {
+        next: value  => {
+          this.showMessage(value.message, 'success', 'Success');
+          window.location.reload();
+        },
+        error: err => {
+          this.showMessage(err, 'error', 'Error');
+        }
+      })
   }
 
   onRowSelect() {
@@ -56,9 +62,9 @@ export class LabelfunctionListComponent {
   }
 
 
-  showSuccessMessage(){
-    this.messageService.add({ key: 'bc', severity: 'success',
-      summary: 'Success', detail: 'Labelfunction has been deleted' });
+  showMessage(message: string, severity: string, summary: string){
+    this.messageService.add({ key: 'bc', severity: severity,
+      summary: summary, detail: message });
   }
 
   getLoggedInUser(){

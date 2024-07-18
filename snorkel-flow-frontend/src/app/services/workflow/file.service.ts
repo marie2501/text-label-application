@@ -34,12 +34,13 @@ export class FileService {
   getCSVFile( run_id: number, type: string) {
     return this.http.get<any>(`${fileURL}/download/${run_id}/${type}/`, {
       responseType: 'text' as any
-    });
+    }).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse){
-    if (error.error.message != null){
-      return throwError(() => new Error(error.error.message));
+    if (error.error != null){
+      const jsonObject = JSON.parse(error.error)
+      return throwError(() => new Error(jsonObject.message));
     } else if (error.error.non_field_errors != null){
       return throwError(() => new Error(error.error.non_field_errors));
     }

@@ -26,13 +26,12 @@ export class ModelSettingsComponent implements OnInit{
   workflow_id: number = 0;
   df_combined: {columns: string[], index: string[], data: string[][]} = {columns: [], index : [], data: []};
   isClassified: boolean = false;
-
+  filterAbstain: boolean = false;
+  selectedTie: string = '';
 
   errorMessage: Message[] = [];
   classfierData: Message[] = [];
   classifierResult: { score_train: number, score_test: number } = {score_train: -1, score_test: -1};
-
-  // todo implemnt function und backend + datenbank änderung -> zeige dies in run dashboard
 
   constructor(private runservices: RunService, private messageService: MessageService, private route: ActivatedRoute) {
   }
@@ -45,14 +44,14 @@ export class ModelSettingsComponent implements OnInit{
   }
 
   saveModel() {
-    let data: {selectedModelClassifier: string, selectedModelLabel: string,
+    let data: {selectedModelClassifier: string, selectedModelLabel: string, selectedTie: string, filterAbstain: boolean,
       selectedModelFeaturize: string, range_x: number, range_y: number, n_epochs : number, log_freq : number,
-      seed : number, base_learning_rate : number, l2: number} = {selectedModelClassifier: this.selectedClassifier,
-      selectedModelLabel: this.selectedLabelModel, l2: this.l2, seed: this.seed, n_epochs: this.n_epochs,
+      seed : number, base_learning_rate : number, l2: number} = {selectedModelClassifier: this.selectedClassifier, filterAbstain: this.filterAbstain,
+      selectedModelLabel: this.selectedLabelModel, selectedTie: this.selectedTie, l2: this.l2, seed: this.seed, n_epochs: this.n_epochs,
       base_learning_rate: this.base_learning_rate, log_freq: this.log_freq,
       selectedModelFeaturize: this.selectedFeaturize, range_x: this.range_x, range_y: this.range_y}
 
-    if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedFeaturize != '' &&
+    if(this.selectedClassifier != '' && this.selectedLabelModel != '' && this.selectedTie != '' && this.selectedFeaturize != '' &&
       (this.range_x && this.range_y) >= 1 && (this.l2 && this.seed && this.log_freq && this.seed && this.base_learning_rate) >= 0){
       this.runservices.trainClassifier(this.run_id, data).subscribe(respData => {
         this.classifierResult = respData;
@@ -73,9 +72,10 @@ export class ModelSettingsComponent implements OnInit{
   }
 
 
-  onChangeLabelvote($event: {selectedModel: string , n_epochs : number, log_freq : number,
+  onChangeLabelvote($event: {selectedModel: string , selectedTie: string, n_epochs : number, log_freq : number,
     seed : number, base_learning_rate : number, l2: number}) {
     this.selectedLabelModel = $event.selectedModel;
+    this.selectedTie = $event.selectedTie;
     this.l2 = $event.l2;
     this.seed = $event.seed;
     this.log_freq = $event.log_freq;
@@ -83,9 +83,9 @@ export class ModelSettingsComponent implements OnInit{
     this.n_epochs = $event.n_epochs;
   }
 
-  onChangeClassifier($event: string) {
-    this.selectedClassifier = $event;
-    console.log(this.selectedClassifier)
+  onChangeClassifier($event: { classifier: string, filterAbstain: boolean }) {
+    this.selectedClassifier = $event.classifier;
+    this.filterAbstain = $event.filterAbstain;
   }
 
   onChangeFeaturize($event: { selectedModel: string; range_x: number; range_y: number }) {

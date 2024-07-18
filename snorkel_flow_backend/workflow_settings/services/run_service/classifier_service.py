@@ -20,7 +20,7 @@ class ClassiferService:
     # todo get classifier assocatied with the run, make model to download
 # todo füge im file object noch die anzahl der cardinality zu, am besten so das dieses automatisch berechnet wird
     def call_classifier(self, run_id, selectedModelClassifier, selectedModelLabel, selectedModelFeaturize, range_x,
-                        range_y, n_epochs, log_freq, seed, base_learning_rate, l2, numbers_of_labels):
+                        range_y, n_epochs, log_freq, seed, base_learning_rate, l2, numbers_of_labels, selectedTie, filterAbstain):
         run_filter = Run.objects.filter(pk=run_id)
 
         if run_filter.exists():
@@ -39,8 +39,10 @@ class ClassiferService:
 
             # 1. Labelmodel
             preds_unlabeled = self.__call_label_modell(base_learning_rate, l2, log_freq, n_epochs, numbers_of_labels,
-                                                     run_object, seed, selectedModelLabel)
+                                                     run_object, seed, selectedModelLabel, selectedTie)
 
+
+            text_list_unlabeled, preds_unlabeled = self.__filter_abstain_in_dataset(text_list_unlabeled, preds_unlabeled, filterAbstain)
 
             # 2. Featurize
             features_test, features_train, features_unlabeled = self.__call_feature_generation(range_x, range_y,
@@ -49,8 +51,9 @@ class ClassiferService:
                                                                                              text_list_test,
                                                                                              text_list_train,
                                                                                              text_list_unlabeled)
+
             # 3. Classifier
-            score_test, score_train, model = 0, 0, None
+            score_test, score_train, model, predictions_train = 0, 0, None, None
             if selectedModelClassifier == 'Naive Bayes':
                 score_test, score_train, model, predictions_train = self.__classifier_naive_bayes(features_test, features_train, features_unlabeled,
                                                                   preds_unlabeled, run_object, text_list_test_class,
@@ -160,13 +163,24 @@ class ClassiferService:
         return features_test, features_train, features_unlabeled
 
     def __call_label_modell(self, base_learning_rate, l2, log_freq, n_epochs, numbers_of_labels, run_object, seed,
-                          selectedModelLabel):
+                          selectedModelLabel, selectedTie):
         labelmodelservice = LabelModelService()
-        preds_unlabeled = labelmodelservice.label_model(run_object, selectedModelLabel, n_epochs, log_freq, seed,
+        preds_unlabeled = labelmodelservice.label_model(run_object, selectedModelLabel, selectedTie, n_epochs, log_freq, seed,
                                                         base_learning_rate, l2, numbers_of_labels)
         run_object.preds_unlabeled = json.dumps(preds_unlabeled.tolist())
         run_object.save()
         return preds_unlabeled
+
+    def __filter_abstain_in_dataset(self, text_list_unlabeled, preds_unlabeled, filterAbstain):
+        if filterAbstain:
+            filter_preds = []
+            filter_text = []
+            for i in range(0, len(text_list_unlabeled)):
+                if preds_unlabeled[i] != -1:
+                    filter_preds.append(preds_unlabeled[i])
+                    filter_text.append(text_list_unlabeled[i])
+            return filter_text, filter_preds
+        return text_list_unlabeled, preds_unlabeled
 
 
 

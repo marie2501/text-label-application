@@ -150,7 +150,7 @@ class LabelfunctionService:
             if not Run.objects.filter(workflow_id=labelfunktion_object.workflow_id).filter(labelfunctions__in=[labelfunktion_object]).exists():
                 labelfunktion_object.delete()
                 return status.HTTP_200_OK, {"message": "The labelfunction was successfully created"}
-            return status.HTTP_400_BAD_REQUEST, {"message": "The label function cannot be deleted as long as it is used in a run"}
+            return status.HTTP_400_BAD_REQUEST, {"message": "The labelfunction can not be deleted as long as it is used in a run."}
         return status.HTTP_404_NOT_FOUND, {"message": "The labelfunction does not exist"}
 
     def update_labelfunction(self, labelfunction_id, request_data):

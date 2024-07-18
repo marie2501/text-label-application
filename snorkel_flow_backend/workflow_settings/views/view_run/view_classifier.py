@@ -30,13 +30,16 @@ class ClassiferView(viewsets.ViewSet):
         seed = request.data['seed']
         base_learning_rate = request.data['base_learning_rate']
         l2 = request.data['l2']
+        selectedTie = request.data['selectedTie']
+        filterAbstain = request.data['filterAbstain']
+        # todo get automatically
         numbers_of_labels = 2
 
         runservice = RunService()
         status, data, L_train_train, dataframe_train, labelfunction_names = runservice.exec_run(run_id)
 
         classifierservice = ClassiferService()
-        status, data, predictions_train = classifierservice.call_classifier(run_id, selectedModelClassifier, selectedModelLabel, selectedModelFeaturize, range_x, range_y, n_epochs, log_freq, seed, base_learning_rate, l2, numbers_of_labels)
+        status, data, predictions_train = classifierservice.call_classifier(run_id, selectedModelClassifier, selectedModelLabel, selectedModelFeaturize, range_x, range_y, n_epochs, log_freq, seed, base_learning_rate, l2, numbers_of_labels, selectedTie, filterAbstain)
 
 
         labelfunctions_dataframe = pd.DataFrame(L_train_train, columns=labelfunction_names)

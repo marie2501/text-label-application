@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {saveAs} from "file-saver";
 import {FileService} from "../../../services/workflow/file.service";
 import {ActivatedRoute, Route} from "@angular/router";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-file-download',
@@ -15,7 +16,7 @@ export class FileDownloadComponent implements OnInit {
   run_id: number = 0;
   workflow_id: number = 0;
 
-  constructor(private fileService: FileService, private route: ActivatedRoute) {}
+  constructor(private fileService: FileService, private route: ActivatedRoute, private messageService: MessageService) {}
 
   ngOnInit(): void {
     this.route.parent?.params.subscribe((params) => {
@@ -32,9 +33,13 @@ export class FileDownloadComponent implements OnInit {
       let filename = 'labeled_data_run_id_' + this.run_id + '_' + type + (type == 'model' ? ".pickle" : ".csv");
       saveAs(data, filename);
     }, error => {
+      this.showMessage(error, 'error', 'Error')
     });
   }
 
-
+  showMessage(message: string, severity: string, summary: string){
+    this.messageService.add({ key: 'bc', severity: severity,
+      summary: summary, detail: message });
+  }
 
 }

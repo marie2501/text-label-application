@@ -4,6 +4,13 @@
     <div class="list-position">
       <p-dropdown [options]="model" [(ngModel)]="selectedModel" [showClear]="true" placeholder="Select a Model"></p-dropdown>
     </div>
+    <br>
+    <div class="list-position">
+      <p-dropdown [options]="tie_break" [(ngModel)]="selectedTie" [showClear]="true" placeholder="Select a Tie Break"
+      pTooltip="Choose how you want to deal with tie breaks between labels.
+abstain: In the event of a tie break, the abstain is returned
+true-random: In the event of a tie break, a random decision is made between the tie options "></p-dropdown>
+    </div>
     <div *ngIf="selectedModel == 'Train Label Model'" class="mt-4">
       <label class="mr-2 font-semibold">Label Model Settings:</label>
       <br>
