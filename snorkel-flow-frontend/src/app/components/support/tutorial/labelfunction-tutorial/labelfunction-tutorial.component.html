@@ -37,34 +37,38 @@
         </div>
       </p-tabPanel>
       <p-tabPanel header="How do you evaluate the label function??">
-        <div class="flex">
-          <div>
-          <p>
-            The label function is applied to two different parts of the data set,
-            the non-annotated part and the part used to analyse the label functions.
-
-            After successful application, you will receive a table with some analysis values:
-          </p>
-          <ul>
-            <li>Polarity: Number of unique labels that were returned (Abstain is not counted)</li>
-            <li>Coverage: Fraction to which a label (not abstain) is assigned</li>
-            <li>Overlaps: Fraction in which this and at least one other function is labelled</li>
-            <li>Conflicts: Fraction where this and at least one other function do not match</li>
-          </ul>
-
-          <p>
-            These values are only used for the data set for the analysis,
-            as the correct labels are available here:
-          </p>
-
-          <ul>
-            <li>Correct: The number of data points in which is correctly labelled</li>
-            <li>Incorrect: The number of data points incorrectly labelled</li>
-            <li>Empirical accuracy: Fraction correctly labelled.</li>
-          </ul>
-          </div>
-          <div>
+        <div class="grid">
+          <div class="col-12">
             <img class="analysis-w fadein labelfunction" src="assets/images/tutorial/analysis.png" >
+          </div>
+          <div class="col-4">
+            <p>
+              The label function is applied to two different parts of the data set,
+              the non-annotated part and the part used to analyse the label functions.
+
+              After successful application, you will receive a table with some analysis values:
+            </p>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Polarity: Number of unique labels that were returned (Abstain is not counted)</li>
+              <li>Coverage: Fraction to which a label (not abstain) is assigned</li>
+              <li>Overlaps: Fraction in which this and at least one other function is labelled</li>
+              <li>Conflicts: Fraction where this and at least one other function do not match</li>
+            </ul>
+          </div>
+
+          <div class="col-4">
+            <p>
+              These values are only used for the data set for the analysis,
+              as the correct labels are available here:
+            </p>
+
+            <ul>
+              <li>Correct: The number of data points in which is correctly labelled</li>
+              <li>Incorrect: The number of data points incorrectly labelled</li>
+              <li>Empirical accuracy: Fraction correctly labelled.</li>
+            </ul>
           </div>
         </div>
       </p-tabPanel>
