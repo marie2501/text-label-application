@@ -2,3 +2,59 @@
   position: relative;
   top: 2rem;
 }
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #ff9100;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link:hover {
+  background-color: #fff2df;
+  color: rgb(86, 86, 86);
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  color: black;
+}
+
+.analysis-w {
+  width: 70.5rem;
+}
+
+.dashboard-user {
+  width: 60vw;
+  position: relative;
+  left: 6rem;
+
+}
+
+.dashbord-1-user {
+  top: -28.615rem;
+  left: 6rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+}
+
+.dashbord-2-user {
+  top: -57.27rem;
+  left: 6rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 4s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+
+}
+
+.dashbord-3-user {
+  top: -85.845rem;
+  left: 6rem;
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-delay: 7s;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+
+}

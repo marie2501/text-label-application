@@ -7,10 +7,60 @@
     </button>
   </div>
 
-  <p-dialog header="Tutorial: Run" [(visible)]="visible" [modal]="true" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-    <p class="m-0">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-      consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
+  <p-dialog header="Tutorial: Run" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw', height: '80vh' }" [draggable]="false" [resizable]="false">
+    <p-tabView>
+      <p-tabPanel header="What is a run?">
+        <p>
+          A run is a collection of label functions that are to be executed and saved together. This execution creates a matrix (data point x label function).
+          Once the label functions have been executed, a further step is required. The results of the label matrix are summarised so that each data point has a single label. This data and label are then used to train a classifier.
+          In the final step, the annotated data set can be downloaded.
+        </p>
+      </p-tabPanel>
+      <p-tabPanel header="How do you evaluate the label function?">
+        <div class="grid">
+          <div class="col-12">
+            <img class="analysis-w fadein labelfunction" src="assets/images/tutorial/analysis.png" >
+          </div>
+          <div class="col-4">
+            <p>
+              The label function is applied to two different parts of the data set,
+              the non-annotated part and the part used to analyse the label functions.
+
+              After successful application, you will receive a table with some analysis values:
+            </p>
+          </div>
+          <div class="col-4">
+            <ul>
+              <li>Polarity: Number of unique labels that were returned (Abstain is not counted)</li>
+              <li>Coverage: Fraction to which a label (not abstain) is assigned</li>
+              <li>Overlaps: Fraction in which this and at least one other function is labelled</li>
+              <li>Conflicts: Fraction where this and at least one other function do not match</li>
+            </ul>
+          </div>
+
+          <div class="col-4">
+            <p>
+              These values are only used for the data set for the analysis,
+              as the correct labels are available here:
+            </p>
+
+            <ul>
+              <li>Correct: The number of data points in which is correctly labelled</li>
+              <li>Incorrect: The number of data points incorrectly labelled</li>
+              <li>Empirical accuracy: Fraction correctly labelled.</li>
+            </ul>
+          </div>
+        </div>
+      </p-tabPanel>
+      <p-tabPanel header="How is the run dashboard organised?">
+        <div class="container">
+          <img class="dashboard-user z-1" src="assets/images/tutorial/step1.jpg" >
+          <img class="dashboard-user z-2 relative dashbord-1-user fadein " src="assets/images/tutorial/step2.jpg" >
+          <img class="dashboard-user z-2 relative dashbord-2-user fadein " src="assets/images/tutorial/step3.jpg" >
+          <img class="dashboard-user z-2 relative dashbord-3-user fadein " src="assets/images/tutorial/step4.jpg" >
+
+        </div>
+      </p-tabPanel>
+    </p-tabView>
   </p-dialog>
 </div>

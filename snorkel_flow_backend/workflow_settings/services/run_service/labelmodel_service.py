@@ -53,7 +53,6 @@ class LabelModelService:
             return status.HTTP_200_OK, labelmodel_serializer.data
         return status.HTTP_404_NOT_FOUND, {"message": "Run object doesn't exists"}
 
-    # todo speichere cardinality mit in der datenbank, n_epochs... selber wählen -> Referenz welche klassen es gibt
     def label_model(
         self,
         run_object,
