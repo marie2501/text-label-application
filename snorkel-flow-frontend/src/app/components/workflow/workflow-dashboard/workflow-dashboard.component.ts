@@ -21,9 +21,6 @@ export class WorkflowDashboardComponent implements OnInit{
   }
 
 
-  // todo info box welches Vormat das dataset haben soll
-  // am besten ein ordern wo ich alle infoboxen sammel
-
   ngOnInit(): void {
     this.workflow_id = this.route.snapshot.params['wid'];
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);

@@ -59,7 +59,6 @@ export class AuthService {
     localStorage.setItem('userData', JSON.stringify({username: username, token: token}));
   }
 
-  //todo passe error code später an
   private handleError(error: HttpErrorResponse) {
     console.log(error.error);
     if (error.error.user != null){

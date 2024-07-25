@@ -14,7 +14,6 @@ export const loginGuard: CanActivateFn = (
   return router.createUrlTree(['/login']);
 }
 
-//todo return URLTree um auf /dashboard zu bleiben
 export const loginGuardHomepage: CanActivateFn = (
   next: ActivatedRouteSnapshot,
   state: RouterStateSnapshot) => {

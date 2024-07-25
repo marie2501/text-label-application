@@ -30,7 +30,6 @@ export class LabelfunctionRunComponent implements OnInit{
     this.workflow_id = this.route.snapshot.params['wid'];
     this.run_id = this.route.snapshot.queryParams['run_id'] ?? -1;
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
-
   }
 
   onSave() : void {
@@ -61,6 +60,7 @@ export class LabelfunctionRunComponent implements OnInit{
 
   onSelectChange($event: LabelfunctionModel[]): void{
     this.selectedLabelfunction = $event;
+    console.log(this.selectedLabelfunction)
   }
 
   private showErrorMessage(error: any) {
