@@ -46,7 +46,6 @@ export class LabelfunctionRunComponent implements OnInit{
       });
       this.router.navigate(['/workflow', this.workflow_id , 'run-dashboard', this.run_id, 'data'])
     } else {
-      console.log(run)
       this.runservice.createRun(run, this.workflow_id).subscribe(respData => {
         this.created = true;
         this.showSuccessMessage();
@@ -60,7 +59,6 @@ export class LabelfunctionRunComponent implements OnInit{
 
   onSelectChange($event: LabelfunctionModel[]): void{
     this.selectedLabelfunction = $event;
-    console.log(this.selectedLabelfunction)
   }
 
   private showErrorMessage(error: any) {

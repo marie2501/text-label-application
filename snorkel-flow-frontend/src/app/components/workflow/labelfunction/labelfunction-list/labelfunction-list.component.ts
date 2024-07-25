@@ -52,7 +52,6 @@ export class LabelfunctionListComponent {
           this.selectedLabelfunction = value.labelfunctions ?? [];
           if (!this.selectable){
             this.labelfunctions = this.selectedLabelfunction;
-            console.log(this.labelfunctions)
           }
         }
       });
@@ -91,7 +90,6 @@ export class LabelfunctionListComponent {
   }
 
   onSelectAnalysis(labelfunction: LabelfunctionModel) {
-    console.log(labelfunction)
     this.analysisModel_train = labelfunction.summary_train!;
     this.analysisModel_unlabeled = labelfunction.summary_unlabeled!;
     this.elementSelected = true;

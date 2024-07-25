@@ -31,7 +31,6 @@ export const workflowAccessGuard: CanActivateFn = (
   const workflowService = inject(WorkflowService);
   const workflow_id = next.params['wid'];
   return workflowService.accessWorkflow(workflow_id).pipe(tap(access => {
-    console.log(access)
     if(access){
       return true
     } else {

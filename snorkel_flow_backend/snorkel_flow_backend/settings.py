@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'asdNB298#+hkasbjhc78a02jk#+as+sadhia78)jansax&5GAX%pa%la7?3H;.dg6(haknx83!ocdeHUI6WrS&bez'
+SECRET_KEY = 'as783g}jasd8{2kap&$saa39SPALBVXJ!BSU83(adad=sa)sad%3jk2$adbj§!nsakJJ&%LOSabjadajsHCV'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -151,5 +151,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # SSL Settings
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-#SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True

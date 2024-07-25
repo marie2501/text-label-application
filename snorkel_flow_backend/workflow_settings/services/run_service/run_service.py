@@ -239,7 +239,6 @@ class RunService:
             - dict: Returns a success or error message.
         """
         if run_serializer.is_valid():
-            print(run_serializer)
             run_serializer.save(creator=request_user, workflow_id=workflow_id)
             return status.HTTP_201_CREATED, {"message": "Run was successfuly created"}
         return status.HTTP_400_BAD_REQUEST, run_serializer.errors

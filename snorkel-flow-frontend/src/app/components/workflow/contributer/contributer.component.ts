@@ -30,7 +30,6 @@ export class ContributerComponent implements OnInit{
       this.contributer = respData;
     });
     this.username = this.getLoggedInUser();
-    console.log(this.username);
   }
 
 
@@ -50,7 +49,6 @@ export class ContributerComponent implements OnInit{
   deleteButton(username_con: string | undefined) {
     if (username_con != undefined){
       this.workflowService.deleteContributer(this.workflow_id, username_con).subscribe(respData => {
-        console.log(respData);
         this.contributer = this.contributer.filter(user => user.username !== username_con)
       }, error => {
       })

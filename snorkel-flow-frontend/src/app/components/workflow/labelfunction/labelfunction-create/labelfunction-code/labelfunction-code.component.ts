@@ -170,7 +170,6 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
           this.showSuccessMessage('The label function has been successfully tested and updated');
         },
         error: error => {
-          console.log(error)
           this.showErrorMessage(error);
       }});
     } else {
@@ -178,7 +177,6 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
       this.labelfunctionService.testAndSaveLabelfunction(labelfunctionModel, this.workflow_id).subscribe({
         next: value => {
-          console.log(value);
           this.analysisModel_unlabeled = value.summary;
           this.analysisModel_train = value.summary_train;
           this.df_combined = value.df_combined;
@@ -187,7 +185,6 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
           this.showSuccessMessage('The label function has been successfully tested and saved');
         },
         error: error => {
-          console.log(error)
           this.showErrorMessage(error);
       }});
     }

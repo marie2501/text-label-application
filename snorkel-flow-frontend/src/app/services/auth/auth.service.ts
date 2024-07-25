@@ -60,7 +60,6 @@ export class AuthService {
   }
 
   private handleError(error: HttpErrorResponse) {
-    console.log(error.error);
     if (error.error.user != null){
       const userError : string = error.error.user[0]
       return throwError(() => new Error(userError));

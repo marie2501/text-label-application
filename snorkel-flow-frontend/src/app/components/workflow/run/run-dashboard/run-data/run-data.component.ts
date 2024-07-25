@@ -37,7 +37,6 @@ export class RunDataComponent implements OnInit{
     this.workflowService.updateCurrentWorkflow(true, this.workflow_id);
     this.runService.getRun(this.run_id).subscribe(respData => {
       this.run = respData;
-      console.log(this.run)
       this.labelfunctions = this.run.labelfunctions!;
       this.runLoaded = Promise.resolve(true);
     }, error => {

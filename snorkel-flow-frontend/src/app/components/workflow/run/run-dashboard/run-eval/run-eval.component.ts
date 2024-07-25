@@ -57,7 +57,6 @@ export class RunEvalComponent implements OnInit{
       this.executed = true;
       this.analysisModel_unlabeled = respData.summary;
       this.analysisModel_train = respData.summary_train;
-      console.log(respData);
       this.analysisLoaded = Promise.resolve(true);
     }, error => {
       this.showErrorMessage(error);

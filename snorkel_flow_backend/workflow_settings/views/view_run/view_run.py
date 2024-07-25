@@ -180,15 +180,12 @@ class RunCreateView(viewsets.ViewSet):
             - Response: A HTTP response containing the status and a error message.
         """
         workflow_id = kwargs["workflow_id"]
-        print(request.data)
 
         run_serializer = RunCreateSerializer(data=request.data)
 
         runservice = RunService()
         status, data = runservice.create_run(workflow_id, run_serializer, request.user)
 
-        print(status)
-        print(data)
 
         return Response(status=status, data=data)
 

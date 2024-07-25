@@ -18,7 +18,6 @@ export class LabelfunctionAnalysisDatapointsComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    console.log(this.df_combined)
   }
 
   showDialog() {
