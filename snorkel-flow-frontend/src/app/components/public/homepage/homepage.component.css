@@ -7,3 +7,15 @@
   height: 100vh;
 }
 
+.dataset-text {
+  position: relative;
+  top: -2.5rem;
+  left: 0.25rem;
+}
+
+.annotation1 {
+  position: relative;
+  top: -23rem;
+  left: 41rem;
+}
+
