@@ -15,7 +15,8 @@ ARG DJANGO_SUPERUSER_USERNAME=admin
 ARG DJANGO_SUPERUSER_EMAIL=admin@example.com
 ARG DJANGO_SUPERUSER_PASSWORD=admin_password
 
-RUN python manage.py migrate && \
+RUN python manage.py makemigrations && \
+    python manage.py migrate && \
     echo "from django.contrib.auth.models import User; \
     User.objects.create_superuser('${DJANGO_SUPERUSER_USERNAME}', '${DJANGO_SUPERUSER_EMAIL}', '${DJANGO_SUPERUSER_PASSWORD}')" | \
     python manage.py shell
