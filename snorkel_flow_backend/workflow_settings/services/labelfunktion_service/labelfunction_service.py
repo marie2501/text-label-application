@@ -136,6 +136,19 @@ class LabelfunctionService:
                         f"The label { el } was not spezified by the workflow creator"
                     )
 
+    def count_labels(self, workflow_id):
+        labelfunction_filter = Labelfunction.objects.filter(
+            workflow_id=workflow_id, type="labels"
+        )
+        count = 0
+        if labelfunction_filter.exists():
+            labelfunction_object_code = labelfunction_filter[0].code
+            labels_split = labelfunction_object_code.split()
+            while "=" in labels_split:
+                labels_split.remove("=")
+                count = count + 1
+        return count - 1
+
     def compile_labelfunction(self, workflow_id, code):
         """
         Compiled the code of a Labelfunction.
@@ -288,7 +301,7 @@ class LabelfunctionService:
                 "text",
                 "splitting_id",
                 "computed_Labels",
-                "CLASS",
+                "class",
             ]
         ]
 
@@ -308,7 +321,7 @@ class LabelfunctionService:
                     "text": row["text"],
                     "splitting_id": row["splitting_id"],
                     "computed_Labels": row["computed_Labels"],
-                    "CLASS": row["CLASS"],
+                    "class": row["class"],
                 }
             )
 
@@ -496,7 +509,7 @@ class LabelfunctionService:
         dataframe = pd.read_csv(file_path)
         dataframe_unlabeled = dataframe.loc[(dataframe["splitting_id"] == "unlabeled")]
         dataframe_train = dataframe.loc[(dataframe["splitting_id"] == "train")]
-        text_list_train_gold_labels = np.array(dataframe_train["CLASS"].tolist())
+        text_list_train_gold_labels = np.array(dataframe_train["class"].tolist())
         local_var = locals()
         lfs = [local_var[name]]
         with queries_disabled():

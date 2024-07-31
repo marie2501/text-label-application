@@ -23,6 +23,7 @@ export class GenerateTemplateComponent implements OnInit {
             '# Please write one label function at a time.\n' +
             '# Note that x is the whole data point.\n' +
             '# x.text is the actual text to be annotated in string format.\n' +
+            '# TextBlob may needs to be imported.\n' +
             '@labeling_function()\n' +
             'def change_name(x):\n' +
             '    sentiment = TextBlob(x.text).sentiment.polarity\n' +

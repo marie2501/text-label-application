@@ -66,7 +66,7 @@ export class RunEvalComponent implements OnInit{
   private showErrorMessage(error: any) {
     this.errorMessage = [];
     this.errorMessage = [
-      {severity: 'error', summary: 'Error', detail: error.error }];
+      {severity: 'error', summary: 'Error', detail: error }];
   }
 
   showSuccessMessage(){

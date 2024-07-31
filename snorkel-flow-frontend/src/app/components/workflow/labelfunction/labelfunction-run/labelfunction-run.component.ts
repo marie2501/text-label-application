@@ -64,7 +64,7 @@ export class LabelfunctionRunComponent implements OnInit{
   private showErrorMessage(error: any) {
     this.errorMessage = [];
     this.errorMessage = [
-      {severity: 'error', summary: 'Error', detail: error.error.non_field_errors }];
+      {severity: 'error', summary: 'Error', detail: error }];
   }
 
   showSuccessMessage(){

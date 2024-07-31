@@ -248,8 +248,8 @@ class ClassiferService:
         text_list_unlabeled = dataframe_unlabeled["text"].tolist()
         text_list_train = dataframe_train["text"].tolist()
         text_list_test = dataframe_test["text"].tolist()
-        text_list_train_class = dataframe_train["CLASS"].tolist()
-        text_list_test_class = dataframe_test["CLASS"].tolist()
+        text_list_train_class = dataframe_train["class"].tolist()
+        text_list_test_class = dataframe_test["class"].tolist()
         return (
             text_list_test,
             text_list_test_class,

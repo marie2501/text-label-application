@@ -6,8 +6,8 @@ import {WorkflowModel} from "../../models/workflow.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-// const workflowURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
-const workflowURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
+const workflowURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/workflow`;
+// const workflowURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/workflow`;
 
 
 
@@ -74,6 +74,8 @@ export class WorkflowService {
       return throwError(() => error.error.non_field_errors);
     } else if (error.error.message != null) {
       return throwError(() => new Error(error.error.message));
+    } else if (error.error != null){
+      return throwError(() => new Error(error.error));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }

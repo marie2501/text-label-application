@@ -5,5 +5,5 @@ export interface DataframeModel {
   text: string;
   splitting_id: string;
   computed_Labels: string;
-  CLASS?: string;
+  class?: string;
 }

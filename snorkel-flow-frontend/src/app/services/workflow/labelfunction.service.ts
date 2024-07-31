@@ -8,8 +8,8 @@ import {environmentDev} from "../../../environments/environment";
 import {AnalysisModel} from "../../models/analysis.model";
 import {DataframeModel} from "../../models/dataframe.model";
 
-// const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/labelfunction`;
-const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/labelfunction`;
+const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/labelfunction`;
+// const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/labelfunction`;
 
 
 @Injectable({providedIn: "root"})
@@ -59,6 +59,8 @@ export class LabelfunctionService {
     } else if (error.error.code != null){
       const code: string = 'import: ' + error.error.code[0]
       return throwError(() => new Error(code));
+    } else if (error.error != null){
+      return throwError(() => new Error(error.error));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }

@@ -141,7 +141,7 @@ class RunService:
                 (dataframe["splitting_id"] == "unlabeled")
             ]
             dataframe_train = dataframe.loc[(dataframe["splitting_id"] == "train")]
-            text_list_train_gold_labels = np.array(dataframe_train["CLASS"].tolist())
+            text_list_train_gold_labels = np.array(dataframe_train["class"].tolist())
 
             labelfunction_names = []
             for item in run_labelfunctions:

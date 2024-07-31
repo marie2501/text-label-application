@@ -8,8 +8,8 @@ import {LabelfunctionModel} from "../../models/labelfunction.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-// const runURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/run`;
-const runURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/run`;
+const runURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/run`;
+// const runURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/run`;
 
 
 
@@ -53,6 +53,10 @@ export class RunService {
   private handleError(error: HttpErrorResponse){
     if (error.error.message != null){
       return throwError(() => new Error(error.error.message));
+    } else if (error.status == 500){
+      return throwError(() => new Error('An unknown error occurred. It may be possible that the label definition is wrong or the dataset has been changed.'));
+    }else if (error.error != null){
+      return throwError(() => new Error(error.error));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }

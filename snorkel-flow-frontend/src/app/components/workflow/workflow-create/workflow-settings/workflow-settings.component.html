@@ -19,7 +19,10 @@
         <br>
       </div>
       <h6>Define the annotation classes of the data set</h6>
-      <div pTooltip="Note that abstain must always be -1." tooltipPosition="top" #editor></div>
+      <div pTooltip="Please note that the abstain label must always be -1. Provide the labels in the format
+      'Labelname = value.' Additionally, you must specify all labels present in the dataset.
+      For instance, if the highest label value is 2, you should include labels for -1, 0, 1, and 2.
+      Users are only permitted to specify the labels that have been outlined." tooltipPosition="top" #editor></div>
       <br>
       <button pButton class="p-button-secondary mt-2 p-button-info"  [disabled]="workflow_created || (!workflowSettingsForm.valid)" type="submit">Submit</button>
       <button pButton class="p-button-secondary mt-2 button-cancel" [disabled]="workflow_created" [routerLink]="['/dashboard']" type="button">Cancel</button>

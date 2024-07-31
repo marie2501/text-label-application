@@ -65,9 +65,9 @@ class FileDownloadService:
                     def get_new_value(row):
                         if row["splitting_id"] == "unlabeled":
                             return unlabeled_pred.pop(0)
-                        return row["CLASS"]
+                        return row["class"]
 
-                    dataframe["CLASS"] = dataframe.apply(get_new_value, axis=1)
+                    dataframe["class"] = dataframe.apply(get_new_value, axis=1)
                     dataframe.to_csv(path_or_buf=response)
 
                     return response, None, None

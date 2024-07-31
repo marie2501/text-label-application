@@ -30,7 +30,7 @@ class FileUploadService:
     def upload_file(self, workflow_id, creator, file_serializer):
         """
         Uploads a file (dataset) to the specified workflow. File needs to have the
-        colums ['corpus_id', 'entity_id', 'text', 'splitting_id', 'CLASS']
+        colums ['corpus_id', 'entity_id', 'text', 'splitting_id', 'class']
 
         Args:
             workflow_id (int): The ID of the workflow to which the file is to be uploaded.
@@ -56,7 +56,7 @@ class FileUploadService:
     def update_file(self, workflow_id, file_serializer):
         """
         Updates a file (dataset) to the specified workflow. File needs to have the
-        colums ['corpus_id', 'entity_id', 'text', 'splitting_id', 'CLASS']
+        colums ['corpus_id', 'entity_id', 'text', 'splitting_id', 'class']
 
         Args:
             workflow_id (int): The ID of the workflow to which the file is to be uploaded.

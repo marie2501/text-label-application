@@ -11,6 +11,7 @@ Classes:
     WorkflowView: A ViewSet for retrieving, updating, and deleting workflows.
     WorkflowModifyView: A ViewSet for updating workflows by ID.
 """
+import sys
 
 from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser
@@ -88,7 +89,11 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
         code_label = request.data["code_label"]
 
         workflow_serializer = WorkflowCreateSerializer(data=workflow)
-
+        try:
+            exec(code_label, locals())
+        except:
+            data = str(sys.exc_info())
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
         workflowservice = WorkflowServiceClass()
         status_save, data = workflowservice.create(workflow_serializer)
         if status_save == status.HTTP_201_CREATED:

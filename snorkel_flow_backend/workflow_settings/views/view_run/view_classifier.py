@@ -13,11 +13,14 @@ Classes:
 
 import pandas as pd
 from rest_framework import authentication, viewsets
+from rest_framework import status as rest_status
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from workflow_settings.models import Run
 from workflow_settings.permissions import IsRunCreatorPermission
+from workflow_settings.services.labelfunktion_service.labelfunction_service import LabelfunctionService
 from workflow_settings.services.run_service.classifier_service import ClassiferService
 from workflow_settings.services.run_service.run_service import RunService
 
@@ -42,7 +45,6 @@ class ClassiferView(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, IsRunCreatorPermission]
     parser_class = [JSONParser]
 
-    # todo get number of labels automatisch wichtig
 
     def call_classifier(self, request, *args, **kwargs):
         """
@@ -89,48 +91,57 @@ class ClassiferView(viewsets.ViewSet):
         l2 = request.data["l2"]
         selected_tie = request.data["selectedTie"]
         filter_abstain = request.data["filterAbstain"]
-        # todo get automatically
-        numbers_of_labels = 2
 
-        runservice = RunService()
-        status, data, l_train_train, dataframe_train, labelfunction_names = (
-            runservice.exec_run(run_id)
-        )
+        run_obj = Run.objects.filter(pk=run_id)
 
-        classifierservice = ClassiferService()
-        status, data, predictions_train = classifierservice.call_classifier(
-            run_id,
-            selected_model_classifier,
-            selected_model_label,
-            selected_model_featurize,
-            range_x,
-            range_y,
-            n_epochs,
-            log_freq,
-            seed,
-            base_learning_rate,
-            l2,
-            numbers_of_labels,
-            selected_tie,
-            filter_abstain,
-        )
+        if run_obj.exists():
+            if run_obj[0].labelfunctions.count() < 3 and selected_model_label == "Train Label Model":
+                return Response(data="To use the Train Label Model, you need to have at least three label functions in your run.", status=rest_status.HTTP_400_BAD_REQUEST)
+            workflow_id = run_obj[0].workflow_id
+            labelfunction_serivce = LabelfunctionService()
+            numbers_of_labels = labelfunction_serivce.count_labels(workflow_id)
 
-        labelfunctions_dataframe = pd.DataFrame(
-            l_train_train, columns=labelfunction_names
-        )
-        if labelfunctions_dataframe.shape[0] == dataframe_train.shape[0]:
-            labelfunctions_dataframe = labelfunctions_dataframe.reset_index(drop=True)
-            dataframe_train = dataframe_train[
-                ["entity_id", "corpus_id", "text", "splitting_id", "CLASS"]
-            ]
-            dataframe_train = dataframe_train.reset_index(drop=True)
-            df_combined = pd.concat([dataframe_train, labelfunctions_dataframe], axis=1)
-            df_combined["Classifier_predictions"] = predictions_train
-            df_combined = df_combined.fillna("")
+            runservice = RunService()
+            status, data, l_train_train, dataframe_train, labelfunction_names = (
+                runservice.exec_run(run_id)
+            )
 
-            json_dataframe = df_combined.to_dict(orient="split")
-            data.update({"df_combined": json_dataframe})
+            classifierservice = ClassiferService()
+            status, data, predictions_train = classifierservice.call_classifier(
+                run_id,
+                selected_model_classifier,
+                selected_model_label,
+                selected_model_featurize,
+                range_x,
+                range_y,
+                n_epochs,
+                log_freq,
+                seed,
+                base_learning_rate,
+                l2,
+                numbers_of_labels,
+                selected_tie,
+                filter_abstain,
+            )
+
+            labelfunctions_dataframe = pd.DataFrame(
+                l_train_train, columns=labelfunction_names
+            )
+            if labelfunctions_dataframe.shape[0] == dataframe_train.shape[0]:
+                labelfunctions_dataframe = labelfunctions_dataframe.reset_index(drop=True)
+                dataframe_train = dataframe_train[
+                    ["entity_id", "corpus_id", "text", "splitting_id", "class"]
+                ]
+                dataframe_train = dataframe_train.reset_index(drop=True)
+                df_combined = pd.concat([dataframe_train, labelfunctions_dataframe], axis=1)
+                df_combined["Classifier_predictions"] = predictions_train
+                df_combined = df_combined.fillna("")
+
+                json_dataframe = df_combined.to_dict(orient="split")
+                data.update({"df_combined": json_dataframe})
+
+                return Response(data=data, status=status)
 
             return Response(data=data, status=status)
-
-        return Response(data=data, status=status)
+        data = {'message': 'Run couldnt be found!'}
+        return Response(data=data, status=rest_status.HTTP_404_NOT_FOUND)

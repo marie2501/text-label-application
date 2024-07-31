@@ -13,7 +13,7 @@
           <th>text</th>
           <th>splitting_id</th>
           <th>computed_Labels</th>
-          <th>CLASS</th>
+          <th>class</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-i="rowIndex">
@@ -23,7 +23,7 @@
           <td class="block w-20rem">{{df_combined[i].text}}</td>
           <td class="text-center"><p-tag [severity]="getSplittingSeverty(df_combined[i].splitting_id)" [value]="getSplittingValue(df_combined[i].splitting_id)"></p-tag></td>
           <td class="text-center">{{df_combined[i].computed_Labels}}</td>
-          <td class="text-center" [ngClass]="{'text-teal-500 font-semibold': df_combined[i].computed_Labels == df_combined[i].CLASS}">{{df_combined[i].CLASS}}</td>
+          <td class="text-center" [ngClass]="{'text-teal-500 font-semibold': df_combined[i].computed_Labels == df_combined[i].class}">{{df_combined[i].class}}</td>
         </tr>
       </ng-template>
     </p-table>

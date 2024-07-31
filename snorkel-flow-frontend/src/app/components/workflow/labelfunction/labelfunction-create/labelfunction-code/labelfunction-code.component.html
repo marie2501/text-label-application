@@ -59,7 +59,7 @@
     <br>
   </div>
 
-  <div #editor></div>
+  <div pTooltip="Before being able to save the label function, you need to press the 'Save Import' button." #editor></div>
 
     <div>
       <button pButton label="Test and {{isUpdate()}}" pTooltip="Your label function is tested for correct syntax and applied to the data set before saving." tooltipPosition="bottom" [disabled]="!isSaved" class="p-button-info mt-4 mr-4 mb-4" (click)="testAndSaveLabelfunction()"></button>

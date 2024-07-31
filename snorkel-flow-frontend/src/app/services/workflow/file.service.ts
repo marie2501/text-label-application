@@ -7,8 +7,8 @@ import {environmentDev} from "../../../environments/environment";
 
 
 
-// const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
-const fileURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
+const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
+// const fileURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
 
 
 
@@ -38,11 +38,10 @@ export class FileService {
   }
 
   private handleError(error: HttpErrorResponse){
-    if (error.error != null){
-      const jsonObject = JSON.parse(error.error)
-      return throwError(() => new Error(jsonObject.message));
-    } else if (error.error.non_field_errors != null){
+    if (error.error.non_field_errors != null){
       return throwError(() => new Error(error.error.non_field_errors));
+    } else if (error.error != null){
+      return throwError(() => new Error(error.error));
     }
     return throwError(() => new Error('An unknown error occurred'));
   }
