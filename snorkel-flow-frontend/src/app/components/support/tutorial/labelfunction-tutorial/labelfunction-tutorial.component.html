@@ -74,10 +74,19 @@
       </p-tabPanel>
       <p-tabPanel header="How to create a labelfunction ?">
         <div>
-          <img class="editor z-1" src="assets/images/tutorial/labelfunction-editor-0.png" >
-          <img class="editor z-2 relative editor-1 fadein" src="assets/images/tutorial/labelfunction-editor-1.png" >
-          <img class="editor z-2 relative editor-2 fadein " src="assets/images/tutorial/labelfunction-editor-2.png" >
-          <img class="editor z-2 relative editor-3 fadein " src="assets/images/tutorial/labelfunction-editor-3.png" >
+          <div class="flex justify-content-center">
+
+            <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'width': '50em' }" [numVisible]="5">
+              <ng-template pTemplate="item" let-item>
+                <img [src]="item.itemImageSrc" style="width: 90%;" />
+              </ng-template>
+              <ng-template pTemplate="thumbnail" let-item>
+                <div class="grid grid-nogutter justify-content-center">
+                  <img [src]="item.thumbnailImageSrc" style="width: 90%;" />
+                </div>
+              </ng-template>
+            </p-galleria>
+          </div>
         </div>
       </p-tabPanel>
       <p-tabPanel header="Further resources and documentation !">

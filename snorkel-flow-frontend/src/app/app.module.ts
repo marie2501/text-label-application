@@ -39,7 +39,7 @@ import { LabelfunctionTutorialComponent } from './components/support/tutorial/la
 import { RunTutorialComponent } from './components/support/tutorial/run-tutorial/run-tutorial.component';
 import { GenerateTemplateComponent } from './components/workflow/labelfunction/labelfunction-create/generate-template/generate-template.component';
 
-
+import { GalleriaModule } from 'primeng/galleria';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { CardModule } from 'primeng/card';
@@ -117,6 +117,7 @@ import { RunAnalysisDatapointsComponent } from './components/workflow/run/run-da
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
+    GalleriaModule,
     HttpClientModule,
     AppRoutingModule,
     MenuModule,

@@ -25,21 +25,36 @@
         <p-button (click)="changeDashboardStatus()" icon="pi pi-angle-right" [outlined]="true" size="large"   [text]="true"  severity="help" class="button-right"></p-button>
         <div *ngIf="!dashboardStatus">
           <h5>Dashboard: User</h5>
-          <div>
-            <img class="dashboard z-1" src="assets/images/tutorial/dashboard-0.png" >
-            <img class="dashboard z-2 relative dashbord-1 fadein" src="assets/images/tutorial/dashboard-1.png" >
-            <img class="dashboard z-2 relative dashbord-2 fadein " src="assets/images/tutorial/dashboard-2.png" >
-            <img class="dashboard z-2 relative dashbord-3 fadein " src="assets/images/tutorial/dashboard-3.png" >
-          </div>
+          <div class="justify-content-center flex">
+            <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'width': '60em' }" [numVisible]="5">
+              <ng-template pTemplate="item" let-item>
+                <img [src]="item.itemImageSrc" style="width: 100%;" />
+              </ng-template>
+              <ng-template pTemplate="thumbnail" let-item>
+                <div class="grid grid-nogutter justify-content-center">
+                  <img [src]="item.thumbnailImageSrc" style="width: 90%;" />
+                </div>
+              </ng-template>
+            </p-galleria>
+        </div>
         </div>
         <div *ngIf="dashboardStatus">
           <h5>Dashboard: Workflow</h5>
-          <div>
-            <img class="dashboard-user z-1" src="assets/images/tutorial/workflow-dash-0.png" >
-            <img class="dashboard-user z-2 relative dashbord-1-user fadein " src="assets/images/tutorial/workflow-dash-1.png" >
-            <img class="dashboard-user z-2 relative dashbord-2-user fadein " src="assets/images/tutorial/workflow-dash-2.png" >
-            <img class="dashboard-user z-2 relative dashbord-3-user fadein " src="assets/images/tutorial/workflow-dash-3.png" >
-
+          <div class="justify-content-center flex">
+<!--            <img class="dashboard-user z-1" src="assets/images/tutorial/workflow-dash-0.png" >-->
+<!--            <img class="dashboard-user z-2 relative dashbord-1-user fadein " src="assets/images/tutorial/workflow-dash-1.png" >-->
+<!--            <img class="dashboard-user z-2 relative dashbord-2-user fadein " src="assets/images/tutorial/workflow-dash-2.png" >-->
+<!--            <img class="dashboard-user z-2 relative dashbord-3-user fadein " src="assets/images/tutorial/workflow-dash-3.png" >-->
+            <p-galleria [value]="images2" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'width': '50em' }" [numVisible]="5">
+              <ng-template pTemplate="item" let-item>
+                <img [src]="item.itemImageSrc" style="width: 100%;" />
+              </ng-template>
+              <ng-template pTemplate="thumbnail" let-item>
+                <div class="grid grid-nogutter justify-content-center">
+                  <img [src]="item.thumbnailImageSrc" style="width: 90%;" />
+                </div>
+              </ng-template>
+            </p-galleria>
           </div>
         </div>
 

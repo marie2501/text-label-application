@@ -54,12 +54,21 @@
       </p-tabPanel>
       <p-tabPanel header="How is the run dashboard organised?">
         <div class="container">
-          <img class="dashboard-user z-1" src="assets/images/tutorial/step1.jpg" >
-          <img class="dashboard-user z-2 relative dashbord-1-user fadein " src="assets/images/tutorial/step2.jpg" >
-          <img class="dashboard-user z-2 relative dashbord-2-user fadein " src="assets/images/tutorial/step3.jpg" >
-          <img class="dashboard-user z-2 relative dashbord-3-user fadein " src="assets/images/tutorial/step4.jpg" >
+          <div class="flex justify-content-center">
 
+          <p-galleria [value]="images" [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'width': '50em' }" [numVisible]="5">
+            <ng-template pTemplate="item" let-item>
+              <img [src]="item.itemImageSrc" style="width: 100%;" />
+            </ng-template>
+            <ng-template pTemplate="thumbnail" let-item>
+              <div class="grid grid-nogutter justify-content-center">
+                <img [src]="item.thumbnailImageSrc" style="width: 90%;" />
+              </div>
+            </ng-template>
+          </p-galleria>
         </div>
+        </div>
+
       </p-tabPanel>
     </p-tabView>
   </p-dialog>
