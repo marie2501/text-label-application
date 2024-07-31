@@ -65,9 +65,9 @@ export class NavbarComponent implements OnInit, OnDestroy{
 
   positionLeft(){
     if (this.workflow.isOnWorkflow){
-      return '65rem'
+      return '70vw'
     }
-    return '75rem'
+    return '80vw'
   }
 
 

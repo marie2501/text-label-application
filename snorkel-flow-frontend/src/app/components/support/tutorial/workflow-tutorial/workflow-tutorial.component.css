@@ -24,7 +24,7 @@
 }
 
 .dashbord-1 {
-  top: -18.5rem;
+  top: -18.5em;
   opacity: 0;
   animation-fill-mode: forwards;
   animation-delay: 1s;
@@ -33,7 +33,7 @@
 }
 
 .dashbord-2 {
-  top: -37rem;
+  top: -37em;
   opacity: 0;
   animation-fill-mode: forwards;
   animation-delay: 2s;
@@ -43,7 +43,7 @@
 }
 
 .dashbord-3 {
-  top: -55.5rem;
+  top: -55.5em;
   opacity: 0;
   animation-fill-mode: forwards;
   animation-delay: 5s;

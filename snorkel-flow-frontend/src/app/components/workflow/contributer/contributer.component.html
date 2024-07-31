@@ -5,7 +5,7 @@
         <ul>
           <li *ngFor="let contributers of contributer" class="contributer-list">
             {{ contributers.username }}
-            <p-button *ngIf="contributers.username != username" icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" (click)="deleteButton(contributers.username)"></p-button>
+            <p-button *ngIf="(contributers.username != username) && allowedToChange" icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" (click)="deleteButton(contributers.username)"></p-button>
           </li>
         </ul>
       </div>
