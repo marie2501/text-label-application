@@ -69,8 +69,8 @@ export class ContributerComponent implements OnInit{
   }
 
   onChange(usernamefilter: Event) {
-    let temp = <InputEvent>usernamefilter
-    const username = this.filteredUsername
+    let temp = <InputEvent>usernamefilter;
+    const username = this.filteredUsername;
     if (username != undefined && username != ''){
       this.workflowService.filterPossibleContributer(this.workflow_id, username).subscribe(respData => {
         this.possibleContributer = respData;

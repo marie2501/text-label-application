@@ -156,37 +156,48 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
   testAndSaveLabelfunction() {
     const code: string = this.codeEditor.getValue();
+    if (this.isOnlyOneLabelfunction()) {
 
-    if (this.lid != -1) {
-      const labelfunctionModel: LabelfunctionModel = {code: code, name: this.functionName, description: this.getDescription()}
 
-      this.labelfunctionService.testAndUpdateLabelfunctions(this.lid, labelfunctionModel, this.workflow_id).subscribe({
-        next: value => {
-          this.analysisModel_unlabeled = value.summary;
-          this.analysisModel_train = value.summary_train;
-          this.df_combined = value.df_combined;
-          this.lid = value.lid;
-          this.isTested = true;
-          this.showSuccessMessage('The label function has been successfully tested and updated');
-        },
-        error: error => {
-          this.showErrorMessage(error);
-      }});
+      if (this.lid != -1) {
+        const labelfunctionModel: LabelfunctionModel = {
+          code: code,
+          name: this.functionName,
+          description: this.getDescription()
+        }
+
+        this.labelfunctionService.testAndUpdateLabelfunctions(this.lid, labelfunctionModel, this.workflow_id).subscribe({
+          next: value => {
+            this.analysisModel_unlabeled = value.summary;
+            this.analysisModel_train = value.summary_train;
+            this.df_combined = value.df_combined;
+            this.lid = value.lid;
+            this.isTested = true;
+            this.showSuccessMessage('The label function has been successfully tested and updated');
+          },
+          error: error => {
+            this.showErrorMessage(error);
+          }
+        });
+      } else {
+        const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
+
+        this.labelfunctionService.testAndSaveLabelfunction(labelfunctionModel, this.workflow_id).subscribe({
+          next: value => {
+            this.analysisModel_unlabeled = value.summary;
+            this.analysisModel_train = value.summary_train;
+            this.df_combined = value.df_combined;
+            this.lid = value.lid;
+            this.isTested = true;
+            this.showSuccessMessage('The label function has been successfully tested and saved');
+          },
+          error: error => {
+            this.showErrorMessage(error);
+          }
+        });
+      }
     } else {
-      const labelfunctionModel: LabelfunctionModel = {code: code, type: 'python_code', name: this.functionName}
-
-      this.labelfunctionService.testAndSaveLabelfunction(labelfunctionModel, this.workflow_id).subscribe({
-        next: value => {
-          this.analysisModel_unlabeled = value.summary;
-          this.analysisModel_train = value.summary_train;
-          this.df_combined = value.df_combined;
-          this.lid = value.lid;
-          this.isTested = true;
-          this.showSuccessMessage('The label function has been successfully tested and saved');
-        },
-        error: error => {
-          this.showErrorMessage(error);
-      }});
+      this.showErrorMessage("Write exactly one labelfunction!");
     }
   }
 
@@ -218,13 +229,23 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
 
   private getfunctionName(){
     const code: string = this.codeEditor.getValue();
-    const i = code.indexOf('def');
+    const i = code.indexOf('@labeling_function()');
     const j = code.indexOf(':');
     if (i < j){
-      const substring = code.substring(i, j);
+      const substring = code.substring(i+22, j);
       const k = substring.indexOf('(');
       this.functionName = substring.substring(4, k).toString().trim();
     }
+  }
+
+  private isOnlyOneLabelfunction(){
+    const code: string = this.codeEditor.getValue();
+    const substring = '@labeling_function()';
+    console.log(code.split(substring))
+    if (code.split(substring).length - 1 == 1){
+      return true;
+    }
+    return false;
   }
 
   implementTemplate($event: string) {
