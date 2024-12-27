@@ -13,6 +13,7 @@ export class ContributerComponent implements OnInit{
   workflow_id: number = 0;
   contributer: {username: string}[] = [];
   possibleContributer: {username: string}[] = [];
+  filteredUsername: string = "";
 
   username: string = '';
 
@@ -69,7 +70,7 @@ export class ContributerComponent implements OnInit{
 
   onChange(usernamefilter: Event) {
     let temp = <InputEvent>usernamefilter
-    const username = temp.data
+    const username = this.filteredUsername
     if (username != undefined && username != ''){
       this.workflowService.filterPossibleContributer(this.workflow_id, username).subscribe(respData => {
         this.possibleContributer = respData;
