@@ -1,9 +1,6 @@
-import json
 from io import StringIO
 
 import pandas as pd
-from django.contrib.auth.models import User
-from django.core.exceptions import NON_FIELD_ERRORS
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 

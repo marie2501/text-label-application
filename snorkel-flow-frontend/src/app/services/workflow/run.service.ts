@@ -8,8 +8,8 @@ import {LabelfunctionModel} from "../../models/labelfunction.model";
 import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
-const runURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/run`;
-// const runURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/run`;
+// const runURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/run`;
+const runURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/run`;
 
 
 

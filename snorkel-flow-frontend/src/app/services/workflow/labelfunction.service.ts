@@ -8,8 +8,8 @@ import {environmentDev} from "../../../environments/environment";
 import {AnalysisModel} from "../../models/analysis.model";
 import {DataframeModel} from "../../models/dataframe.model";
 
-const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/labelfunction`;
-// const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/labelfunction`;
+// const labelfuntionURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/labelfunction`;
+const labelfuntionURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/labelfunction`;
 
 
 @Injectable({providedIn: "root"})

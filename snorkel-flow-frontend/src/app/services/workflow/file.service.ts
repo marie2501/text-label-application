@@ -7,8 +7,8 @@ import {environmentDev} from "../../../environments/environment";
 
 
 
-const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
-// const fileURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
+// const fileURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/settings/file_upload`;
+const fileURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/settings/file_upload`;
 
 
 
