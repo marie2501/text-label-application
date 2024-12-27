@@ -6,6 +6,6 @@ COPY . .
 RUN npm run build --prod
 
 FROM nginx:alpine
-COPY --from=builder /app/dist/snorkel-flow-frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/text-label-frontend /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
