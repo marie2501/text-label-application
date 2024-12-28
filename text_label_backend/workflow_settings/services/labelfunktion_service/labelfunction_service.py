@@ -18,7 +18,7 @@ from zen_queries import fetch, queries_disabled
 
 from rest_framework import status
 
-from snorkel_flow_backend.settings import MEDIA_ROOT
+from text_label_backend.settings import MEDIA_ROOT
 from workflow_settings.models import Labelfunction, File, Run
 from workflow_settings.serializers.serializers_labelfunction import (
     LabelfunctionSerializer,

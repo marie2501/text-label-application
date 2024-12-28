@@ -27,6 +27,6 @@ EXPOSE 8080
 RUN pip install gunicorn
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "snorkel_flow_backend.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "text_label_backend.wsgi:application"]
 
 #--platform=linux/amd64

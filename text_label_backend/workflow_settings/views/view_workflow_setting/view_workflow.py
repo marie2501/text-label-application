@@ -17,7 +17,7 @@ from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from snorkel_flow_backend.settings import MEDIA_ROOT
+from text_label_backend.settings import MEDIA_ROOT
 from workflow_settings.permissions import (
     WorkflowAccessPermission,
     IsWorkflowCreatorPermission,

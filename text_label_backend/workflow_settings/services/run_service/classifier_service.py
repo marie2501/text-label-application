@@ -16,7 +16,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.linear_model import LogisticRegression
 from rest_framework import status
 
-from snorkel_flow_backend.settings import MEDIA_ROOT
+from text_label_backend.settings import MEDIA_ROOT
 from workflow_settings.models import File, Run, Classifier
 from workflow_settings.services.run_service.feature_generation_service import (
     FeatureGenerationService,

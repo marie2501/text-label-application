@@ -13,7 +13,7 @@ import pandas as pd
 from django.http import HttpResponse
 from rest_framework import status
 
-from snorkel_flow_backend.settings import MEDIA_ROOT
+from text_label_backend.settings import MEDIA_ROOT
 from workflow_settings.models import File, Run
 
 
