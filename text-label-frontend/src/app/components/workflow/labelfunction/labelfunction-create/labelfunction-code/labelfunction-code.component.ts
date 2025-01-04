@@ -105,9 +105,6 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
         "# x.text is the actual text to be annotated in string format.\n");
     }
 
-    this.codeEditor.on('change', () => {
-      this.getfunctionName();
-    });
     // import Editor
     const elementImport = this.importEditorRef.nativeElement;
     const importOptions: Partial<ace.Ace.EditorOptions> = {
@@ -155,9 +152,9 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
   }
 
   testAndSaveLabelfunction() {
-    const code: string = this.codeEditor.getValue();
     if (this.isOnlyOneLabelfunction()) {
-
+      const code: string = this.codeEditor.getValue();
+      this.getfunctionName();
 
       if (this.lid != -1) {
         const labelfunctionModel: LabelfunctionModel = {
@@ -232,16 +229,16 @@ export class LabelfunctionCodeComponent implements AfterViewInit, OnInit{
     const i = code.indexOf('@labeling_function()');
     const j = code.indexOf(':');
     if (i < j){
-      const substring = code.substring(i+22, j);
+      const substring = code.substring(i+21, j);
       const k = substring.indexOf('(');
       this.functionName = substring.substring(4, k).toString().trim();
+      console.log(this.functionName);
     }
   }
 
   private isOnlyOneLabelfunction(){
     const code: string = this.codeEditor.getValue();
     const substring = '@labeling_function()';
-    console.log(code.split(substring))
     if (code.split(substring).length - 1 == 1){
       return true;
     }
