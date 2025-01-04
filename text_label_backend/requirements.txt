@@ -2,7 +2,6 @@ absl-py==1.4.0
 annotated-types==0.6.0
 asgiref==3.7.2
 astroid==3.2.3
-black==24.4.2
 blis==0.7.11
 boolean.py==4.0
 CacheControl==0.13.1
@@ -20,6 +19,7 @@ dill==0.3.8
 Django==3.2.20
 django-cleanup==8.0.0
 django-cors-headers==4.1.0
+django-environ==0.11.2
 django-filter==23.2
 django-rest-authtoken==2.1.4
 django-zen-queries==2.1.0
@@ -69,7 +69,6 @@ pyasn1-modules==0.3.0
 pydantic==2.5.3
 pydantic_core==2.14.6
 Pygments==2.17.2
-pylint==3.2.5
 pyparsing==3.1.1
 python-dateutil==2.8.2
 pytz==2023.3
@@ -96,6 +95,7 @@ tensorboard-data-server==0.7.1
 textblob==0.18.0.post0
 the-social-network==0.0.7
 thinc==8.2.2
+thinc-apple-ops==0.1.4
 threadpoolctl==3.2.0
 toml==0.10.2
 tomli==2.0.1
