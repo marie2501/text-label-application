@@ -5,7 +5,7 @@
     </div>
     <div class="container card_width">
       <p-card header="Sign up">
-          <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()">
+          <form [formGroup]="signUpForm" (ngSubmit)="confirmSignUp($event)">
             <div class="p-fluid">
               <div>
                 <span class="p-float-label">
@@ -42,6 +42,7 @@
             <button pButton class="button_position p-button-sm p-button-info" icon="pi pi-user" label="Sign-in" type="submit" [disabled]="!signUpForm.valid"></button>
         </form>
       </p-card>
+      <p-confirmDialog />
     </div>
   </div>
 </div>

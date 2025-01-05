@@ -71,7 +71,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { LabelfunctionAnalysisDatapointsComponent } from './components/workflow/labelfunction/labelfunction-create/labelfunction-analysis-datapoints/labelfunction-analysis-datapoints.component';
 import { LabelfunctionAnalysisComponent } from './components/workflow/labelfunction/labelfunction-analysis/labelfunction-analysis.component';
 import { RunAnalysisDatapointsComponent } from './components/workflow/run/run-dashboard/run-analysis-datapoints/run-analysis-datapoints.component';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 @NgModule({
@@ -124,6 +124,7 @@ import { RunAnalysisDatapointsComponent } from './components/workflow/run/run-da
     MenubarModule,
     CardModule,
     PasswordModule,
+    ConfirmDialogModule,
     ButtonModule,
     InputTextModule,
     CheckboxModule,

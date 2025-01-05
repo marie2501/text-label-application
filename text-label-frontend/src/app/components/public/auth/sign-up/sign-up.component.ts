@@ -2,20 +2,23 @@ import {Component, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {AuthService} from "../../../../services/auth/auth.service";
 import {Router} from "@angular/router";
-import {Message} from 'primeng/api';
+import {ConfirmationService, Message} from 'primeng/api';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [ConfirmationService]
+
 })
 export class SignUpComponent {
 
   errorMessage: Message[] = [];
   invalidForm: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, private builder: FormBuilder) {
+  constructor(private authService: AuthService, private router: Router,
+              private builder: FormBuilder, private confirmationService: ConfirmationService) {
   }
 
   signUpForm: FormGroup = this.builder.group({
@@ -55,4 +58,38 @@ export class SignUpComponent {
 
   }
 
+
+  confirmSignUp($event: Event) {
+    this.confirmationService.confirm({
+      target: $event.target as EventTarget,
+      message: '<div>\n' +
+        '  <p>\n' +
+        '    This application is a prototype developed for demonstration and testing purposes only. It will be available online for a limited period of time. The owner of this application assumes no liability for any potential data loss, service interruptions, or issues arising from its use.\n' +
+        '  </p>\n' +
+        '  <p>\n' +
+        '    All user-uploaded data, including account details and files, will be deleted when the application is taken offline. Users are advised not to upload sensitive or critical data.\n' +
+        '  </p>\n' +
+        '  <p>By creating an account or using this application, you acknowledge that:</p>\n' +
+        '  <ul>\n' +
+        '    <li>You understand this is a temporary, experimental prototype.</li>\n' +
+        '    <li>You agree to use it at your own risk.</li>\n' +
+        '    <li>You accept that no guarantees of functionality, security, or availability are provided.</li>\n' +
+        '  </ul>\n' +
+        '  <p>\n' +
+        '    If you do not agree to these terms, please refrain from using the application.\n' +
+        '  </p>\n' +
+        '</div>\n',
+      header: 'Disclaimer: Prototype Application',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon:"none",
+      rejectIcon:"none",
+      acceptButtonStyleClass: "p-button-text p-button-danger",
+      rejectButtonStyleClass: "p-button-text p-button-info",
+      accept: () => {
+        this.onSignUp()
+      },
+      reject: () => {
+      }
+    });
+  }
 }

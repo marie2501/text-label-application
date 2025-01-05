@@ -24,12 +24,6 @@ p-card >div {
   border: 0.1px solid #929292;
 }
 
-/*p-card .p-button {*/
-/*  background-color: #f0fbff;*/
-/*  border: #f0fbff;*/
-/*}*/
-
-/*p-card .p-button:hover  {*/
-/*  background-color: #c6eaf5;*/
-/*  border: #c6eaf5;*/
-/*}*/
+p-confirmdialog i {
+  color: red;
+}
