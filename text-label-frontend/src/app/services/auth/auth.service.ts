@@ -6,8 +6,8 @@ import {environmentProd} from "../../../environments/environment.prod";
 import {environmentDev} from "../../../environments/environment";
 
 
-// const auhtURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/authentication`;
-const auhtURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/authentication`;
+const auhtURL = `${environmentProd.protocol}://${environmentProd.ip_adresse}/authentication`;
+// const auhtURL = `${environmentDev.protocol}://${environmentDev.ip_adresse}:${environmentDev.port}/authentication`;
 
 interface AuthRespData {
   token: string;
