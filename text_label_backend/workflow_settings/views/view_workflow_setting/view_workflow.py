@@ -142,7 +142,7 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
                         of packages ans their version as string.
         """
         packages = []
-        filepath = "{root}/../{name}".format(root=MEDIA_ROOT, name="requirements.txt")
+        filepath = "{root}/../{name}".format(root=MEDIA_ROOT, name="installed_packages_for_labeling.txt")
         with open(filepath, "r") as file:
             packages = file.readlines()
         return Response(packages, status=status.HTTP_200_OK)

@@ -1,4 +1,3 @@
-django_requirements_installed_packages.txt
 Dockerfile
 database/db.sqlite3
 media/*
