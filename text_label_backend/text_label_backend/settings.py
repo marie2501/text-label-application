@@ -11,23 +11,28 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(
+    DEBUG=(bool, False)
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'as783g}jasd8{2kap&$saa39SPALBVXJ!BSU83(adad=sa)sad%3jk2$adbj§!nsakJJ&%LOSabjadajsHCV'
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='chsih4390hf#sad+asd2n%gas8')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
 
 
-ALLOWED_HOSTS = ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de', 'localhost']
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["localhost"])
+# ['178.254.37.162', 'masterfrontend', 'everythinkatonce.de', 'localhost']
 
 
 # Application definition
@@ -136,15 +141,16 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS Settings
-CORS_ALLOWED_ORIGINS = [
-    "http://masterfrontend",
-    "https://masterfrontend",
-    "http://everythinkatonce.de",
-    "https://everythinkatonce.de",
-    "http://localhost"
-]
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=["*"])
+# [
+#     "http://masterfrontend",
+#     "https://masterfrontend",
+#     "http://everythinkatonce.de",
+#     "https://everythinkatonce.de",
+#     "http://localhost"
+# ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = env("CORS_ALLOW_ALL_ORIGINS", default=True)
 
 # File Settings
 MEDIA_URL = '/media/'

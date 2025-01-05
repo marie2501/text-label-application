@@ -95,7 +95,6 @@ tensorboard-data-server==0.7.1
 textblob==0.18.0.post0
 the-social-network==0.0.7
 thinc==8.2.2
-thinc-apple-ops==0.1.4
 threadpoolctl==3.2.0
 toml==0.10.2
 tomli==2.0.1
