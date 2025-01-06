@@ -2,7 +2,7 @@
 
 ## Description
 TextLabel is an open-source web application prototype built on the SnorkelAI framework, designed to simplify and accelerate distributed text data labeling through weak supervision via label functions.
-The web application consists of two main software components: a Django backend and an Angular frontend. The Django backend handles data processing, model integration, and weak supervision logic, while the Angular frontend provides a responsive and user-friendly interface for interacting with the system. 
+The web application consists of two main software components: a Django backend and an Angular frontend.
 
 ## Installation
 
