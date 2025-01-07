@@ -12,7 +12,7 @@ Classes:
     WorkflowModifyView: A ViewSet for updating workflows by ID.
 """
 import sys
-
+from workflow_settings.services.validate_service.validate_functions_service import validate_variable_assignments, compile_variable_assignments
 from rest_framework import status, authentication, viewsets
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import IsAuthenticated
@@ -90,7 +90,8 @@ class WorkflowAuthenticatetOnlyView(viewsets.ViewSet):
 
         workflow_serializer = WorkflowCreateSerializer(data=workflow)
         try:
-            exec(code_label, locals())
+            if validate_variable_assignments(code_label):
+                compile_variable_assignments(code_label)
         except:
             data = str(sys.exc_info())
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
