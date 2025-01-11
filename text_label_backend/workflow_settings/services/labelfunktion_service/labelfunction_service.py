@@ -13,7 +13,7 @@ import sys
 import numpy as np
 from snorkel.labeling import PandasLFApplier, LFAnalysis
 import pandas as pd
-
+from workflow_settings.services.validate_service.validate_functions_service import validate_code_for_imports_only, execute_code_in_safe_env, validate_labelfunction
 from zen_queries import fetch, queries_disabled
 
 from rest_framework import status
@@ -167,6 +167,7 @@ class LabelfunctionService:
             import_code = imports[0].code
             try:
                 exec(import_code, locals())
+                validate_labelfunction(code)
                 exec(code, locals())
                 return status.HTTP_200_OK, {"message": "The labelfunction compiled"}
             except:
@@ -462,7 +463,8 @@ class LabelfunctionService:
             import_object = labelfunction_filter[0]
             try:
                 import_code = request_data["code"]
-                exec(import_code, locals())
+                validate_code_for_imports_only(import_code)
+                execute_code_in_safe_env(import_code)
                 serialziers_import = LabelfunctionCreateSerializer(
                     import_object, data=request_data, partial=True
                 )
@@ -505,6 +507,7 @@ class LabelfunctionService:
         import_code = imports[0].code
         exec(import_code, locals())
         exec(labels_code, locals())
+        validate_labelfunction(code)
         exec(code, locals())
         dataframe = pd.read_csv(file_path)
         dataframe_unlabeled = dataframe.loc[(dataframe["splitting_id"] == "unlabeled")]
